@@ -2,6 +2,8 @@ package com.uit.ooad.scienceresearch.service.account.impl;
 
 import com.uit.ooad.scienceresearch.service.account.IAccountService;
 import com.uit.ooad.scienceresearch.service.account.IFindAccountService;
+import com.uit.ooad.scienceresearch.service.account.IRegisterAccountService;
+import com.uit.ooad.scienceresearch.service.lecturer.IRegisterLecturerService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,4 +19,8 @@ public class AccountServiceImpl implements IAccountService {
 
     @Autowired
     private IFindAccountService findAccountService;
+
+    @Autowired
+    private IRegisterAccountService registerAccountService;
+
 }

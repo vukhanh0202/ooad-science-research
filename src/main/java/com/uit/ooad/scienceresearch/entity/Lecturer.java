@@ -24,6 +24,10 @@ public class Lecturer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     @Column(name = "full_name")
     private String fullName;
 
@@ -39,10 +43,6 @@ public class Lecturer {
 
     @Column(name = "phone")
     private String phone;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contract_id")
@@ -66,5 +66,17 @@ public class Lecturer {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Lecturer{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", dob=" + dob +
+                ", major='" + major + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

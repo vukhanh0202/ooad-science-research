@@ -1,8 +1,10 @@
 package com.uit.ooad.scienceresearch.service.account;
 
-import com.uit.ooad.scienceresearch.dto.AccountDto;
-
-import java.util.List;
+import com.uit.ooad.scienceresearch.dto.account.AccountDto;
+import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
+import com.uit.ooad.scienceresearch.entity.Account;
+import com.uit.ooad.scienceresearch.entity.Lecturer;
+import com.uit.ooad.scienceresearch.service.lecturer.IRegisterLecturerService;
 
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
@@ -12,4 +14,7 @@ import java.util.List;
 public interface IAccountService {
 
     IFindAccountService<String, AccountDto> getFindAccountService();
+
+    IRegisterAccountService<AccountLecturerDto, Account> getRegisterAccountService();
+
 }

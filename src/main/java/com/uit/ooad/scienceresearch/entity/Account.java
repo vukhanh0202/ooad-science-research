@@ -1,9 +1,11 @@
 package com.uit.ooad.scienceresearch.entity;
 
+import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,12 +20,11 @@ import java.util.Objects;
 public class Account {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "id")
-    private Lecturer user;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    private List<Lecturer> lecturers;
 
     @Column(name = "username", unique = true)
     private String username;

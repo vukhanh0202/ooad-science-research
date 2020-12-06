@@ -1,6 +1,6 @@
 package com.uit.ooad.scienceresearch.service.account.impl;
 
-import com.uit.ooad.scienceresearch.dto.AccountDto;
+import com.uit.ooad.scienceresearch.dto.account.AccountDto;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
 import com.uit.ooad.scienceresearch.mapper.AccountMapper;
 import com.uit.ooad.scienceresearch.repository.AccountRepository;
@@ -8,8 +8,6 @@ import com.uit.ooad.scienceresearch.service.AbstractBaseService;
 import com.uit.ooad.scienceresearch.service.account.IFindAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]

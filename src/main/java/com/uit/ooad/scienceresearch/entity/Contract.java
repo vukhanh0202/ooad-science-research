@@ -40,4 +40,12 @@ public class Contract {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "Contract{" +
+                "id=" + id +
+                ", nameContract='" + nameContract + '\'' +
+                '}';
+    }
 }

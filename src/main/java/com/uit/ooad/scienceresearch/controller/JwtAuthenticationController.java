@@ -7,7 +7,7 @@ package com.uit.ooad.scienceresearch.controller;
  */
 
 import com.uit.ooad.scienceresearch.config.JwtTokenUtil;
-import com.uit.ooad.scienceresearch.dto.AccountDto;
+import com.uit.ooad.scienceresearch.dto.account.AccountDto;
 import com.uit.ooad.scienceresearch.service.JwtUserDetailsService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,6 @@ public class JwtAuthenticationController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        //return ResponseEntity.ok(new JwtResponse(token));
         JSONObject json = new JSONObject();
         json.put("access-token", token);
         return ResponseEntity.status(HttpStatus.OK).body(json.toString());

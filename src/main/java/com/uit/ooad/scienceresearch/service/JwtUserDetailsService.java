@@ -1,6 +1,6 @@
 package com.uit.ooad.scienceresearch.service;
 
-import com.uit.ooad.scienceresearch.dto.AccountDto;
+import com.uit.ooad.scienceresearch.dto.account.AccountDto;
 import com.uit.ooad.scienceresearch.service.account.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;

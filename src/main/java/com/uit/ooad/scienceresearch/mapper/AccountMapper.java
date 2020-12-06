@@ -1,6 +1,7 @@
 package com.uit.ooad.scienceresearch.mapper;
 
-import com.uit.ooad.scienceresearch.dto.AccountDto;
+import com.uit.ooad.scienceresearch.dto.account.AccountDto;
+import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
 import com.uit.ooad.scienceresearch.entity.Account;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -20,4 +21,12 @@ public abstract class AccountMapper {
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
     public abstract AccountDto toAccountDto(Account entity);
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "password", target = "password")
+    @Mapping(source = "role", target = "role.code")
+    public abstract Account toAccount(AccountLecturerDto accountLecturerDto);
+
 }

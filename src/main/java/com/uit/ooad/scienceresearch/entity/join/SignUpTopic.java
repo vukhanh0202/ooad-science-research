@@ -53,4 +53,11 @@ public class SignUpTopic {
     public int hashCode() {
         return Objects.hash(lecturer, topic, position);
     }
+
+    @Override
+    public String toString() {
+        return "SignUpTopic{" +
+                "id=" + id +
+                '}';
+    }
 }

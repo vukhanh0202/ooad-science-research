@@ -1,4 +1,4 @@
-package com.uit.ooad.scienceresearch.dto;
+package com.uit.ooad.scienceresearch.dto.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
