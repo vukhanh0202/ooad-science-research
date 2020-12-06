@@ -1,0 +1,20 @@
+package com.uit.ooad.scienceresearch.service.account.impl;
+
+import com.uit.ooad.scienceresearch.service.account.IAccountService;
+import com.uit.ooad.scienceresearch.service.account.IFindAccountService;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * @author VuKhanh [18520903@gm.uit.edu.vn]
+ * @project Manage Science Research
+ * @since 12/6/2020
+ */
+@Service
+@Getter
+public class AccountServiceImpl implements IAccountService {
+
+    @Autowired
+    private IFindAccountService findAccountService;
+}

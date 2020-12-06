@@ -40,6 +40,10 @@ public class Lecturer {
     @Column(name = "phone")
     private String phone;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
+    private Account account;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contract_id")
     private Contract contract;
