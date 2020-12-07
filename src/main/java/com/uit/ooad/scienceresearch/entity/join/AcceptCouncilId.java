@@ -30,4 +30,6 @@ public class AcceptCouncilId implements Serializable {
     public int hashCode() {
         return Objects.hash(lecturerId, topicId, positionId);
     }
+
+
 }

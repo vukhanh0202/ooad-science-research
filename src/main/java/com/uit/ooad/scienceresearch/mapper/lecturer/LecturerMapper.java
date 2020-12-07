@@ -1,7 +1,8 @@
-package com.uit.ooad.scienceresearch.mapper;
+package com.uit.ooad.scienceresearch.mapper.lecturer;
 
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
+import com.uit.ooad.scienceresearch.mapper.lecturer.converter.LecturerConverter;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public abstract class LecturerMapper {
 
     @Named("toEntity")
     @BeforeMapping
-    protected void toDto(AccountLecturerDto dto, @MappingTarget Lecturer entity) {
+    protected void toEntity(AccountLecturerDto dto, @MappingTarget Lecturer entity) {
         entity.setFaculty(lecturerConverter.getFaculty(dto.getFaculty_id()));
         entity.setContract(lecturerConverter.getContract(dto.getContract_id()));
     }

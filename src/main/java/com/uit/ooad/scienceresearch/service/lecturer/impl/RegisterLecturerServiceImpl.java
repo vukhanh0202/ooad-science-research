@@ -3,7 +3,7 @@ package com.uit.ooad.scienceresearch.service.lecturer.impl;
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
 import com.uit.ooad.scienceresearch.exception.InvalidException;
-import com.uit.ooad.scienceresearch.mapper.LecturerMapper;
+import com.uit.ooad.scienceresearch.mapper.lecturer.LecturerMapper;
 import com.uit.ooad.scienceresearch.repository.ContractRepository;
 import com.uit.ooad.scienceresearch.repository.FacultyRepository;
 import com.uit.ooad.scienceresearch.repository.LecturerRepository;

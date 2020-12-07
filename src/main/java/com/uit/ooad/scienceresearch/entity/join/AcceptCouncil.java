@@ -52,4 +52,11 @@ public class AcceptCouncil {
     public int hashCode() {
         return Objects.hash(lecturer, topic, position);
     }
+
+    @Override
+    public String toString() {
+        return "AcceptCouncil{" +
+                "id=" + id +
+                '}';
+    }
 }

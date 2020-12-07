@@ -1,4 +1,4 @@
-package com.uit.ooad.scienceresearch.mapper;
+package com.uit.ooad.scienceresearch.mapper.account;
 
 import com.uit.ooad.scienceresearch.dto.account.AccountDto;
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;

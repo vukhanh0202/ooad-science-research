@@ -29,13 +29,6 @@ public class UserController {
     @Autowired
     ILecturerService lecturerService;
 
-    @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getTaskDetail() {
-        String x = BCrypt.hashpw("password", BCrypt.gensalt(10));
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse(x));
-    }
-
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody AccountLecturerDto body) {
         Account account = accountService.getRegisterAccountService().execute(body);

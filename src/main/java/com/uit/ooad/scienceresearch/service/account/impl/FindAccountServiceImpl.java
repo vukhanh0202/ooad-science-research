@@ -2,7 +2,7 @@ package com.uit.ooad.scienceresearch.service.account.impl;
 
 import com.uit.ooad.scienceresearch.dto.account.AccountDto;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
-import com.uit.ooad.scienceresearch.mapper.AccountMapper;
+import com.uit.ooad.scienceresearch.mapper.account.AccountMapper;
 import com.uit.ooad.scienceresearch.repository.AccountRepository;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
 import com.uit.ooad.scienceresearch.service.account.IFindAccountService;

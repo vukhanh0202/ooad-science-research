@@ -45,4 +45,13 @@ public class Role {
     public int hashCode() {
         return Objects.hash(code);
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "code=" + code +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

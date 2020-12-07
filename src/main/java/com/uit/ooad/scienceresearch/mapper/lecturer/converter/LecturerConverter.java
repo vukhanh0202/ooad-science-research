@@ -1,4 +1,4 @@
-package com.uit.ooad.scienceresearch.mapper;
+package com.uit.ooad.scienceresearch.mapper.lecturer.converter;
 
 import com.uit.ooad.scienceresearch.entity.Contract;
 import com.uit.ooad.scienceresearch.entity.Faculty;

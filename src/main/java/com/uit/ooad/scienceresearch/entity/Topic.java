@@ -29,12 +29,13 @@ public class Topic {
     @Column(name = "year")
     private Long year;
 
-    @Column(name = "field")
-    private String field;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "field_id")
+    private FieldTopic fieldTopic;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "level_id")
@@ -54,5 +55,14 @@ public class Topic {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id=" + id +
+                ", nameTopic='" + nameTopic + '\'' +
+                ", year=" + year +
+                '}';
     }
 }
