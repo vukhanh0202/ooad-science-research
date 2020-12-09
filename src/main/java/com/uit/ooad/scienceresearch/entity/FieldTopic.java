@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "field_topic")
 @Data
 @NoArgsConstructor
-public class FieldTopic {
+public class FieldTopic extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

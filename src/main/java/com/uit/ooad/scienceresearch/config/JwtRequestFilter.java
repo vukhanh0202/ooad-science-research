@@ -1,5 +1,8 @@
 package com.uit.ooad.scienceresearch.config;
 
+import com.uit.ooad.scienceresearch.data.UserPrincipal;
+import com.uit.ooad.scienceresearch.entity.Account;
+import com.uit.ooad.scienceresearch.repository.AccountRepository;
 import com.uit.ooad.scienceresearch.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -61,9 +67,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             // if token is valid configure Spring Security to manually set
             // authentication
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+                Account account = accountRepository.findByUsername(username).get();
+                UserPrincipal userPrincipal = new UserPrincipal();
+                userPrincipal.setId(account.getId());
+                userPrincipal.setUsername(account.getUsername());;
+                userPrincipal.setEmail(account.getLecturers().get(0).getEmail());
+                userPrincipal.setFullName(account.getLecturers().get(0).getFullName());
+                //userPrincipal.setAuthorities((List<? extends GrantedAuthority>) userDetails.getAuthorities());
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
+                        userPrincipal, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 // After setting the Authentication in the context, we specify

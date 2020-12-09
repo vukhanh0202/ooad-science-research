@@ -3,6 +3,7 @@ package com.uit.ooad.scienceresearch.mapper.topic;
 import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.entity.Topic;
+import com.uit.ooad.scienceresearch.mapper.BaseMapper;
 import com.uit.ooad.scienceresearch.mapper.topic.converter.TopicConverter;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring")
 @Component
-public abstract class TopicMapper {
+public abstract class TopicMapper implements BaseMapper {
 
     @Autowired
     private TopicConverter topicConverter;
@@ -44,6 +45,11 @@ public abstract class TopicMapper {
     @Mapping(source = "faculty", target = "faculty")
     @Mapping(source = "level", target = "level")
     @Mapping(source = "fieldTopic", target = "fieldTopic")
+    @Mapping(source = "deleted", target = "isDeleted")
+    @Mapping(source = "createdAt", target = "createdAt")
+    @Mapping(source = "updatedAt", target = "updatedAt")
+    @Mapping(source = "createdBy", target = "createdBy", qualifiedByName = "getAudit")
+    @Mapping(source = "updatedBy", target = "updatedBy", qualifiedByName = "getAudit")
     public abstract TopicFullDto toTopicFullDto(Topic entity);
 
     @BeanMapping(ignoreByDefault = true)

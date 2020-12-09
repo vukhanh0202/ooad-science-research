@@ -15,9 +15,18 @@ import lombok.Data;
 public class AccountDto {
     private static final long serialVersionUID = 5926468583005150707L;
 
+    private Long id;
     private String username;
     private String password;
+    private String fullName;
 
     //need default constructor for JSON Parsing
-    public AccountDto(){}
+    public AccountDto() {
+    }
+
+    public AccountDto(Long id,String password, String fullName) {
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+    }
 }

@@ -17,7 +17,7 @@ import java.util.Objects;
 @Table(name = "account")
 @Data
 @NoArgsConstructor
-public class Account {
+public class Account extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,5 +56,8 @@ public class Account {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+    public Account(long id) {
+        this.id = id;
     }
 }

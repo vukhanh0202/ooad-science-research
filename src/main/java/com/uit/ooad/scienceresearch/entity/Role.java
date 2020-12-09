@@ -18,7 +18,7 @@ import java.util.Objects;
 @Table(name = "role")
 @Data
 @NoArgsConstructor
-public class Role {
+public class Role extends BaseEntity {
 
     @Id
     @Enumerated(EnumType.STRING)

@@ -17,7 +17,7 @@ import java.util.Objects;
 @Table(name = "topic")
 @Data
 @NoArgsConstructor
-public class Topic {
+public class Topic extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

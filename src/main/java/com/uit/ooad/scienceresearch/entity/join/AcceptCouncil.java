@@ -1,5 +1,7 @@
 package com.uit.ooad.scienceresearch.entity.join;
 
+import com.uit.ooad.scienceresearch.dto.BaseDto;
+import com.uit.ooad.scienceresearch.entity.BaseEntity;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
 import com.uit.ooad.scienceresearch.entity.Position;
 import com.uit.ooad.scienceresearch.entity.Topic;
@@ -18,7 +20,7 @@ import java.util.Objects;
 @Table(name = "accept_council")
 @Data
 @NoArgsConstructor
-public class AcceptCouncil {
+public class AcceptCouncil extends BaseEntity {
 
     @EmbeddedId
     private AcceptCouncilId id = new AcceptCouncilId();

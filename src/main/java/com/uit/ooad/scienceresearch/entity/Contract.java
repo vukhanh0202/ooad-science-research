@@ -16,7 +16,7 @@ import java.util.Objects;
 @Table(name = "contract")
 @Data
 @NoArgsConstructor
-public class Contract {
+public class Contract extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
