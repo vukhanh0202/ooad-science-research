@@ -7,6 +7,7 @@ import com.uit.ooad.scienceresearch.mapper.topic.converter.TopicConverter;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

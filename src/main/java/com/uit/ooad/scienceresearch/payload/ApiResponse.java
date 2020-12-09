@@ -1,4 +1,4 @@
-package com.uit.ooad.scienceresearch.dto;
+package com.uit.ooad.scienceresearch.payload;
 
 import lombok.Data;
 

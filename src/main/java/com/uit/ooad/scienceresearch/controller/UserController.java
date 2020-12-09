@@ -1,7 +1,6 @@
 package com.uit.ooad.scienceresearch.controller;
 
-import com.uit.ooad.scienceresearch.dto.account.AccountDto;
-import com.uit.ooad.scienceresearch.dto.ApiResponse;
+import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
 import com.uit.ooad.scienceresearch.entity.Account;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -32,7 +30,7 @@ public class UserController {
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody AccountLecturerDto body) {
         Account account = accountService.getRegisterAccountService().execute(body);
-        body.setId(account.getId());
+        body.setAccount_id(account.getId());
         Lecturer lecturer = lecturerService.getRegisterLecturerService().execute(body);
         if (account != null && lecturer != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(true, "Success!"));

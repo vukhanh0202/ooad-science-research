@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface ITopicService {
 
-    IFindAllTopicService<Void, List<TopicFullDto>> getFindAllTopicService();
+    IFindAllTopicService<IFindAllTopicService.Input, List<TopicFullDto>> getFindAllTopicService();
 
     IFindTopicByIdService<Long, TopicFullDto> getFindTopicByIdService();
 
@@ -21,5 +21,7 @@ public interface ITopicService {
     IUpdateTopicService<TopicDto, Boolean> getUpdateTopicService();
 
     IDeleteTopicService<TopicDto, Boolean> getDeleteTopicService();
+
+    ICountTopicService<Void, Long> getCountTopicService();
 
 }

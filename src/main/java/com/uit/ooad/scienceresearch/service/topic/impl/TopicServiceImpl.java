@@ -30,4 +30,7 @@ public class TopicServiceImpl implements ITopicService {
 
     @Autowired
     private IDeleteTopicService deleteTopicService;
+
+    @Autowired
+    private ICountTopicService countTopicService;
 }

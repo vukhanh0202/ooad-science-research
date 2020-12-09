@@ -49,7 +49,7 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         JSONObject json = new JSONObject();
-        json.put("access-token", token);
+        json.put("accessToken", token);
         return ResponseEntity.status(HttpStatus.OK).body(json.toString());
     }
 

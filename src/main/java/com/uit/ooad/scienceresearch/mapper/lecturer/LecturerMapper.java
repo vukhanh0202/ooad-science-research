@@ -25,6 +25,7 @@ public abstract class LecturerMapper {
     protected void toEntity(AccountLecturerDto dto, @MappingTarget Lecturer entity) {
         entity.setFaculty(lecturerConverter.getFaculty(dto.getFaculty_id()));
         entity.setContract(lecturerConverter.getContract(dto.getContract_id()));
+        entity.setAccount(lecturerConverter.getAccount(dto.getAccount_id()));
     }
 
     @BeanMapping(qualifiedByName = "toEntity",ignoreByDefault = true)

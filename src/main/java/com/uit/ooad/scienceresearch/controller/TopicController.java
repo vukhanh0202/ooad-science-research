@@ -1,11 +1,11 @@
 package com.uit.ooad.scienceresearch.controller;
 
-import com.uit.ooad.scienceresearch.dto.ApiResponse;
-import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
+import com.uit.ooad.scienceresearch.constant.DefaultConstant;
+import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
-import com.uit.ooad.scienceresearch.entity.Account;
-import com.uit.ooad.scienceresearch.entity.Lecturer;
+import com.uit.ooad.scienceresearch.payload.PaginationResponse;
+import com.uit.ooad.scienceresearch.service.topic.IFindAllTopicService;
 import com.uit.ooad.scienceresearch.service.topic.ITopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,10 +33,12 @@ public class TopicController {
      * @return
      */
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllTopic() {
-        List<TopicFullDto> result = topicService.getFindAllTopicService().execute();
+    public ResponseEntity<?> getAllTopic(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
+                                         @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size) {
+        List<TopicFullDto> result = topicService.getFindAllTopicService().execute(new IFindAllTopicService.Input(page, size));
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse(result));
+                .body(new PaginationResponse(Integer.parseInt(topicService.getCountTopicService().execute().toString())
+                        , size, page, result));
     }
 
     /**
@@ -61,10 +63,10 @@ public class TopicController {
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addTopic(@RequestBody TopicDto body) {
         Boolean res = topicService.getAddTopicService().execute(body);
-        if (res){
+        if (res) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(res, "Success!"));
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponse(res, "Fail!"));
         }
@@ -79,10 +81,10 @@ public class TopicController {
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateTopic(@RequestBody TopicDto body) {
         Boolean res = topicService.getUpdateTopicService().execute(body);
-        if (res){
+        if (res) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(res, "Success!"));
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponse(res, "Fail!"));
         }
@@ -97,10 +99,10 @@ public class TopicController {
     @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteTopic(@RequestBody TopicDto body) {
         Boolean res = topicService.getDeleteTopicService().execute(body);
-        if (res){
+        if (res) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(res, "Success!"));
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponse(res, "Fail!"));
         }

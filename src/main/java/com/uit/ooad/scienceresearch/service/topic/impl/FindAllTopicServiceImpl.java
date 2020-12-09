@@ -2,6 +2,7 @@ package com.uit.ooad.scienceresearch.service.topic.impl;
 
 import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
+import com.uit.ooad.scienceresearch.entity.Topic;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
 import com.uit.ooad.scienceresearch.mapper.topic.TopicMapper;
 import com.uit.ooad.scienceresearch.repository.FacultyRepository;
@@ -12,6 +13,7 @@ import com.uit.ooad.scienceresearch.service.AbstractBaseService;
 import com.uit.ooad.scienceresearch.service.topic.IAddTopicService;
 import com.uit.ooad.scienceresearch.service.topic.IFindAllTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,8 @@ import java.util.List;
  * @since 12/7/2020
  */
 @Service
-public class FindAllTopicServiceImpl extends AbstractBaseService<Void, List<TopicFullDto>>
-        implements IFindAllTopicService<Void, List<TopicFullDto>> {
+public class FindAllTopicServiceImpl extends AbstractBaseService<IFindAllTopicService.Input, List<TopicFullDto>>
+        implements IFindAllTopicService<IFindAllTopicService.Input, List<TopicFullDto>> {
 
 
     @Autowired
@@ -34,9 +36,9 @@ public class FindAllTopicServiceImpl extends AbstractBaseService<Void, List<Topi
 
 
     @Override
-    public List<TopicFullDto> doing(Void aVoid) {
+    public List<TopicFullDto> doing(IFindAllTopicService.Input input) {
         try{
-            return topicMapper.toListTopicFullDto(topicRepository.findAll());
+            return topicMapper.toListTopicFullDto(topicRepository.findAll(input.createPageable(Sort.Direction.ASC, "id")).getContent());
         }catch (Exception e){
             return null;
         }
