@@ -1,12 +1,11 @@
 package com.uit.ooad.scienceresearch.controller;
 
 import com.uit.ooad.scienceresearch.constant.DefaultConstant;
-import com.uit.ooad.scienceresearch.dto.lecturer.LecturerDto;
-import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
+import com.uit.ooad.scienceresearch.dto.contract.ContractDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
-import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerService;
-import com.uit.ooad.scienceresearch.service.lecturer.ILecturerService;
+import com.uit.ooad.scienceresearch.service.contract.IContractService;
+import com.uit.ooad.scienceresearch.service.contract.IFindAllContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,52 +17,53 @@ import java.util.List;
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
- * @since 12/8/2020
+ * @since 12/10/2020
  */
 @RestController
-@RequestMapping(value = "/lecturer")
-public class LecturerController {
+@RequestMapping(value = "/contract")
+public class ContractController {
 
 
     @Autowired
-    ILecturerService lecturerService;
+    IContractService contractService;
 
     /**
-     * Find All Lecturer
+     * Find All contract
      *
      * @return
      */
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllLecturer(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
+    public ResponseEntity<?> getAllContract(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
                                             @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
                                             @RequestParam(value = "search", defaultValue = "") String search) {
-        List<LecturerFullDto> result = lecturerService.getFindAllLecturerService().execute(new IFindAllLecturerService.Input(search, page, size));
+        List<ContractDto> result = contractService.getFindAllContractService().execute(new IFindAllContractService.Input(search, page, size));
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new PaginationResponse(Integer.parseInt(lecturerService.getCountLecturerService().execute().toString())
+                .body(new PaginationResponse(Integer.parseInt(contractService.getCountContractService().execute().toString())
                         , size, page, result));
     }
 
+
     /**
-     * Find Lecturer with Id
+     * Find contract with Id
      *
      * @return
      */
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getLecturerById(@PathVariable("id") Long lecturerId) {
-        LecturerFullDto result = lecturerService.getFindLecturerByIdService().execute(lecturerId);
+    public ResponseEntity<?> getContractById(@PathVariable("id") Long contractId) {
+        ContractDto result = contractService.getFindContractByIdService().execute(contractId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse(result));
     }
 
     /**
-     * Update topic
+     * Add new contract
      *
      * @param body
      * @return
      */
-    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateLecturer(@RequestBody LecturerDto body) {
-        Boolean res = lecturerService.getUpdateLecturerService().execute(body);
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addContract(@RequestBody ContractDto body) {
+        Boolean res = contractService.getAddContractService().execute(body);
         if (res) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(res, "Success!"));
@@ -74,14 +74,14 @@ public class LecturerController {
     }
 
     /**
-     * Delete lecturer
+     * Update contract
      *
      * @param body
      * @return
      */
-   /* @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteTopic(@RequestBody LecturerDto body) {
-        Boolean res = lecturerService.getDeleteLecturerService().execute(body);
+    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateContract(@RequestBody ContractDto body) {
+        Boolean res = contractService.getUpdateContractService().execute(body);
         if (res) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(res, "Success!"));
@@ -89,5 +89,6 @@ public class LecturerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponse(res, "Fail!"));
         }
-    }*/
+    }
+
 }

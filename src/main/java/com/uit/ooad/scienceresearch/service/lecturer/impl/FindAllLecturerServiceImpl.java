@@ -36,7 +36,7 @@ public class FindAllLecturerServiceImpl extends AbstractBaseService<IFindAllLect
                         findAll(input.createPageable(Sort.Direction.ASC, "id")).getContent());
             } else {
                 return lecturerMapper.toListLecturerFullDto(lecturerRepository.
-                        findALlByFullNameContaining(input.getSearch(), input.createPageable(Sort.Direction.ASC, "id")));
+                        findAllByFullNameContaining(input.getSearch(), input.createPageable(Sort.Direction.ASC, "id")));
             }
 
         } catch (Exception e) {
