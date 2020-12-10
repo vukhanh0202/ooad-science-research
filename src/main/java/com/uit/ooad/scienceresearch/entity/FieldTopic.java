@@ -24,7 +24,7 @@ public class FieldTopic extends BaseEntity{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "fieldTopic")
     private List<Topic> topics;
 
-    @Column(name = "field_name")
+    @Column(name = "field_name", unique = true)
     private String fieldName;
 
     @Override

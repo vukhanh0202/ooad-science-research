@@ -22,7 +22,7 @@ public class Faculty extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name_faculty")
+    @Column(name = "name_faculty", unique = true)
     private String nameFaculty;
 
     @Column(name = "nameUniversity")

@@ -22,7 +22,7 @@ public class Contract extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name_contract")
+    @Column(name = "name_contract", unique = true)
     private String nameContract;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contract")

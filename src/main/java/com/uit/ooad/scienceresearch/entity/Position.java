@@ -23,7 +23,7 @@ public class Position extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name_position")
+    @Column(name = "name_position", unique = true)
     private String namePosition;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "position")

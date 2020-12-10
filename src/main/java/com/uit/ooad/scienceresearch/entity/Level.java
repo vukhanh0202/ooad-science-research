@@ -22,7 +22,7 @@ public class Level extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name_level")
+    @Column(name = "name_level", unique = true)
     private String nameLevel;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "level")
