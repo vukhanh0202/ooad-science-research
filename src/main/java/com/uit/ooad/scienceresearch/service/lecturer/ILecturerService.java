@@ -1,7 +1,11 @@
 package com.uit.ooad.scienceresearch.service.lecturer;
 
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
+import com.uit.ooad.scienceresearch.dto.lecturer.LecturerDto;
+import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
+
+import java.util.List;
 
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
@@ -11,4 +15,14 @@ import com.uit.ooad.scienceresearch.entity.Lecturer;
 public interface ILecturerService {
 
     IRegisterLecturerService<AccountLecturerDto, Lecturer> getRegisterLecturerService();
+
+    IFindAllLecturerService<IFindAllLecturerService.Input, List<LecturerFullDto>> getFindAllLecturerService();
+
+    ICountLecturerService<Void, Long> getCountLecturerService();
+
+    IFindLecturerByIdService<Long, LecturerFullDto> getFindLecturerByIdService();
+
+    IUpdateLecturerService<LecturerDto, Boolean> getUpdateLecturerService();
+
+    IDeleteLecturerService<LecturerDto, Boolean> getDeleteLecturerService();
 }

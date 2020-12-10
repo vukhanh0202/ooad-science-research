@@ -1,7 +1,6 @@
 package com.uit.ooad.scienceresearch.service.lecturer.impl;
 
-import com.uit.ooad.scienceresearch.service.lecturer.ILecturerService;
-import com.uit.ooad.scienceresearch.service.lecturer.IRegisterLecturerService;
+import com.uit.ooad.scienceresearch.service.lecturer.*;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,4 +16,19 @@ public class LecturerServiceImpl implements ILecturerService {
 
     @Autowired
     private IRegisterLecturerService registerLecturerService;
+
+    @Autowired
+    private IFindAllLecturerService findAllLecturerService;
+
+    @Autowired
+    private ICountLecturerService countLecturerService;
+
+    @Autowired
+    private IFindLecturerByIdService findLecturerByIdService;
+
+    @Autowired
+    private IUpdateLecturerService updateLecturerService;
+
+    @Autowired
+    private IDeleteLecturerService deleteLecturerService;
 }

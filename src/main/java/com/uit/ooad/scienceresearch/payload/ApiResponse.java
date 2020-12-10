@@ -21,11 +21,6 @@ public class ApiResponse {
     private String message;
 
     /**
-     * Error code.
-     */
-    private String errorCode;
-
-    /**
      * Data response.
      */
     private Object data;

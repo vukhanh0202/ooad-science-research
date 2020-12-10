@@ -34,8 +34,9 @@ public class TopicController {
      */
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllTopic(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
-                                         @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size) {
-        List<TopicFullDto> result = topicService.getFindAllTopicService().execute(new IFindAllTopicService.Input(page, size));
+                                         @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
+                                         @RequestParam(value = "search", defaultValue = "") String search) {
+        List<TopicFullDto> result = topicService.getFindAllTopicService().execute(new IFindAllTopicService.Input(search, page, size));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PaginationResponse(Integer.parseInt(topicService.getCountTopicService().execute().toString())
                         , size, page, result));

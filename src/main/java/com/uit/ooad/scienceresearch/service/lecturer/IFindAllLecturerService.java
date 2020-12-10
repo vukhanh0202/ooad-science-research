@@ -1,4 +1,4 @@
-package com.uit.ooad.scienceresearch.service.topic;
+package com.uit.ooad.scienceresearch.service.lecturer;
 
 import com.uit.ooad.scienceresearch.payload.PaginationRequest;
 import com.uit.ooad.scienceresearch.service.IBaseService;
@@ -9,7 +9,7 @@ import lombok.Data;
  * @project Manage Science Research
  * @since 12/7/2020
  */
-public interface IFindAllTopicService<Input, Output> extends IBaseService<Input, Output> {
+public interface IFindAllLecturerService<Input, Output> extends IBaseService<Input, Output> {
 
     @Data
     class Input extends PaginationRequest {

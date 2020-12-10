@@ -37,9 +37,19 @@ public class FindAllTopicServiceImpl extends AbstractBaseService<IFindAllTopicSe
 
     @Override
     public List<TopicFullDto> doing(IFindAllTopicService.Input input) {
-        try{
-            return topicMapper.toListTopicFullDto(topicRepository.findAll(input.createPageable(Sort.Direction.ASC, "id")).getContent());
-        }catch (Exception e){
+        try {
+            if (input.getSearch().equals("")) {
+                return topicMapper
+                        .toListTopicFullDto(topicRepository
+                                .findAll(input.createPageable(Sort.Direction.ASC, "id"))
+                                .getContent());
+            } else {
+                return topicMapper
+                        .toListTopicFullDto(topicRepository
+                                .findAllByNameTopicContaining(input.getSearch(),
+                                        input.createPageable(Sort.Direction.ASC, "id")));
+            }
+        } catch (Exception e) {
             return null;
         }
     }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @since 12/8/2020
  */
 @Service
-public class DeleteServiceImpl extends AbstractBaseService<TopicDto, Boolean>
+public class DeleteTopicServiceImpl extends AbstractBaseService<TopicDto, Boolean>
         implements IDeleteTopicService<TopicDto, Boolean> {
 
     @Autowired
