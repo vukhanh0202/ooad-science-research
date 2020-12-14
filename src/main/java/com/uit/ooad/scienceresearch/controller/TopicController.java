@@ -5,6 +5,7 @@ import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
+import com.uit.ooad.scienceresearch.service.topic.ICountTopicService;
 import com.uit.ooad.scienceresearch.service.topic.IFindAllTopicService;
 import com.uit.ooad.scienceresearch.service.topic.ITopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,17 @@ public class TopicController {
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllTopic(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
                                          @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
-                                         @RequestParam(value = "search", defaultValue = "") String search) {
-        List<TopicFullDto> result = topicService.getFindAllTopicService().execute(new IFindAllTopicService.Input(search, page, size));
+                                         @RequestParam(value = "search", defaultValue = "") String search,
+                                         @RequestParam(value = "facultyId", defaultValue = "") Long facultyId,
+                                         @RequestParam(value = "levelId", defaultValue = "") Long levelId,
+                                         @RequestParam(value = "fieldId", defaultValue = "") Long fieldId) {
+        List<TopicFullDto> result = topicService
+                .getFindAllTopicService()
+                .execute(new IFindAllTopicService.Input(search, facultyId, levelId, fieldId, page, size));
+
+        Long totalItem = topicService.getCountTopicService().execute(new ICountTopicService.Input(search, facultyId, levelId, fieldId));
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new PaginationResponse(Integer.parseInt(topicService.getCountTopicService().execute().toString())
+                .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
                         , size, page, result));
     }
 

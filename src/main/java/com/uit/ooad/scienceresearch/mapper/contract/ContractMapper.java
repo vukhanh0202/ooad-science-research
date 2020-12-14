@@ -1,12 +1,7 @@
 package com.uit.ooad.scienceresearch.mapper.contract;
 
 import com.uit.ooad.scienceresearch.dto.contract.ContractDto;
-import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
-import com.uit.ooad.scienceresearch.dto.lecturer.LecturerDto;
-import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.entity.Contract;
-import com.uit.ooad.scienceresearch.entity.Faculty;
-import com.uit.ooad.scienceresearch.entity.Lecturer;
 import com.uit.ooad.scienceresearch.mapper.BaseMapper;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
@@ -23,7 +18,7 @@ import java.util.List;
 public abstract class ContractMapper implements BaseMapper {
 
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "contractId", target = "contractId")
     @Mapping(source = "nameContract", target = "nameContract")
     @Mapping(source = "deleted", target = "isDeleted")
     @Mapping(source = "createdAt", target = "createdAt")

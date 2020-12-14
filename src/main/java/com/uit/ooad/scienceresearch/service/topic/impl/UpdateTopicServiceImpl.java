@@ -9,7 +9,6 @@ import com.uit.ooad.scienceresearch.repository.FieldTopicRepository;
 import com.uit.ooad.scienceresearch.repository.LevelRepository;
 import com.uit.ooad.scienceresearch.repository.TopicRepository;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
-import com.uit.ooad.scienceresearch.service.topic.IAddTopicService;
 import com.uit.ooad.scienceresearch.service.topic.IUpdateTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,16 +39,16 @@ public class UpdateTopicServiceImpl extends AbstractBaseService<TopicDto, Boolea
 
     @Override
     public void preExecute(TopicDto topicDto) {
-        if (topicRepository.findById(topicDto.getId()).isEmpty()){
+        if (topicRepository.findById(topicDto.getTopicId()).isEmpty()){
             throw new NotFoundException("Topic Not Found!");
         }
-        if (fieldTopicRepository.findById(topicDto.getField_id()).isEmpty()){
+        if (fieldTopicRepository.findById(topicDto.getFieldId()).isEmpty()){
             throw new NotFoundException("Field Topic Not Found!");
         }
-        if (levelRepository.findById(topicDto.getLevel_id()).isEmpty()){
+        if (levelRepository.findById(topicDto.getLevelId()).isEmpty()){
             throw new NotFoundException("Level Not Found!");
         }
-        if (facultyRepository.findById(topicDto.getFaculty_id()).isEmpty()){
+        if (facultyRepository.findById(topicDto.getFacultyId()).isEmpty()){
             throw new NotFoundException("Faculty Not Found!");
         }
     }
@@ -57,7 +56,7 @@ public class UpdateTopicServiceImpl extends AbstractBaseService<TopicDto, Boolea
     @Override
     public Boolean doing(TopicDto topicDto) {
         try{
-            Topic oldTopic = topicRepository.findById(topicDto.getId()).get();
+            Topic oldTopic = topicRepository.findById(topicDto.getTopicId()).get();
             topicMapper.updateTopic(topicDto, oldTopic);
             topicRepository.save(oldTopic);
             return true;

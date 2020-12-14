@@ -21,7 +21,8 @@ public class Position extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "position_id")
+    private Long positionId;
 
     @Column(name = "name_position", unique = true)
     private String namePosition;
@@ -34,18 +35,18 @@ public class Position extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return Objects.equals(id, position.id);
+        return Objects.equals(positionId, position.positionId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(positionId);
     }
 
     @Override
     public String toString() {
         return "Position{" +
-                "id=" + id +
+                "id=" + positionId +
                 ", namePosition='" + namePosition + '\'' +
                 '}';
     }

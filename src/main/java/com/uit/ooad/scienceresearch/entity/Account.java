@@ -1,6 +1,5 @@
 package com.uit.ooad.scienceresearch.entity;
 
-import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +20,8 @@ public class Account extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "account_id")
+    private long accountId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<Lecturer> lecturers;
@@ -41,23 +41,23 @@ public class Account extends BaseEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return id == account.id;
+        return accountId == account.accountId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(accountId);
     }
 
     @Override
     public String toString() {
         return "Account{" +
-                "id=" + id +
+                "id=" + accountId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
     public Account(long id) {
-        this.id = id;
+        this.accountId = id;
     }
 }

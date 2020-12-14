@@ -1,15 +1,11 @@
 package com.uit.ooad.scienceresearch.service.contract.impl;
 
 import com.uit.ooad.scienceresearch.dto.contract.ContractDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.exception.InvalidException;
-import com.uit.ooad.scienceresearch.exception.NotFoundException;
 import com.uit.ooad.scienceresearch.mapper.contract.ContractMapper;
-import com.uit.ooad.scienceresearch.mapper.topic.TopicMapper;
 import com.uit.ooad.scienceresearch.repository.*;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
 import com.uit.ooad.scienceresearch.service.contract.IAddContractService;
-import com.uit.ooad.scienceresearch.service.topic.IAddTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +26,9 @@ public class AddContractServiceImpl extends AbstractBaseService<ContractDto, Boo
 
     @Override
     public void preExecute(ContractDto contractDto) {
+        if (contractDto.getContractId() != null) {
+            throw new InvalidException("Not Parameter id in post request!");
+        }
         if (contractRepository.findByNameContract(contractDto.getNameContract()).isPresent()) {
             throw new InvalidException("Contract is exist!");
         }

@@ -27,7 +27,7 @@ import java.util.List;
 public class UserPrincipal implements UserDetails {
 
     private static final long serialVersionUID = 1L;
-    private Long id;
+    private Long accountId;
     private String username;
     private String email;
     private boolean isRoot;

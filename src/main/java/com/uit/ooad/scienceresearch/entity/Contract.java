@@ -20,7 +20,8 @@ public class Contract extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "contract_id")
+    private Long contractId;
 
     @Column(name = "name_contract", unique = true)
     private String nameContract;
@@ -33,18 +34,18 @@ public class Contract extends BaseEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contract contract = (Contract) o;
-        return Objects.equals(id, contract.id);
+        return Objects.equals(contractId, contract.contractId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(contractId);
     }
 
     @Override
     public String toString() {
         return "Contract{" +
-                "id=" + id +
+                "id=" + contractId +
                 ", nameContract='" + nameContract + '\'' +
                 '}';
     }

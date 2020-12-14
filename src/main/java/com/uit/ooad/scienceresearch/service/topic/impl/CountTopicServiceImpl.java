@@ -13,14 +13,52 @@ import org.springframework.stereotype.Service;
  * @since 12/9/2020
  */
 @Service
-public class CountTopicServiceImpl extends AbstractBaseService<Void, Long>
-        implements ICountTopicService<Void, Long> {
+public class CountTopicServiceImpl extends AbstractBaseService<ICountTopicService.Input, Long>
+        implements ICountTopicService<ICountTopicService.Input, Long> {
 
     @Autowired
     private TopicRepository topicRepository;
 
     @Override
-    public Long doing(Void aVoid) {
-        return topicRepository.count();
+    public Long doing(ICountTopicService.Input input) {
+
+        if (input.getFacultyId() != null && input.getFieldId() != null && input.getLevelId() != null) {
+            return topicRepository
+                    .countAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelIdAndFieldTopicFieldId(
+                            input.getSearch(), input.getFacultyId(), input.getLevelId(), input.getFieldId()
+                    );
+        } else if (input.getFacultyId() != null && input.getFieldId() != null && input.getLevelId() == null) {
+            return topicRepository
+                    .countAllByNameTopicContainingAndFacultyFacultyIdAndFieldTopicFieldId(
+                            input.getSearch(), input.getFacultyId(), input.getFieldId()
+                    );
+        } else if (input.getFacultyId() != null && input.getFieldId() == null && input.getLevelId() != null) {
+            return topicRepository
+                    .countAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelId(
+                            input.getSearch(), input.getFacultyId(), input.getLevelId()
+                    );
+        } else if (input.getFacultyId() != null && input.getFieldId() == null && input.getLevelId() == null) {
+            return topicRepository
+                    .countAllByNameTopicContainingAndFacultyFacultyId(
+                            input.getSearch(), input.getFacultyId()
+                    );
+        } else if (input.getFacultyId() == null && input.getFieldId() != null && input.getLevelId() != null) {
+            return topicRepository
+                    .countAllByNameTopicContainingAndLevelLevelIdAndFieldTopicFieldId(
+                            input.getSearch(), input.getLevelId(), input.getFieldId()
+                    );
+        } else if (input.getFacultyId() == null && input.getFieldId() != null && input.getLevelId() == null) {
+            return topicRepository
+                    .countAllByNameTopicContainingAndFieldTopicFieldId(
+                            input.getSearch(), input.getFieldId()
+                    );
+        } else if (input.getFacultyId() == null && input.getFieldId() == null && input.getLevelId() != null) {
+            return topicRepository
+                    .countAllByNameTopicContainingAndLevelLevelId(
+                            input.getSearch(), input.getLevelId()
+                    );
+        } else {
+            return topicRepository.count();
+        }
     }
 }

@@ -26,7 +26,7 @@ public class JpaAuditorAware implements AuditorAware<Account> {
             log.info("User not login");
         }
         if (principal!=null) {
-            return Optional.of(new Account(principal.getId()));
+            return Optional.of(new Account(principal.getAccountId()));
         } else {
             return Optional.empty();
         }

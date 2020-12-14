@@ -23,7 +23,7 @@ public abstract class AccountMapper {
     public abstract AccountDto toAccountDto(Account entity);
 
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "accountId", target = "accountId")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "password", target = "password")
     @Mapping(source = "role", target = "role.code")

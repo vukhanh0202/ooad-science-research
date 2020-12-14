@@ -21,10 +21,11 @@ public class BaseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Boolean isDeleted;
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date createdAt;
     private AccountDto createdBy;
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date updatedAt;
     private AccountDto updatedBy;
+
 }

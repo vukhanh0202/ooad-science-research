@@ -20,7 +20,8 @@ public class Level extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "level_id")
+    private Long levelId;
 
     @Column(name = "name_level", unique = true)
     private String nameLevel;
@@ -33,18 +34,18 @@ public class Level extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Level level = (Level) o;
-        return Objects.equals(id, level.id);
+        return Objects.equals(levelId, level.levelId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(levelId);
     }
 
     @Override
     public String toString() {
         return "Level{" +
-                "id=" + id +
+                "id=" + levelId +
                 ", nameLevel='" + nameLevel + '\'' +
                 '}';
     }

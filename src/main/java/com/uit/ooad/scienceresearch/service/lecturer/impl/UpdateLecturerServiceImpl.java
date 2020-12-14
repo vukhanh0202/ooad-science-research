@@ -1,16 +1,12 @@
 package com.uit.ooad.scienceresearch.service.lecturer.impl;
 
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
-import com.uit.ooad.scienceresearch.entity.Topic;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
 import com.uit.ooad.scienceresearch.mapper.lecturer.LecturerMapper;
-import com.uit.ooad.scienceresearch.mapper.topic.TopicMapper;
 import com.uit.ooad.scienceresearch.repository.*;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
 import com.uit.ooad.scienceresearch.service.lecturer.IUpdateLecturerService;
-import com.uit.ooad.scienceresearch.service.topic.IUpdateTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +34,7 @@ public class UpdateLecturerServiceImpl extends AbstractBaseService<LecturerDto, 
 
     @Override
     public void preExecute(LecturerDto lecturerDto) {
-        if (lecturerRepository.findById(lecturerDto.getId()).isEmpty()){
+        if (lecturerRepository.findById(lecturerDto.getLecturerId()).isEmpty()){
             throw new NotFoundException("Lecturer Not Found!");
         }
         if (facultyRepository.findById(lecturerDto.getFacultyId()).isEmpty()){
@@ -52,7 +48,7 @@ public class UpdateLecturerServiceImpl extends AbstractBaseService<LecturerDto, 
     @Override
     public Boolean doing(LecturerDto lecturerDto) {
         try{
-            Lecturer oldLecturer = lecturerRepository.findById(lecturerDto.getId()).get();
+            Lecturer oldLecturer = lecturerRepository.findById(lecturerDto.getLecturerId()).get();
             lecturerMapper.updateLecturer(lecturerDto, oldLecturer);
             lecturerRepository.save(oldLecturer);
             return true;

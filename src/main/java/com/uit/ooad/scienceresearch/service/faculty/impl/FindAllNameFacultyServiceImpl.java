@@ -1,12 +1,11 @@
 package com.uit.ooad.scienceresearch.service.faculty.impl;
 
-import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
+import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
 import com.uit.ooad.scienceresearch.mapper.faculty.FacultyMapper;
 import com.uit.ooad.scienceresearch.repository.FacultyRepository;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
-import com.uit.ooad.scienceresearch.service.faculty.IFindAllFacultyService;
+import com.uit.ooad.scienceresearch.service.faculty.IFindAllNameFacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.List;
  * @since 12/7/2020
  */
 @Service
-public class FindAllFacultyServiceImpl extends AbstractBaseService<IFindAllFacultyService.Input, List<FacultyFullDto>>
-        implements IFindAllFacultyService<IFindAllFacultyService.Input, List<FacultyFullDto>> {
+public class FindAllNameFacultyServiceImpl extends AbstractBaseService<Void, List<FacultyDto>>
+        implements IFindAllNameFacultyService<Void, List<FacultyDto>> {
 
 
     @Autowired
@@ -29,11 +28,10 @@ public class FindAllFacultyServiceImpl extends AbstractBaseService<IFindAllFacul
 
 
     @Override
-    public List<FacultyFullDto> doing(Input input) {
+    public List<FacultyDto> doing(Void input) {
         try {
-            return facultyMapper.toFacultyFullListDto(facultyRepository.
-                    findAllByNameFacultyContaining(input.getSearch(), input.createPageable(Sort.Direction.ASC,
-                            "nameFaculty")));
+            return facultyMapper.toaFacultyListDto(facultyRepository.
+                    findAll());
         } catch (Exception e) {
             return null;
         }

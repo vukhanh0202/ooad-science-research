@@ -3,9 +3,7 @@ package com.uit.ooad.scienceresearch.mapper.lecturer;
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
-import com.uit.ooad.scienceresearch.entity.Topic;
 import com.uit.ooad.scienceresearch.mapper.BaseMapper;
 import com.uit.ooad.scienceresearch.mapper.lecturer.converter.LecturerConverter;
 import org.mapstruct.*;
@@ -30,13 +28,13 @@ public abstract class LecturerMapper implements BaseMapper {
     @Named("toEntity")
     @BeforeMapping
     protected void toEntity(AccountLecturerDto dto, @MappingTarget Lecturer entity) {
-        entity.setFaculty(lecturerConverter.getFaculty(dto.getFaculty_id()));
-        entity.setContract(lecturerConverter.getContract(dto.getContract_id()));
-        entity.setAccount(lecturerConverter.getAccount(dto.getAccount_id()));
+        entity.setFaculty(lecturerConverter.getFaculty(dto.getFacultyId()));
+        entity.setContract(lecturerConverter.getContract(dto.getContractId()));
+        entity.setAccount(lecturerConverter.getAccount(dto.getAccountId()));
     }
 
     @BeanMapping(qualifiedByName = "toEntity", ignoreByDefault = true)
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "lecturerId", target = "lecturerId")
     @Mapping(source = "fullName", target = "fullName")
     @Mapping(source = "dob", target = "dob")
     @Mapping(source = "major", target = "major")
@@ -45,7 +43,7 @@ public abstract class LecturerMapper implements BaseMapper {
     public abstract Lecturer toLecturer(AccountLecturerDto accountLecturerDto);
 
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "lecturerId", target = "lecturerId")
     @Mapping(source = "dob", target = "dob")
     @Mapping(source = "fullName", target = "fullName")
     @Mapping(source = "major", target = "major")

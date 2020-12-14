@@ -14,6 +14,6 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FieldTopicDto {
 
-    Long id;
+    Long fieldId;
     String fieldName;
 }

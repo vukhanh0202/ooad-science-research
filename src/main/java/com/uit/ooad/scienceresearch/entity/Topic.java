@@ -21,7 +21,8 @@ public class Topic extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "topic_id")
+    private Long topicId;
 
     @Column(name = "name_topic")
     private String nameTopic;
@@ -49,18 +50,18 @@ public class Topic extends BaseEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Topic topic = (Topic) o;
-        return Objects.equals(id, topic.id);
+        return Objects.equals(topicId, topic.topicId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(topicId);
     }
 
     @Override
     public String toString() {
         return "Topic{" +
-                "id=" + id +
+                "id=" + topicId +
                 ", nameTopic='" + nameTopic + '\'' +
                 ", year=" + year +
                 '}';

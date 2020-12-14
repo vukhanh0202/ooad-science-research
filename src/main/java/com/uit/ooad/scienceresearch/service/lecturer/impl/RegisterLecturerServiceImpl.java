@@ -38,10 +38,10 @@ public class RegisterLecturerServiceImpl extends AbstractBaseService<AccountLect
         if (accountLecturerDto.getFullName() == null) {
             throw new InvalidException("Invalid full name");
         }
-        if (accountLecturerDto.getContract_id() == null || contractRepository.findById(accountLecturerDto.getContract_id()).isEmpty()) {
+        if (accountLecturerDto.getContractId() == null || contractRepository.findById(accountLecturerDto.getContractId()).isEmpty()) {
             throw new InvalidException("Invalid contract");
         }
-        if (accountLecturerDto.getFaculty_id() == null || facultyRepository.findById(accountLecturerDto.getFaculty_id()).isEmpty()) {
+        if (accountLecturerDto.getFacultyId() == null || facultyRepository.findById(accountLecturerDto.getFacultyId()).isEmpty()) {
             throw new InvalidException("Invalid faculty");
         }
     }

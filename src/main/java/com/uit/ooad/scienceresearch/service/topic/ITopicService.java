@@ -22,6 +22,6 @@ public interface ITopicService {
 
     IDeleteTopicService<TopicDto, Boolean> getDeleteTopicService();
 
-    ICountTopicService<Void, Long> getCountTopicService();
+    ICountTopicService<ICountTopicService.Input, Long> getCountTopicService();
 
 }

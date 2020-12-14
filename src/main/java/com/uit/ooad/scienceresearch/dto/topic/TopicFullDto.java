@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.uit.ooad.scienceresearch.dto.BaseDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
+import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
 import com.uit.ooad.scienceresearch.dto.field.FieldTopicDto;
 import com.uit.ooad.scienceresearch.dto.level.LevelDto;
 import lombok.Data;
@@ -18,7 +19,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TopicFullDto extends BaseDto {
 
-    private Long id;
+    private Long topicId;
     private String nameTopic;
     private Long year;
     private FacultyDto faculty;

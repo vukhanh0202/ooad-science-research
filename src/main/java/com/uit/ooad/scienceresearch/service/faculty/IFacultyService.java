@@ -1,8 +1,7 @@
 package com.uit.ooad.scienceresearch.service.faculty;
 
-import com.uit.ooad.scienceresearch.dto.contract.ContractDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
-import com.uit.ooad.scienceresearch.service.contract.*;
+import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
 
 import java.util.List;
 
@@ -13,13 +12,15 @@ import java.util.List;
  */
 public interface IFacultyService {
 
-    IFindAllFacultyService<IFindAllFacultyService.Input, List<FacultyDto>> getFindAllFacultyService();
+    IFindAllFacultyService<IFindAllFacultyService.Input, List<FacultyFullDto>> getFindAllFacultyService();
+
+    IFindAllNameFacultyService<Void, List<FacultyDto>> getFindAllNameFacultyService();
 
     ICountFacultyService<Void, Long> getCountFacultyService();
 
-    IFindFacultyByIdService<Long, FacultyDto> getFindFacultyByIdService();
+    IFindFacultyByIdService<Long, FacultyFullDto> getFindFacultyByIdService();
 
-    IAddFacultyService<FacultyDto, Boolean> getAddFacultyService();
+    IAddFacultyService<FacultyFullDto, Boolean> getAddFacultyService();
 
-    IUpdateFacultyService<FacultyDto, Boolean> getUpdateFacultyService();
+    IUpdateFacultyService<FacultyFullDto, Boolean> getUpdateFacultyService();
 }

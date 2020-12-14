@@ -20,7 +20,8 @@ public class Faculty extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "faculty_id")
+    private Long facultyId;
 
     @Column(name = "name_faculty", unique = true)
     private String nameFaculty;
@@ -39,18 +40,18 @@ public class Faculty extends BaseEntity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return Objects.equals(id, faculty.id);
+        return Objects.equals(facultyId, faculty.facultyId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(facultyId);
     }
 
     @Override
     public String toString() {
         return "Faculty{" +
-                "id=" + id +
+                "id=" + facultyId +
                 ", nameFaculty='" + nameFaculty + '\'' +
                 ", nameUniversity='" + nameUniversity + '\'' +
                 '}';

@@ -8,7 +8,6 @@ import com.uit.ooad.scienceresearch.mapper.topic.converter.TopicConverter;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,20 +26,20 @@ public abstract class TopicMapper implements BaseMapper {
     @Named("toEntity")
     @BeforeMapping
     protected void toEntity(TopicDto dto, @MappingTarget Topic entity) {
-        entity.setFaculty(topicConverter.getFaculty(dto.getFaculty_id()));
-        entity.setLevel(topicConverter.getLevel(dto.getLevel_id()));
-        entity.setFieldTopic(topicConverter.getFieldTopic(dto.getField_id()));
+        entity.setFaculty(topicConverter.getFaculty(dto.getFacultyId()));
+        entity.setLevel(topicConverter.getLevel(dto.getLevelId()));
+        entity.setFieldTopic(topicConverter.getFieldTopic(dto.getFieldId()));
     }
 
 
     @BeanMapping(qualifiedByName = "toEntity",ignoreByDefault = true)
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "topicId", target = "topicId")
     @Mapping(source = "nameTopic", target = "nameTopic")
     @Mapping(source = "year", target = "year")
     public abstract Topic toTopic(TopicDto topicDto);
 
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "topicId", target = "topicId")
     @Mapping(source = "nameTopic", target = "nameTopic")
     @Mapping(source = "faculty", target = "faculty")
     @Mapping(source = "level", target = "level")

@@ -14,6 +14,6 @@ public interface BaseMapper {
     @Named("getAudit")
     default AccountDto getAudit(Account account) {
         if (account == null) return null;
-        return new AccountDto(account.getId(), account.getUsername(), account.getLecturers().get(0).getFullName());
+        return new AccountDto(account.getAccountId(), account.getUsername(), account.getLecturers().get(0).getFullName());
     }
 }

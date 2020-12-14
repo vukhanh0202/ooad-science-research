@@ -17,7 +17,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AccountLecturerDto {
 
-    private Long id;
+    private Long lecturerId;
     private String username;
     private String password;
     private ERole role;
@@ -26,7 +26,7 @@ public class AccountLecturerDto {
     private String major;
     private String email;
     private String phone;
-    private Long contract_id;
-    private Long faculty_id;
-    private Long account_id;
+    private Long contractId;
+    private Long facultyId;
+    private Long accountId;
 }

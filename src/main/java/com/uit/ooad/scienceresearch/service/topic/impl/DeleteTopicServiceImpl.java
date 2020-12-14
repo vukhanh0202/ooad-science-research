@@ -5,7 +5,6 @@ import com.uit.ooad.scienceresearch.entity.Topic;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
 import com.uit.ooad.scienceresearch.repository.TopicRepository;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
-import com.uit.ooad.scienceresearch.service.topic.IAddTopicService;
 import com.uit.ooad.scienceresearch.service.topic.IDeleteTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class DeleteTopicServiceImpl extends AbstractBaseService<TopicDto, Boolea
 
     @Override
     public void preExecute(TopicDto topicDto) {
-        if (topicRepository.findById(topicDto.getId()).isEmpty()){
+        if (topicRepository.findById(topicDto.getTopicId()).isEmpty()){
             throw new NotFoundException("Topic Not Found!");
         }
     }
@@ -32,7 +31,7 @@ public class DeleteTopicServiceImpl extends AbstractBaseService<TopicDto, Boolea
     @Override
     public Boolean doing(TopicDto topicDto) {
         try{
-            Topic topic = topicRepository.findById(topicDto.getId()).get();
+            Topic topic = topicRepository.findById(topicDto.getTopicId()).get();
             topicRepository.delete(topic);
             return true;
         }catch (Exception e){

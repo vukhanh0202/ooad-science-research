@@ -19,7 +19,8 @@ public class FieldTopic extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "field_id")
+    private Long fieldId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "fieldTopic")
     private List<Topic> topics;
@@ -30,7 +31,7 @@ public class FieldTopic extends BaseEntity{
     @Override
     public String toString() {
         return "FieldTopic{" +
-                "id=" + id +
+                "id=" + fieldId +
                 ", fieldName='" + fieldName + '\'' +
                 '}';
     }

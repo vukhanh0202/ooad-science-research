@@ -1,6 +1,7 @@
 package com.uit.ooad.scienceresearch.service.topic.impl;
 
 import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
+import com.uit.ooad.scienceresearch.exception.InvalidException;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
 import com.uit.ooad.scienceresearch.mapper.topic.TopicMapper;
 import com.uit.ooad.scienceresearch.repository.FacultyRepository;
@@ -38,13 +39,16 @@ public class AddTopicServiceImpl extends AbstractBaseService<TopicDto, Boolean>
 
     @Override
     public void preExecute(TopicDto topicDto) {
-        if (fieldTopicRepository.findById(topicDto.getField_id()).isEmpty()){
+        if (topicDto.getTopicId() != null) {
+            throw new InvalidException("Not Parameter id in post request!");
+        }
+        if (fieldTopicRepository.findById(topicDto.getFieldId()).isEmpty()){
             throw new NotFoundException("Field Topic Not Found!");
         }
-        if (levelRepository.findById(topicDto.getLevel_id()).isEmpty()){
+        if (levelRepository.findById(topicDto.getLevelId()).isEmpty()){
             throw new NotFoundException("Level Not Found!");
         }
-        if (facultyRepository.findById(topicDto.getFaculty_id()).isEmpty()){
+        if (facultyRepository.findById(topicDto.getFacultyId()).isEmpty()){
             throw new NotFoundException("Faculty Not Found!");
         }
     }

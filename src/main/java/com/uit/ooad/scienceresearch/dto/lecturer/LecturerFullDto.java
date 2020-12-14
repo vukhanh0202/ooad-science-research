@@ -17,7 +17,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LecturerFullDto extends BaseDto{
 
-    private Long id;
+    private Long lecturerId;
     private Date dob;
     private String fullName;
     private String major;

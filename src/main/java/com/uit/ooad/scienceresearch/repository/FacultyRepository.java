@@ -17,4 +17,6 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     List<Faculty> findAllByNameFacultyContaining(String nameFaculty, Pageable pageable);
 
     Optional<Faculty> findByNameFaculty(String nameFaculty);
+
+
 }

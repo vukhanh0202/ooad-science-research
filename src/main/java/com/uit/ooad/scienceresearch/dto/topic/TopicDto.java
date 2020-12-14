@@ -14,10 +14,10 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TopicDto {
 
-    private Long id;
+    private Long topicId;
     private String nameTopic;
     private Long year;
-    private Long faculty_id;
-    private Long level_id;
-    private Long field_id;
+    private Long facultyId;
+    private Long levelId;
+    private Long fieldId;
 }

@@ -19,6 +19,9 @@ public class FacultyServiceImpl implements IFacultyService {
     IFindAllFacultyService findAllFacultyService;
 
     @Autowired
+    IFindAllNameFacultyService findAllNameFacultyService;
+
+    @Autowired
     ICountFacultyService countFacultyService;
 
     @Autowired

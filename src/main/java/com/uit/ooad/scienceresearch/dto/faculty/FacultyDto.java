@@ -3,7 +3,6 @@ package com.uit.ooad.scienceresearch.dto.faculty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.uit.ooad.scienceresearch.dto.BaseDto;
-import com.uit.ooad.scienceresearch.mapper.BaseMapper;
 import lombok.Data;
 
 /**
@@ -14,9 +13,8 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class FacultyDto extends BaseDto {
+public class FacultyDto{
 
-    private Long id;
+    private Long facultyId;
     private String nameFaculty;
-    private String nameUniversity;
 }

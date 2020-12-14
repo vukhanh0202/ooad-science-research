@@ -15,7 +15,7 @@ import lombok.Data;
 public class AccountDto {
     private static final long serialVersionUID = 5926468583005150707L;
 
-    private Long id;
+    private Long accountId;
     private String username;
     private String password;
     private String fullName;
@@ -25,7 +25,7 @@ public class AccountDto {
     }
 
     public AccountDto(Long id,String password, String fullName) {
-        this.id = id;
+        this.accountId = id;
         this.username = username;
         this.fullName = fullName;
     }

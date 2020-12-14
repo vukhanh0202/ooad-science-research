@@ -1,6 +1,7 @@
 package com.uit.ooad.scienceresearch.mapper.faculty;
 
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
+import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
 import com.uit.ooad.scienceresearch.entity.Faculty;
 import com.uit.ooad.scienceresearch.mapper.BaseMapper;
 import org.mapstruct.*;
@@ -18,7 +19,7 @@ import java.util.List;
 public abstract class FacultyMapper implements BaseMapper {
 
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "facultyId", target = "facultyId")
     @Mapping(source = "nameFaculty", target = "nameFaculty")
     @Mapping(source = "nameUniversity", target = "nameUniversity")
     @Mapping(source = "deleted", target = "isDeleted")
@@ -26,18 +27,26 @@ public abstract class FacultyMapper implements BaseMapper {
     @Mapping(source = "updatedAt", target = "updatedAt")
     @Mapping(source = "createdBy", target = "createdBy", qualifiedByName = "getAudit")
     @Mapping(source = "updatedBy", target = "updatedBy", qualifiedByName = "getAudit")
+    public abstract FacultyFullDto toFacultyFullDto(Faculty entity);
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "facultyId", target = "facultyId")
+    @Mapping(source = "nameFaculty", target = "nameFaculty")
     public abstract FacultyDto toFacultyDto(Faculty entity);
 
     @BeanMapping(ignoreByDefault = true)
-    public abstract List<FacultyDto> toFacultyListDto(List<Faculty> entities);
+    public abstract List<FacultyDto> toaFacultyListDto(List<Faculty> entities);
+
+    @BeanMapping(ignoreByDefault = true)
+    public abstract List<FacultyFullDto> toFacultyFullListDto(List<Faculty> entities);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "id", target = "id")
+    @Mapping(source = "facultyId", target = "facultyId")
     @Mapping(source = "nameFaculty", target = "nameFaculty")
     @Mapping(source = "nameUniversity", target = "nameUniversity")
-    public abstract void updateFaculty(FacultyDto facultyDto, @MappingTarget Faculty entity);
+    public abstract void updateFaculty(FacultyFullDto facultyDto, @MappingTarget Faculty entity);
 
     @Mapping(source = "nameFaculty", target = "nameFaculty")
     @Mapping(source = "nameUniversity", target = "nameUniversity")
-    public abstract Faculty toFaculty(FacultyDto facultyDto);
+    public abstract Faculty toFaculty(FacultyFullDto facultyDto);
 }

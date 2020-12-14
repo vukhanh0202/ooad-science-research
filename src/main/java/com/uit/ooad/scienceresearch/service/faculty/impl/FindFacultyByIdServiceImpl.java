@@ -1,14 +1,10 @@
 package com.uit.ooad.scienceresearch.service.faculty.impl;
 
-import com.uit.ooad.scienceresearch.dto.contract.ContractDto;
-import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
+import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
-import com.uit.ooad.scienceresearch.mapper.contract.ContractMapper;
 import com.uit.ooad.scienceresearch.mapper.faculty.FacultyMapper;
-import com.uit.ooad.scienceresearch.repository.ContractRepository;
 import com.uit.ooad.scienceresearch.repository.FacultyRepository;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
-import com.uit.ooad.scienceresearch.service.contract.IFindContractByIdService;
 import com.uit.ooad.scienceresearch.service.faculty.IFindFacultyByIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +15,8 @@ import org.springframework.stereotype.Service;
  * @since 12/9/2020
  */
 @Service
-public class FindFacultyByIdServiceImpl extends AbstractBaseService<Long, FacultyDto>
-        implements IFindFacultyByIdService<Long, FacultyDto> {
+public class FindFacultyByIdServiceImpl extends AbstractBaseService<Long, FacultyFullDto>
+        implements IFindFacultyByIdService<Long, FacultyFullDto> {
 
     @Autowired
     FacultyRepository facultyRepository;
@@ -36,7 +32,7 @@ public class FindFacultyByIdServiceImpl extends AbstractBaseService<Long, Facult
     }
 
     @Override
-    public FacultyDto doing(Long facultyId) {
-        return facultyMapper.toFacultyDto(facultyRepository.findById(facultyId).get());
+    public FacultyFullDto doing(Long facultyId) {
+        return facultyMapper.toFacultyFullDto(facultyRepository.findById(facultyId).get());
     }
 }

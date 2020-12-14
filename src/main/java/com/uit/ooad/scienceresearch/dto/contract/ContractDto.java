@@ -15,6 +15,6 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContractDto extends BaseDto {
 
-    private Long id;
+    private Long contractId;
     private String nameContract;
 }

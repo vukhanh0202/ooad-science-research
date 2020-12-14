@@ -69,7 +69,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                 Account account = accountRepository.findByUsername(username).get();
                 UserPrincipal userPrincipal = new UserPrincipal();
-                userPrincipal.setId(account.getId());
+                userPrincipal.setAccountId(account.getAccountId());
                 userPrincipal.setUsername(account.getUsername());;
                 userPrincipal.setEmail(account.getLecturers().get(0).getEmail());
                 userPrincipal.setFullName(account.getLecturers().get(0).getFullName());

@@ -22,7 +22,8 @@ public class Lecturer extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "lecturer_id")
+    private Long lecturerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
@@ -60,18 +61,18 @@ public class Lecturer extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lecturer lecturer = (Lecturer) o;
-        return Objects.equals(id, lecturer.id);
+        return Objects.equals(lecturerId, lecturer.lecturerId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(lecturerId);
     }
 
     @Override
     public String toString() {
         return "Lecturer{" +
-                "id=" + id +
+                "id=" + lecturerId +
                 ", fullName='" + fullName + '\'' +
                 ", dob=" + dob +
                 ", major='" + major + '\'' +
