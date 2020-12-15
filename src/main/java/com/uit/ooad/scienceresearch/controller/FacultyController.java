@@ -3,10 +3,14 @@ package com.uit.ooad.scienceresearch.controller;
 import com.uit.ooad.scienceresearch.constant.DefaultConstant;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
+import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
 import com.uit.ooad.scienceresearch.service.faculty.IFacultyService;
 import com.uit.ooad.scienceresearch.service.faculty.IFindAllFacultyService;
+import com.uit.ooad.scienceresearch.service.topic.ICountTopicService;
+import com.uit.ooad.scienceresearch.service.topic.IFindAllTopicService;
+import com.uit.ooad.scienceresearch.service.topic.ITopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,6 +32,9 @@ public class FacultyController {
 
     @Autowired
     IFacultyService facultyService;
+
+    @Autowired
+    ITopicService topicService;
 
     /**
      * Find All Faculty
@@ -88,13 +95,13 @@ public class FacultyController {
     }
 
     /**
-     * Update contract
+     * Update Faculty
      *
      * @param body
      * @return
      */
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateContract(@RequestBody FacultyFullDto body) {
+    public ResponseEntity<?> updateFaculty(@RequestBody FacultyFullDto body) {
         Boolean res = facultyService.getUpdateFacultyService().execute(body);
         if (res) {
             return ResponseEntity.status(HttpStatus.OK)
@@ -105,4 +112,26 @@ public class FacultyController {
         }
     }
 
+
+    /**
+     * Find All Topic Of Faculty
+     *
+     * @return
+     */
+    @GetMapping(value = "/topic/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllTopic(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
+                                         @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
+                                         @RequestParam(value = "search", defaultValue = "") String search,
+                                         @RequestParam(value = "levelId", defaultValue = "") Long levelId,
+                                         @RequestParam(value = "fieldId", defaultValue = "") Long fieldId,
+                                         @PathVariable("id") Long facultyId) {
+        List<TopicFullDto> result = topicService
+                .getFindAllTopicService()
+                .execute(new IFindAllTopicService.Input(search, facultyId, levelId, fieldId, page, size));
+
+        Long totalItem = topicService.getCountTopicService().execute(new ICountTopicService.Input(search, facultyId, levelId, fieldId));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
+                        , size, page, result));
+    }
 }

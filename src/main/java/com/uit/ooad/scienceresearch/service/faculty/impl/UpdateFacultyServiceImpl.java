@@ -11,6 +11,9 @@ import com.uit.ooad.scienceresearch.service.faculty.IUpdateFacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_EXIST;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -29,13 +32,12 @@ public class UpdateFacultyServiceImpl extends AbstractBaseService<FacultyFullDto
     @Override
     public void preExecute(FacultyFullDto facultyDto) {
         if (facultyRepository.findById(facultyDto.getFacultyId()).isEmpty()) {
-            throw new NotFoundException("Faculty is  Not Found!");
+            throw new NotFoundException(messageHelper.getMessage(FACULTY_NOT_FOUND, facultyDto.getFacultyId()));
         }
         if (facultyRepository.findByNameFaculty(facultyDto.getNameFaculty()).isPresent()) {
-            throw new InvalidException("Faculty is Exist!");
+            throw new InvalidException(messageHelper.getMessage(FACULTY_EXIST, facultyDto.getNameFaculty()));
         }
     }
-
     @Override
     public Boolean doing(FacultyFullDto facultyDto) {
         try {

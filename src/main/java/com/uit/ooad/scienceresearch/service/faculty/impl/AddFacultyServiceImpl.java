@@ -9,6 +9,8 @@ import com.uit.ooad.scienceresearch.service.faculty.IAddFacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_EXIST;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -26,11 +28,8 @@ public class AddFacultyServiceImpl extends AbstractBaseService<FacultyFullDto, B
 
     @Override
     public void preExecute(FacultyFullDto facultyDto) {
-        if (facultyDto.getFacultyId() != null) {
-            throw new InvalidException("Not Parameter id in post request!");
-        }
         if (facultyRepository.findByNameFaculty(facultyDto.getNameFaculty()).isPresent()) {
-            throw new InvalidException("Contract is exist!");
+            throw new InvalidException(messageHelper.getMessage(FACULTY_EXIST,facultyDto.getNameFaculty()));
         }
     }
 

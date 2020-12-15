@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Topic.TOPIC_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -30,16 +32,16 @@ public class FindTopicByIdServiceImpl extends AbstractBaseService<Long, TopicFul
 
     @Override
     public void preExecute(Long topicId) {
-        if (topicRepository.findById(topicId).isEmpty()){
-            throw new NotFoundException("Topic Not Found!");
+        if (topicRepository.findById(topicId).isEmpty()) {
+            throw new NotFoundException(messageHelper.getMessage(TOPIC_NOT_FOUND, topicId));
         }
     }
 
     @Override
     public TopicFullDto doing(Long topicId) {
-        try{
+        try {
             return topicMapper.toTopicFullDto(topicRepository.findById(topicId).get());
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

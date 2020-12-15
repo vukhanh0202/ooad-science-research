@@ -14,14 +14,18 @@ public interface IFindAllLecturerService<Input, Output> extends IBaseService<Inp
     @Data
     class Input extends PaginationRequest {
         String search;
+        Long facultyId;
+        Long contractId;
 
         public Input(Integer page, Integer size) {
             super(page, size);
         }
 
-        public Input(String search, Integer page, Integer size) {
+        public Input(String search, Long facultyId, Long contractId, Integer page, Integer size) {
             super(page, size);
             this.search = search;
+            this.facultyId = facultyId;
+            this.contractId = contractId;
         }
     }
 }

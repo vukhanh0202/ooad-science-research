@@ -9,6 +9,8 @@ import com.uit.ooad.scienceresearch.service.topic.IDeleteTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Topic.TOPIC_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -24,7 +26,7 @@ public class DeleteTopicServiceImpl extends AbstractBaseService<TopicDto, Boolea
     @Override
     public void preExecute(TopicDto topicDto) {
         if (topicRepository.findById(topicDto.getTopicId()).isEmpty()){
-            throw new NotFoundException("Topic Not Found!");
+            throw new NotFoundException(messageHelper.getMessage(TOPIC_NOT_FOUND,topicDto.getTopicId()));
         }
     }
 

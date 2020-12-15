@@ -11,6 +11,9 @@ import com.uit.ooad.scienceresearch.service.contract.IUpdateContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Contract.CONTRACT_EXIST;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Contract.CONTRACT_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -29,10 +32,10 @@ public class UpdateContractServiceImpl extends AbstractBaseService<ContractDto, 
     @Override
     public void preExecute(ContractDto contractDto) {
         if (contractRepository.findById(contractDto.getContractId()).isEmpty()) {
-            throw new NotFoundException("Contract is  Not Found!");
+            throw new NotFoundException(messageHelper.getMessage(CONTRACT_NOT_FOUND, contractDto.getContractId()));
         }
         if (contractRepository.findByNameContract(contractDto.getNameContract()).isPresent()) {
-            throw new InvalidException("Contract is Exist!");
+            throw new InvalidException(messageHelper.getMessage(CONTRACT_EXIST, contractDto.getNameContract()));
         }
     }
 

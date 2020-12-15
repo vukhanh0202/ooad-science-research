@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_NOT_FOUND;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Field.FIELD_NOT_FOUND;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Level.LEVEL_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -50,17 +54,17 @@ public class FindAllTopicServiceImpl extends AbstractBaseService<IFindAllTopicSe
     public void preExecute(Input input) {
         if (input.getFacultyId() != null) {
             if (facultyRepository.findById(input.getFacultyId()).isEmpty()) {
-                throw new NotFoundException("Faculty not found!");
+                throw new NotFoundException(messageHelper.getMessage(FACULTY_NOT_FOUND, input.getFacultyId()));
             }
         }
         if (input.getFieldId() != null) {
             if (fieldTopicRepository.findById(input.getFieldId()).isEmpty()) {
-                throw new NotFoundException("Field not found!");
+                throw new NotFoundException(messageHelper.getMessage(FIELD_NOT_FOUND, input.getFacultyId()));
             }
         }
         if (input.getLevelId() != null) {
             if (levelRepository.findById(input.getLevelId()).isEmpty()) {
-                throw new NotFoundException("Level not found!");
+                throw new NotFoundException(messageHelper.getMessage(LEVEL_NOT_FOUND, input.getFacultyId()));
             }
         }
     }
@@ -68,45 +72,11 @@ public class FindAllTopicServiceImpl extends AbstractBaseService<IFindAllTopicSe
     @Override
     public List<TopicFullDto> doing(IFindAllTopicService.Input input) {
         try {
-            if (input.getFacultyId() != null && input.getFieldId() != null && input.getLevelId() != null) {
-                return topicMapper.toListTopicFullDto(topicRepository
-                        .findAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelIdAndFieldTopicFieldId(input.getSearch(),
-                                input.getFacultyId(),input.getLevelId(),input.getFieldId(),
-                                input.createPageable(Sort.Direction.ASC, "createdAt")));
-            } else if (input.getFacultyId() != null && input.getFieldId() != null && input.getLevelId() == null) {
-                return topicMapper.toListTopicFullDto(topicRepository
-                        .findAllByNameTopicContainingAndFacultyFacultyIdAndFieldTopicFieldId(
-                                input.getSearch(), input.getFacultyId(), input.getFieldId(),
-                                input.createPageable(Sort.Direction.ASC, "createdAt")));
-            } else if (input.getFacultyId() != null && input.getFieldId() == null && input.getLevelId() != null) {
-                return topicMapper.toListTopicFullDto(topicRepository
-                        .findAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelId(
-                                input.getSearch(), input.getFacultyId(), input.getLevelId(),
-                                input.createPageable(Sort.Direction.ASC, "createdAt")));
-            } else if (input.getFacultyId() != null && input.getFieldId() == null && input.getLevelId() == null) {
-                return topicMapper.toListTopicFullDto(topicRepository
-                        .findAllByNameTopicContainingAndFacultyFacultyId(
-                                input.getSearch(), input.getFacultyId(),
-                                input.createPageable(Sort.Direction.ASC, "createdAt")));
-            } else if (input.getFacultyId() == null && input.getFieldId() != null && input.getLevelId() != null) {
-                return topicMapper.toListTopicFullDto(topicRepository
-                        .findAllByNameTopicContainingAndLevelLevelIdAndFieldTopicFieldId(
-                                input.getSearch(), input.getLevelId(), input.getFieldId(),
-                                input.createPageable(Sort.Direction.ASC, "createdAt")));
-            } else if (input.getFacultyId() == null && input.getFieldId() != null && input.getLevelId() == null) {
-                return topicMapper.toListTopicFullDto(topicRepository
-                        .findAllByNameTopicContainingAndFieldTopicFieldId(
-                                input.getSearch(), input.getFieldId(),
-                                input.createPageable(Sort.Direction.ASC, "createdAt")));
-            } else if (input.getFacultyId() == null && input.getFieldId() == null && input.getLevelId() != null) {
-                return topicMapper.toListTopicFullDto(topicRepository
-                        .findAllByNameTopicContainingAndLevelLevelId(
-                                input.getSearch(), input.getLevelId(),
-                                input.createPageable(Sort.Direction.ASC, "createdAt")));
-            } else {
-                return topicMapper.toListTopicFullDto(topicRepository.findAllByNameTopicContaining(input.getSearch(),
-                        input.createPageable(Sort.Direction.ASC, "createdAt")));
-            }
+            return topicMapper.toListTopicFullDto(topicRepository
+                    .findCustomerByNameTopicContainingAndFacultyIdAndLevelIdAndFieldId(input.getSearch(),
+                            input.getFacultyId(),input.getLevelId(),input.getFieldId(),
+                            input.createPageable(Sort.Direction.ASC, "createdAt")));
+
 
         } catch (Exception e) {
             return null;

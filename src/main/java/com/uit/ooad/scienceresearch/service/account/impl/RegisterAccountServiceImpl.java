@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.User.USER_EXIST;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -30,29 +32,19 @@ public class RegisterAccountServiceImpl extends AbstractBaseService<AccountLectu
     @Override
     public void preExecute(AccountLecturerDto accountLecturerDto) {
 
-        if (accountLecturerDto.getUsername() == null) {
-            throw new InvalidException("Invalid username");
-        }
         if (accountRepository.findByUsername(accountLecturerDto.getUsername()).isPresent()) {
-            throw new InvalidException("Username is exists");
-        }
-        if (accountLecturerDto.getPassword() == null) {
-            throw new InvalidException("Invalid password");
-        }
-
-        if (accountLecturerDto.getRole() == null) {
-            throw new InvalidException("Invalid role");
+            throw new InvalidException(messageHelper.getMessage(USER_EXIST, accountLecturerDto.getUsername()));
         }
     }
 
     @Override
     public Account doing(AccountLecturerDto accountLecturerDto) {
-        try{
+        try {
             String pwdBcrypt = BCrypt.hashpw(accountLecturerDto.getPassword(), BCrypt.gensalt(10));
             accountLecturerDto.setPassword(pwdBcrypt);
 
             return accountRepository.save(accountMapper.toAccount(accountLecturerDto));
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

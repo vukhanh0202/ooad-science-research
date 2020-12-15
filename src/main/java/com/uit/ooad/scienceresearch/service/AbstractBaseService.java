@@ -1,5 +1,7 @@
 package com.uit.ooad.scienceresearch.service;
 
+import com.uit.ooad.scienceresearch.util.MessageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -8,6 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 12/6/2020
  */
 public abstract class AbstractBaseService<Input, Output> implements IBaseService<Input, Output>{
+
+    /**
+     * Message Helper.
+     */
+    @Autowired
+    protected MessageHelper messageHelper;
 
     @Override
     @Transactional

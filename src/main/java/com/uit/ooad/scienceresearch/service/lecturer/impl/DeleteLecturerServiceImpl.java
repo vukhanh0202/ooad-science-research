@@ -9,6 +9,8 @@ import com.uit.ooad.scienceresearch.service.lecturer.IDeleteLecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Lecturer.LECTURER_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -23,18 +25,18 @@ public class DeleteLecturerServiceImpl extends AbstractBaseService<LecturerDto, 
 
     @Override
     public void preExecute(LecturerDto lecturerDto) {
-        if (lecturerRepository.findById(lecturerDto.getLecturerId()).isEmpty()){
-            throw new NotFoundException("Lecturer Not Found!");
+        if (lecturerRepository.findById(lecturerDto.getLecturerId()).isEmpty()) {
+            throw new NotFoundException(messageHelper.getMessage(LECTURER_NOT_FOUND, lecturerDto.getLecturerId()));
         }
     }
 
     @Override
     public Boolean doing(LecturerDto lecturerDto) {
-        try{
+        try {
             Lecturer lecturer = lecturerRepository.findById(lecturerDto.getLecturerId()).get();
             lecturerRepository.delete(lecturer);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

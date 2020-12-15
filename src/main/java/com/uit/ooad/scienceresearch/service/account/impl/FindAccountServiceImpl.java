@@ -9,6 +9,8 @@ import com.uit.ooad.scienceresearch.service.account.IFindAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.User.USER_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -26,8 +28,8 @@ public class FindAccountServiceImpl extends AbstractBaseService<String, AccountD
 
     @Override
     public void preExecute(String username) {
-        if(accountRepository.findByUsername(username).isEmpty()){
-            throw new NotFoundException("Username not exists");
+        if (accountRepository.findByUsername(username).isEmpty()) {
+            throw new NotFoundException(messageHelper.getMessage(USER_NOT_FOUND, username));
         }
     }
 

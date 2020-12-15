@@ -5,6 +5,7 @@ import com.uit.ooad.scienceresearch.dto.lecturer.LecturerDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
+import com.uit.ooad.scienceresearch.service.lecturer.ICountLecturerService;
 import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerService;
 import com.uit.ooad.scienceresearch.service.lecturer.ILecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,15 @@ public class LecturerController {
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllLecturer(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
                                             @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
-                                            @RequestParam(value = "search", defaultValue = "") String search) {
-        List<LecturerFullDto> result = lecturerService.getFindAllLecturerService().execute(new IFindAllLecturerService.Input(search, page, size));
+                                            @RequestParam(value = "search", defaultValue = "") String search,
+                                            @RequestParam(value = "facultyId", defaultValue = "") Long facultyId,
+                                            @RequestParam(value = "contractId", defaultValue = "") Long contractId) {
+        List<LecturerFullDto> result = lecturerService.getFindAllLecturerService()
+                .execute(new IFindAllLecturerService.Input(search,facultyId,contractId, page, size));
+
+        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search,facultyId,contractId, page, size));
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new PaginationResponse(Integer.parseInt(lecturerService.getCountLecturerService().execute().toString())
+                .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
                         , size, page, result));
     }
 

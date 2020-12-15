@@ -13,6 +13,10 @@ import com.uit.ooad.scienceresearch.service.topic.IAddTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_NOT_FOUND;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Field.FIELD_NOT_FOUND;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Level.LEVEL_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -39,17 +43,14 @@ public class AddTopicServiceImpl extends AbstractBaseService<TopicDto, Boolean>
 
     @Override
     public void preExecute(TopicDto topicDto) {
-        if (topicDto.getTopicId() != null) {
-            throw new InvalidException("Not Parameter id in post request!");
-        }
         if (fieldTopicRepository.findById(topicDto.getFieldId()).isEmpty()){
-            throw new NotFoundException("Field Topic Not Found!");
+            throw new NotFoundException(messageHelper.getMessage(FIELD_NOT_FOUND,topicDto.getTopicId()));
         }
         if (levelRepository.findById(topicDto.getLevelId()).isEmpty()){
-            throw new NotFoundException("Level Not Found!");
+            throw new NotFoundException(messageHelper.getMessage(LEVEL_NOT_FOUND,topicDto.getLevelId()));
         }
         if (facultyRepository.findById(topicDto.getFacultyId()).isEmpty()){
-            throw new NotFoundException("Faculty Not Found!");
+            throw new NotFoundException(messageHelper.getMessage(FACULTY_NOT_FOUND,topicDto.getFacultyId()));
         }
     }
 

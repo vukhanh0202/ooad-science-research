@@ -18,7 +18,7 @@ public interface ILecturerService {
 
     IFindAllLecturerService<IFindAllLecturerService.Input, List<LecturerFullDto>> getFindAllLecturerService();
 
-    ICountLecturerService<Void, Long> getCountLecturerService();
+    ICountLecturerService<ICountLecturerService.Input, Long> getCountLecturerService();
 
     IFindLecturerByIdService<Long, LecturerFullDto> getFindLecturerByIdService();
 

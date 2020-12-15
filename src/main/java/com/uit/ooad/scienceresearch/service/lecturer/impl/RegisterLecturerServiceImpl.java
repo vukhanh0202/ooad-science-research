@@ -12,6 +12,9 @@ import com.uit.ooad.scienceresearch.service.lecturer.IRegisterLecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Contract.CONTRACT_NOT_FOUND;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -35,22 +38,20 @@ public class RegisterLecturerServiceImpl extends AbstractBaseService<AccountLect
 
     @Override
     public void preExecute(AccountLecturerDto accountLecturerDto) {
-        if (accountLecturerDto.getFullName() == null) {
-            throw new InvalidException("Invalid full name");
-        }
+
         if (accountLecturerDto.getContractId() == null || contractRepository.findById(accountLecturerDto.getContractId()).isEmpty()) {
-            throw new InvalidException("Invalid contract");
+            throw new InvalidException(messageHelper.getMessage(CONTRACT_NOT_FOUND, accountLecturerDto.getContractId()));
         }
         if (accountLecturerDto.getFacultyId() == null || facultyRepository.findById(accountLecturerDto.getFacultyId()).isEmpty()) {
-            throw new InvalidException("Invalid faculty");
+            throw new InvalidException(messageHelper.getMessage(FACULTY_NOT_FOUND,accountLecturerDto.getFacultyId()));
         }
     }
 
     @Override
     public Lecturer doing(AccountLecturerDto accountLecturerDto) {
-        try{
+        try {
             return lecturerRepository.save(lecturerMapper.toLecturer(accountLecturerDto));
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

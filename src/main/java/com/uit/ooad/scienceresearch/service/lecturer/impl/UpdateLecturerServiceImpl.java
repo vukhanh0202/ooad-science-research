@@ -10,6 +10,10 @@ import com.uit.ooad.scienceresearch.service.lecturer.IUpdateLecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Contract.CONTRACT_NOT_FOUND;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_NOT_FOUND;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Lecturer.LECTURER_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -35,13 +39,13 @@ public class UpdateLecturerServiceImpl extends AbstractBaseService<LecturerDto, 
     @Override
     public void preExecute(LecturerDto lecturerDto) {
         if (lecturerRepository.findById(lecturerDto.getLecturerId()).isEmpty()){
-            throw new NotFoundException("Lecturer Not Found!");
+            throw new NotFoundException(messageHelper.getMessage(LECTURER_NOT_FOUND,lecturerDto.getFullName()));
         }
         if (facultyRepository.findById(lecturerDto.getFacultyId()).isEmpty()){
-            throw new NotFoundException("Faculty Not Found!");
+            throw new NotFoundException(messageHelper.getMessage(FACULTY_NOT_FOUND,lecturerDto.getFacultyId()));
         }
         if (contractRepository.findById(lecturerDto.getContractId()).isEmpty()){
-            throw new NotFoundException("Contract Not Found!");
+            throw new NotFoundException(messageHelper.getMessage(CONTRACT_NOT_FOUND,lecturerDto.getContractId()));
         }
     }
 

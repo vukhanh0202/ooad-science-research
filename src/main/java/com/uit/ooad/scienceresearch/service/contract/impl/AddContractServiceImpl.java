@@ -9,6 +9,8 @@ import com.uit.ooad.scienceresearch.service.contract.IAddContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Contract.CONTRACT_EXIST;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -26,11 +28,8 @@ public class AddContractServiceImpl extends AbstractBaseService<ContractDto, Boo
 
     @Override
     public void preExecute(ContractDto contractDto) {
-        if (contractDto.getContractId() != null) {
-            throw new InvalidException("Not Parameter id in post request!");
-        }
         if (contractRepository.findByNameContract(contractDto.getNameContract()).isPresent()) {
-            throw new InvalidException("Contract is exist!");
+            throw new InvalidException(messageHelper.getMessage(CONTRACT_EXIST, contractDto.getNameContract()));
         }
     }
 

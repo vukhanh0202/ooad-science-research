@@ -12,6 +12,8 @@ import com.uit.ooad.scienceresearch.service.contract.IFindContractByIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Contract.CONTRACT_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -30,7 +32,7 @@ public class FindContractByIdServiceImpl extends AbstractBaseService<Long, Contr
     @Override
     public void preExecute(Long contractId) {
         if (contractRepository.findById(contractId).isEmpty()) {
-            throw new NotFoundException("Contract is not found");
+            throw new NotFoundException(messageHelper.getMessage(CONTRACT_NOT_FOUND));
         }
     }
 

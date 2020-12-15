@@ -9,6 +9,8 @@ import com.uit.ooad.scienceresearch.service.faculty.IFindFacultyByIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_NOT_FOUND;
+
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
@@ -27,7 +29,7 @@ public class FindFacultyByIdServiceImpl extends AbstractBaseService<Long, Facult
     @Override
     public void preExecute(Long facultyId) {
         if (facultyRepository.findById(facultyId).isEmpty()) {
-            throw new NotFoundException("Faculty is not found");
+            throw new NotFoundException(messageHelper.getMessage(FACULTY_NOT_FOUND, facultyId));
         }
     }
 

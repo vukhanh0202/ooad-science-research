@@ -21,44 +21,8 @@ public class CountTopicServiceImpl extends AbstractBaseService<ICountTopicServic
 
     @Override
     public Long doing(ICountTopicService.Input input) {
-
-        if (input.getFacultyId() != null && input.getFieldId() != null && input.getLevelId() != null) {
-            return topicRepository
-                    .countAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelIdAndFieldTopicFieldId(
-                            input.getSearch(), input.getFacultyId(), input.getLevelId(), input.getFieldId()
-                    );
-        } else if (input.getFacultyId() != null && input.getFieldId() != null && input.getLevelId() == null) {
-            return topicRepository
-                    .countAllByNameTopicContainingAndFacultyFacultyIdAndFieldTopicFieldId(
-                            input.getSearch(), input.getFacultyId(), input.getFieldId()
-                    );
-        } else if (input.getFacultyId() != null && input.getFieldId() == null && input.getLevelId() != null) {
-            return topicRepository
-                    .countAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelId(
-                            input.getSearch(), input.getFacultyId(), input.getLevelId()
-                    );
-        } else if (input.getFacultyId() != null && input.getFieldId() == null && input.getLevelId() == null) {
-            return topicRepository
-                    .countAllByNameTopicContainingAndFacultyFacultyId(
-                            input.getSearch(), input.getFacultyId()
-                    );
-        } else if (input.getFacultyId() == null && input.getFieldId() != null && input.getLevelId() != null) {
-            return topicRepository
-                    .countAllByNameTopicContainingAndLevelLevelIdAndFieldTopicFieldId(
-                            input.getSearch(), input.getLevelId(), input.getFieldId()
-                    );
-        } else if (input.getFacultyId() == null && input.getFieldId() != null && input.getLevelId() == null) {
-            return topicRepository
-                    .countAllByNameTopicContainingAndFieldTopicFieldId(
-                            input.getSearch(), input.getFieldId()
-                    );
-        } else if (input.getFacultyId() == null && input.getFieldId() == null && input.getLevelId() != null) {
-            return topicRepository
-                    .countAllByNameTopicContainingAndLevelLevelId(
-                            input.getSearch(), input.getLevelId()
-                    );
-        } else {
-            return topicRepository.count();
-        }
+        return topicRepository
+                .countCustomerByNameTopicContainingAndFacultyIdAndLevelIdAndFieldId(
+                        input.getSearch(), input.getFacultyId(), input.getLevelId(), input.getFieldId());
     }
 }

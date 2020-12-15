@@ -4,6 +4,8 @@ import com.uit.ooad.scienceresearch.entity.Topic;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -15,49 +17,24 @@ import java.util.List;
  */
 public interface TopicRepository extends JpaRepository<Topic, Long> {
 
-    List<Topic> findAllByNameTopicContaining(String nameTopic, Pageable pageable);
+    @Query(value = "SELECT * FROM TOPIC t WHERE LOWER(t.name_topic) LIKE CONCAT(\"%\", LOWER(:nameTopic), \"%\")" +
+            " AND (:facultyId is null or t.faculty_id = :facultyId)" +
+            " AND (:levelId is null or t.level_id = :levelId)" +
+            " AND (:fieldId is null or t.field_id = :fieldId)",
+            nativeQuery = true)
+    List<Topic> findCustomerByNameTopicContainingAndFacultyIdAndLevelIdAndFieldId(@Param("nameTopic") String nameTopic,
+                                                                             @Param("facultyId") Long facultyId,
+                                                                             @Param("levelId") Long levelId,
+                                                                             @Param("fieldId") Long fieldId,
+                                                                             Pageable pageable);
 
-    // search
-    List<Topic> findAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelIdAndFieldTopicFieldId(String nameTopic
-            ,Long facultyId, Long levelId, Long fieldTopicId, Pageable pageable);
-
-    List<Topic> findAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelId(String nameTopic
-            ,Long facultyId, Long levelId, Pageable pageable);
-
-    List<Topic> findAllByNameTopicContainingAndFacultyFacultyIdAndFieldTopicFieldId(String nameTopic
-            ,Long facultyId, Long fieldTopicId, Pageable pageable);
-
-    List<Topic> findAllByNameTopicContainingAndFacultyFacultyId(String nameTopic
-            ,Long facultyId, Pageable pageable);
-
-    List<Topic> findAllByNameTopicContainingAndLevelLevelIdAndFieldTopicFieldId(String nameTopic
-            , Long levelId, Long fieldTopicId, Pageable pageable);
-
-    List<Topic> findAllByNameTopicContainingAndLevelLevelId(String nameTopic
-            , Long levelId, Pageable pageable);
-
-    List<Topic> findAllByNameTopicContainingAndFieldTopicFieldId(String nameTopic
-            ,Long fieldTopicId, Pageable pageable);
-
-    // Count
-    Long countAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelIdAndFieldTopicFieldId(String nameTopic
-            ,Long facultyId, Long levelId, Long fieldTopicId);
-
-    Long countAllByNameTopicContainingAndFacultyFacultyIdAndLevelLevelId(String nameTopic
-            ,Long facultyId, Long levelId);
-
-    Long countAllByNameTopicContainingAndFacultyFacultyIdAndFieldTopicFieldId(String nameTopic
-            ,Long facultyId, Long fieldTopicId);
-
-    Long countAllByNameTopicContainingAndFacultyFacultyId(String nameTopic
-            ,Long facultyId);
-
-    Long countAllByNameTopicContainingAndLevelLevelIdAndFieldTopicFieldId(String nameTopic
-            , Long levelId, Long fieldTopicId);
-
-    Long countAllByNameTopicContainingAndLevelLevelId(String nameTopic
-            , Long levelId);
-
-    Long countAllByNameTopicContainingAndFieldTopicFieldId(String nameTopic
-            ,Long fieldTopicId);
+    @Query(value = "SELECT COUNT(*) FROM TOPIC t WHERE LOWER(t.name_topic) LIKE CONCAT(\"%\", LOWER(:nameTopic), \"%\")" +
+            " AND (:facultyId is null or t.faculty_id = :facultyId)" +
+            " AND (:levelId is null or t.level_id = :levelId)" +
+            " AND (:fieldId is null or t.field_id = :fieldId)",
+            nativeQuery = true)
+    Long countCustomerByNameTopicContainingAndFacultyIdAndLevelIdAndFieldId(@Param("nameTopic") String nameTopic,
+                                                                                  @Param("facultyId") Long facultyId,
+                                                                                  @Param("levelId") Long levelId,
+                                                                                  @Param("fieldId") Long fieldId);
 }
