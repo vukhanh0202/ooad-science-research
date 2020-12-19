@@ -24,6 +24,7 @@ public class JwtUserDetailsService implements UserDetailsService {
      * password encrypt
      */
     final String defaultPassword = "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6";
+    final String defaultPass123 = "$2a$10$.JvCcIOq4LLAzmiW4ZF2oOQd5uC9uTAHL3h2CWUSiYOCX7/Nuz5Ee";
 
     @Autowired
     IAccountService accountService;

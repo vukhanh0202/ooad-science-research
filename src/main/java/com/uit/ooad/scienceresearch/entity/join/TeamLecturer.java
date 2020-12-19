@@ -1,6 +1,8 @@
 package com.uit.ooad.scienceresearch.entity.join;
 
-import com.uit.ooad.scienceresearch.entity.*;
+import com.uit.ooad.scienceresearch.entity.BaseEntity;
+import com.uit.ooad.scienceresearch.entity.Team;
+import com.uit.ooad.scienceresearch.entity.Lecturer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,16 +12,16 @@ import java.util.Objects;
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
- * @since 12/6/2020
+ * @since 12/19/2020
  */
 @Entity
-@Table(name = "signup_topic")
+@Table(name = "group_lecturer")
 @Data
 @NoArgsConstructor
-public class SignUpTopic extends BaseEntity {
+public class TeamLecturer extends BaseEntity {
 
     @EmbeddedId
-    private SignUpTopicId id = new SignUpTopicId();
+    private TeamLecturerId id = new TeamLecturerId();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("teamId")
@@ -27,28 +29,23 @@ public class SignUpTopic extends BaseEntity {
     private Team team;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("topicId")
-    @JoinColumn(name = "topic_id")
-    private Topic topic;
+    @MapsId("lecturerId")
+    @JoinColumn(name = "lecturer_id")
+    private Lecturer lecturer;
+
+    private String position;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SignUpTopic that = (SignUpTopic) o;
-        return Objects.equals(team, that.team) &&
-                Objects.equals(topic, that.topic);
+        if (!super.equals(o)) return false;
+        TeamLecturer that = (TeamLecturer) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(team, topic);
-    }
-
-    @Override
-    public String toString() {
-        return "SignUpTopic{" +
-                "id=" + id +
-                '}';
+        return Objects.hash(super.hashCode(), id);
     }
 }

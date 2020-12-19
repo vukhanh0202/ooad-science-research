@@ -22,6 +22,7 @@ public class TopicFullDto extends BaseDto {
     private Long topicId;
     private String nameTopic;
     private Long year;
+    private String description;
     private FacultyDto faculty;
     private LevelDto level;
     private FieldTopicDto fieldTopic;

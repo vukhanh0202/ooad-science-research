@@ -34,6 +34,8 @@ public class UserPrincipal implements UserDetails {
     @JsonIgnore
     private String password;
     private String fullName;
+    private Long facultyId;
+    private Long lecturerId;
 
 
 

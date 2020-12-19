@@ -29,4 +29,5 @@ public class AccountLecturerDto {
     private Long contractId;
     private Long facultyId;
     private Long accountId;
+    private String position;
 }

@@ -25,4 +25,6 @@ public interface IContractService {
     IAddContractService<ContractDto, Boolean> getAddContractService();
 
     IUpdateContractService<ContractDto, Boolean> getUpdateContractService();
+
+    IFindAllNameContractService<Void, List<ContractDto>> getFindAllNameContractService();
 }

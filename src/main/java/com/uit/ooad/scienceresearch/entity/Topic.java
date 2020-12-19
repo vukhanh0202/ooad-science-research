@@ -30,6 +30,9 @@ public class Topic extends BaseEntity{
     @Column(name = "year")
     private Long year;
 
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;

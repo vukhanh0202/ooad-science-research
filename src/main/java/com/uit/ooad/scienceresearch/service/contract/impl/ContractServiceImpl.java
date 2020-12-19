@@ -29,4 +29,7 @@ public class ContractServiceImpl implements IContractService {
 
     @Autowired
     IUpdateContractService updateContractService;
+
+    @Autowired
+    IFindAllNameContractService findAllNameContractService;
 }

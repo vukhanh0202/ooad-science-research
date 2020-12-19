@@ -19,6 +19,8 @@ public class AccountDto {
     private String username;
     private String password;
     private String fullName;
+    private Long facultyId;
+    private Long lecturerId;
 
     //need default constructor for JSON Parsing
     public AccountDto() {

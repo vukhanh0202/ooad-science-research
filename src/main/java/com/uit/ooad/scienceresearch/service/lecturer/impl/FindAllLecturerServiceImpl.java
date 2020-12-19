@@ -58,7 +58,7 @@ public class FindAllLecturerServiceImpl extends AbstractBaseService<IFindAllLect
     @Override
     public List<LecturerFullDto> doing(IFindAllLecturerService.Input input) {
         try {
-            return lecturerMapper.toListLecturerFullDto((List<Lecturer>) lecturerRepository.
+            return lecturerMapper.toListLecturerFullDto(lecturerRepository.
                     findCustomerByFullNameContainingAndContractIdAndFacultyId(input.getSearch(),input.getContractId(),
                             input.getFacultyId(),input.createPageable(Sort.Direction.ASC, "createdAt")));
         } catch (Exception e) {

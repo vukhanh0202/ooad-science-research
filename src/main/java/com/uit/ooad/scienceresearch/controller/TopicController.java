@@ -50,6 +50,7 @@ public class TopicController {
                         , size, page, result));
     }
 
+
     /**
      * Find Topic with Id
      *
@@ -105,7 +106,7 @@ public class TopicController {
      * @param body
      * @return
      */
-    /*@DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteTopic(@RequestBody TopicDto body) {
         Boolean res = topicService.getDeleteTopicService().execute(body);
         if (res) {
@@ -115,5 +116,5 @@ public class TopicController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponse(res, "Fail!"));
         }
-    }*/
+    }
 }

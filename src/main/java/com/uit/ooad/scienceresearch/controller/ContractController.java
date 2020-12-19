@@ -41,6 +41,17 @@ public class ContractController {
                 .body(new PaginationResponse(Integer.parseInt(contractService.getCountContractService().execute().toString())
                         , size, page, result));
     }
+    /**
+     * Find All contract
+     *
+     * @return
+     */
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllContractNoPageable() {
+        List<ContractDto> result = contractService.getFindAllNameContractService().execute();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+    }
 
 
     /**

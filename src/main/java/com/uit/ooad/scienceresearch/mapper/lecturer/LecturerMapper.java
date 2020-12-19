@@ -40,6 +40,7 @@ public abstract class LecturerMapper implements BaseMapper {
     @Mapping(source = "major", target = "major")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "phone", target = "phone")
+    @Mapping(source = "position", target = "position")
     public abstract Lecturer toLecturer(AccountLecturerDto accountLecturerDto);
 
     @BeanMapping(ignoreByDefault = true)
@@ -49,13 +50,14 @@ public abstract class LecturerMapper implements BaseMapper {
     @Mapping(source = "major", target = "major")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "phone", target = "phone")
+    @Mapping(source = "position", target = "position")
     @Mapping(source = "contract.nameContract", target = "contract")
     @Mapping(source = "faculty.nameFaculty", target = "faculty")
     @Mapping(source = "deleted", target = "isDeleted")
     @Mapping(source = "createdAt", target = "createdAt")
-    @Mapping(source = "updatedAt", target = "updatedAt")
-    @Mapping(source = "createdBy", target = "createdBy", qualifiedByName = "getAudit")
-    @Mapping(source = "updatedBy", target = "updatedBy", qualifiedByName = "getAudit")
+    //@Mapping(source = "updatedAt", target = "updatedAt")
+    //@Mapping(source = "createdBy", target = "createdBy", qualifiedByName = "getAudit")
+    //@Mapping(source = "updatedBy", target = "updatedBy", qualifiedByName = "getAudit")
     public abstract LecturerFullDto toLecturerFullDto(Lecturer entity);
 
     @BeanMapping(ignoreByDefault = true)

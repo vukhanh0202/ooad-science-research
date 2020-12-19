@@ -17,6 +17,7 @@ public class TopicDto {
     private Long topicId;
     private String nameTopic;
     private Long year;
+    private String description;
     private Long facultyId;
     private Long levelId;
     private Long fieldId;

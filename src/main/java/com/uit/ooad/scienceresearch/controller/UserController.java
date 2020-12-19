@@ -1,12 +1,20 @@
 package com.uit.ooad.scienceresearch.controller;
 
+import com.uit.ooad.scienceresearch.constant.DefaultConstant;
 import com.uit.ooad.scienceresearch.data.UserPrincipal;
 import com.uit.ooad.scienceresearch.dto.account.AccountDto;
+import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
+import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
 import com.uit.ooad.scienceresearch.entity.Account;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
+import com.uit.ooad.scienceresearch.payload.PaginationResponse;
 import com.uit.ooad.scienceresearch.service.account.IAccountService;
+import com.uit.ooad.scienceresearch.service.faculty.IFacultyService;
+import com.uit.ooad.scienceresearch.service.faculty.IFindAllFacultyService;
+import com.uit.ooad.scienceresearch.service.lecturer.ICountLecturerService;
+import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerService;
 import com.uit.ooad.scienceresearch.service.lecturer.ILecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +22,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
@@ -29,6 +41,9 @@ public class UserController {
 
     @Autowired
     ILecturerService lecturerService;
+
+    @Autowired
+    IFacultyService facultyService;
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody AccountLecturerDto body) {
@@ -47,6 +62,28 @@ public class UserController {
         AccountDto account =new AccountDto();
         account.setUsername(userPrincipal.getUsername());
         account.setFullName(userPrincipal.getFullName());
+        account.setFacultyId(userPrincipal.getFacultyId());
+        account.setLecturerId(userPrincipal.getLecturerId());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(account));
+    }
+
+    @GetMapping(value = "/faculty", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> facultyOfUser(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
+                                           @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
+                                           @RequestParam(value = "search", defaultValue = "") String search,
+                                           @RequestParam(value = "contractId", defaultValue = "") Long contractId) {
+        UserPrincipal userPrincipal = (UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        FacultyFullDto result1 = facultyService.getFindFacultyByIdService().execute(userPrincipal.getFacultyId());
+        List<LecturerFullDto> result = lecturerService.getFindAllLecturerService()
+                .execute(new IFindAllLecturerService.Input(search,userPrincipal.getFacultyId(),contractId, page, size));
+
+        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search,userPrincipal.getFacultyId(),contractId, page, size));
+
+        Map<String, Object> rs = new HashMap<>();
+        rs.put("info", result1);
+        rs.put("lecturers", new PaginationResponse(Integer.parseInt(totalItem.toString())
+                , size, page, result));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(rs);
     }
 }

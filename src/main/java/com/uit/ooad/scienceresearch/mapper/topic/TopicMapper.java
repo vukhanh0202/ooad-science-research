@@ -36,6 +36,7 @@ public abstract class TopicMapper implements BaseMapper {
     @Mapping(source = "topicId", target = "topicId")
     @Mapping(source = "nameTopic", target = "nameTopic")
     @Mapping(source = "year", target = "year")
+    @Mapping(source = "description", target = "description")
     public abstract Topic toTopic(TopicDto topicDto);
 
     @BeanMapping(ignoreByDefault = true)
@@ -47,6 +48,7 @@ public abstract class TopicMapper implements BaseMapper {
     @Mapping(source = "deleted", target = "isDeleted")
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "updatedAt", target = "updatedAt")
+    @Mapping(source = "description", target = "description")
     @Mapping(source = "createdBy", target = "createdBy", qualifiedByName = "getAudit")
     @Mapping(source = "updatedBy", target = "updatedBy", qualifiedByName = "getAudit")
     public abstract TopicFullDto toTopicFullDto(Topic entity);
