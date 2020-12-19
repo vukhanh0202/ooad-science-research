@@ -15,7 +15,7 @@ import java.util.Objects;
  * @since 12/19/2020
  */
 @Entity
-@Table(name = "group_lecturer")
+@Table(name = "team_lecturer")
 @Data
 @NoArgsConstructor
 public class TeamLecturer extends BaseEntity {
@@ -33,7 +33,11 @@ public class TeamLecturer extends BaseEntity {
     @JoinColumn(name = "lecturer_id")
     private Lecturer lecturer;
 
+    @Column
     private String position;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean isPrimary;
 
     @Override
     public boolean equals(Object o) {

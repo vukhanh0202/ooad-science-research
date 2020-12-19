@@ -1,5 +1,6 @@
 package com.uit.ooad.scienceresearch.entity.join;
 
+import com.uit.ooad.scienceresearch.constant.EProcess;
 import com.uit.ooad.scienceresearch.entity.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,18 @@ public class SignUpTopic extends BaseEntity {
     @MapsId("topicId")
     @JoinColumn(name = "topic_id")
     private Topic topic;
+
+    @Column
+    private EProcess start;
+
+    @Column(name = "faculty_review")
+    private EProcess facultyReview;
+
+    @Column(name = "university_review")
+    private EProcess universityReview;
+
+    @Column
+    private EProcess completed;
 
     @Override
     public boolean equals(Object o) {

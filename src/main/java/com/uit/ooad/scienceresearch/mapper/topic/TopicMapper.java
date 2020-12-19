@@ -46,6 +46,7 @@ public abstract class TopicMapper implements BaseMapper {
     @Mapping(source = "level", target = "level")
     @Mapping(source = "fieldTopic", target = "fieldTopic")
     @Mapping(source = "deleted", target = "isDeleted")
+    @Mapping(source = "year", target = "year")
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "updatedAt", target = "updatedAt")
     @Mapping(source = "description", target = "description")

@@ -33,4 +33,7 @@ public class TopicServiceImpl implements ITopicService {
 
     @Autowired
     private ICountTopicService countTopicService;
+
+    @Autowired
+    private IFindAllTopicRegisterService findAllTopicRegisterService;
 }

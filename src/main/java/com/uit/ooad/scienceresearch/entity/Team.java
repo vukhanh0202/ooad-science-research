@@ -1,5 +1,6 @@
 package com.uit.ooad.scienceresearch.entity;
 
+import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
 import com.uit.ooad.scienceresearch.entity.join.TeamLecturer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,10 +25,11 @@ public class Team extends BaseEntity{
     @Column(name = "team_id")
     private Long teamId;
 
-    private String name;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
     private List<TeamLecturer> groupLecturers;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
+    private List<SignUpTopic> signUpTopics;
 
     @Override
     public boolean equals(Object o) {

@@ -26,7 +26,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
      * @param request request
      * @return ExceptionResponse
      */
-    @ExceptionHandler({NotFoundException.class, InvalidException.class, BadRequestException.class})
+    @ExceptionHandler({NotFoundException.class, InvalidException.class, BadRequestException.class,ForbiddenException.class})
     public final ResponseEntity<ExceptionResponse> handleNotFoundException(Exception ex, WebRequest request) {
         HttpStatus httpStatus;
         if (ex instanceof NotFoundException) {
@@ -35,6 +35,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
             httpStatus = HttpStatus.BAD_REQUEST;
         } else if (ex instanceof InvalidException) {
             httpStatus = HttpStatus.NOT_ACCEPTABLE;
+        } else if (ex instanceof ForbiddenException) {
+            httpStatus = HttpStatus.FORBIDDEN;
         } else {
             httpStatus = HttpStatus.BAD_REQUEST;
         }

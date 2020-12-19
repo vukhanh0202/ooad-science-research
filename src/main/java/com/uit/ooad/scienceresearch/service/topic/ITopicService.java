@@ -2,6 +2,7 @@ package com.uit.ooad.scienceresearch.service.topic;
 
 import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
+import com.uit.ooad.scienceresearch.dto.topic.TopicRegisterDto;
 
 import java.util.List;
 
@@ -23,5 +24,7 @@ public interface ITopicService {
     IDeleteTopicService<TopicDto, Boolean> getDeleteTopicService();
 
     ICountTopicService<ICountTopicService.Input, Long> getCountTopicService();
+
+    IFindAllTopicRegisterService<IFindAllTopicRegisterService.Input, List<TopicRegisterDto>> getFindAllTopicRegisterService();
 
 }

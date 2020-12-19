@@ -32,4 +32,11 @@ public interface MessageCode {
         String TOPIC_NOT_FOUND = "message.user.TopicNotFound";
         String TOPIC_EXIST = "message.user.TopicExist";
     }
+    interface Token {
+        String INVALID_TOKEN = "message.token.InvalidToken";
+    }
+    interface Register {
+        String EMPTY_REGISTER = "message.register.EmptyLecturer";
+        String BAD_REQUEST = "message.register.BadRequest";
+    }
 }

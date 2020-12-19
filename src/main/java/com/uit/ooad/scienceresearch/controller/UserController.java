@@ -3,6 +3,7 @@ package com.uit.ooad.scienceresearch.controller;
 import com.uit.ooad.scienceresearch.constant.DefaultConstant;
 import com.uit.ooad.scienceresearch.data.UserPrincipal;
 import com.uit.ooad.scienceresearch.dto.account.AccountDto;
+import com.uit.ooad.scienceresearch.dto.account.AccountLecturerSearchDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
@@ -83,6 +84,13 @@ public class UserController {
         rs.put("info", result1);
         rs.put("lecturers", new PaginationResponse(Integer.parseInt(totalItem.toString())
                 , size, page, result));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(rs);
+    }
+
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> searchUser(@RequestParam(value = "search", defaultValue = "") String search) {
+        List<AccountLecturerSearchDto> rs = accountService.getSearchAccountService().execute(search);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(rs);
     }

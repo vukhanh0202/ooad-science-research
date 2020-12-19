@@ -2,9 +2,12 @@ package com.uit.ooad.scienceresearch.service.account;
 
 import com.uit.ooad.scienceresearch.dto.account.AccountDto;
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
+import com.uit.ooad.scienceresearch.dto.account.AccountLecturerSearchDto;
 import com.uit.ooad.scienceresearch.entity.Account;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
 import com.uit.ooad.scienceresearch.service.lecturer.IRegisterLecturerService;
+
+import java.util.List;
 
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
@@ -17,4 +20,5 @@ public interface IAccountService {
 
     IRegisterAccountService<AccountLecturerDto, Account> getRegisterAccountService();
 
+    ISearchAccountService<String, List<AccountLecturerSearchDto>> getSearchAccountService();
 }
