@@ -1,7 +1,5 @@
 package com.uit.ooad.scienceresearch.service.topic.impl;
 
-import com.uit.ooad.scienceresearch.service.lecturer.ILecturerService;
-import com.uit.ooad.scienceresearch.service.lecturer.IRegisterLecturerService;
 import com.uit.ooad.scienceresearch.service.topic.*;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +40,13 @@ public class TopicServiceImpl implements ITopicService {
 
     @Autowired
     private IFindDetailTopicRegisterService findDetailTopicRegisterService;
+
+    @Autowired
+    private IApproveTopicService approveTopicService;
+
+    @Autowired
+    private IDeclineTopicService declineTopicService;
+
+    @Autowired
+    private IUpdateMyTopicService updateMyTopicService;
 }

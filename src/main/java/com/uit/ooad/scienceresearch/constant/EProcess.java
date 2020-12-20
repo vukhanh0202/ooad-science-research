@@ -6,9 +6,9 @@ package com.uit.ooad.scienceresearch.constant;
  * @since 12/6/2020
  */
 public enum EProcess {
-    APPROVE,
-    DECLINE,
-    WAITING,
-    PROCESSING,
-    NONE,
+    finish,
+    error,
+    wait,
+    process,
+    none,
 }

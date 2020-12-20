@@ -26,10 +26,9 @@ public interface SignUpTopicRepository extends JpaRepository<SignUpTopic, SignUp
     List<SignUpTopic> findCustomByFacultyReviewAndListTopicId(@Param("topicIds") Set<Long> topicIds, @Param("facultyReview") int facultyReview);
 
     @Query(value = "SELECT * FROM signup_topic s WHERE " +
-            " s.university_review = :universityReview" +
-            " AND s.topic_id IN :topicIds",
+            " s.university_review = :universityReview",
             nativeQuery = true)
-    List<SignUpTopic> findCustomByUniversityReviewAndListTopicId(@Param("topicIds") Set<Long> topicIds, @Param("universityReview") int universityReview);
+    List<SignUpTopic> findCustomByUniversityReview(@Param("universityReview") int universityReview);
 
     SignUpTopic findByTopicTopicIdAndTeamTeamId(Long topicId, Long teamId);
 }

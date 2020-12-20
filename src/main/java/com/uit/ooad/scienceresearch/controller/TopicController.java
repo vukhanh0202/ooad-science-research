@@ -4,11 +4,8 @@ import com.uit.ooad.scienceresearch.constant.DefaultConstant;
 import com.uit.ooad.scienceresearch.constant.ERole;
 import com.uit.ooad.scienceresearch.data.UserPrincipal;
 import com.uit.ooad.scienceresearch.dto.team.TeamLecturerDto;
-import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicFullDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicRegisterDto;
+import com.uit.ooad.scienceresearch.dto.topic.*;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
-import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
 import com.uit.ooad.scienceresearch.service.team.IRegisterTopicService;
 import com.uit.ooad.scienceresearch.service.team.ITeamService;
@@ -179,6 +176,20 @@ public class TopicController {
                 .body(result);
     }
 
+    @PutMapping(value = "/my-topic", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateRegisterTopic(@RequestBody SignUpTopicDto body) {
+        Boolean res = topicService
+                .getUpdateMyTopicService()
+                .execute(body);
+        if (res) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse(res, "Success!"));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse(res, "Fail!"));
+        }
+    }
+
     /**
      * Find assign topic
      *
@@ -200,4 +211,69 @@ public class TopicController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
     }
+
+    /**
+     * Find My detail topic
+     *
+     * @return
+     */
+    @GetMapping(value = "/assign-topic/{topicId}/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getDetailAssignTopic(@PathVariable("topicId") Long topicId, @PathVariable("teamId") Long teamId) {
+        SignUpTopicFullDto result = topicService
+                .getFindDetailTopicRegisterService()
+                .execute(new IFindDetailTopicRegisterService.Input(topicId,teamId));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+    }
+
+    /**
+     * acceptTopic
+     *
+     * @return
+     */
+    @PostMapping(value = "/assign-topic/approve/{topicId}/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> acceptTopic(@PathVariable("topicId") Long topicId, @PathVariable("teamId") Long teamId) {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        Boolean res = false;
+        // hard code
+        if (!userPrincipal.getRoleCode().equals(ERole.USER)) {
+            res = topicService
+                    .getApproveTopicService()
+                    .execute(new IApproveTopicService.Input(topicId, teamId, userPrincipal.getRoleCode()));
+        }
+        if (res) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse(res, "Success!"));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse(res, "Fail!"));
+        }
+    }
+
+    /**
+     * decline topic
+     *
+     * @return
+     */
+    @PostMapping(value = "/assign-topic/decline/{topicId}/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> declineTopic(@PathVariable("topicId") Long topicId, @PathVariable("teamId") Long teamId) {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        Boolean res = false;
+        // hard code
+        if (!userPrincipal.getRoleCode().equals(ERole.USER)) {
+            res = topicService
+                    .getDeclineTopicService()
+                    .execute(new IDeclineTopicService.Input(topicId, teamId, userPrincipal.getRoleCode()));
+        }
+        if (res) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse(res, "Success!"));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse(res, "Fail!"));
+        }
+    }
+
 }

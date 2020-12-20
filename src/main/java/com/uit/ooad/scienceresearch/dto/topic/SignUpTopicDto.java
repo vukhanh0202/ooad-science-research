@@ -21,4 +21,9 @@ public class SignUpTopicDto {
     private EProcess facultyReview;
     private EProcess universityReview;
     private EProcess completed;
+    private String dateApproved;
+    private String dateExpired;
+    private String dateExtend;
+    private Boolean result;
+    private Boolean finish;
 }

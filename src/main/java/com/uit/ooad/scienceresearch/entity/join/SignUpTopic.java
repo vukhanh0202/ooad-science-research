@@ -44,6 +44,21 @@ public class SignUpTopic extends BaseEntity {
     @Column
     private EProcess completed;
 
+    @Column(name = "date_approved")
+    private String dateApproved;
+
+    @Column(name = "date_expired")
+    private String dateExpired;
+
+    @Column(name = "date_extend")
+    private String dateExtend;
+
+    @Column
+    private Boolean result;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean finish;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

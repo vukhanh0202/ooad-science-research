@@ -1,25 +1,18 @@
 package com.uit.ooad.scienceresearch.mapper.topic;
 
 import com.uit.ooad.scienceresearch.constant.EProcess;
-import com.uit.ooad.scienceresearch.dto.team.TeamLecturerDto;
 import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicDto;
 import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicFullDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicRegisterDto;
-import com.uit.ooad.scienceresearch.entity.Topic;
 import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
-import com.uit.ooad.scienceresearch.entity.join.TeamLecturer;
 import com.uit.ooad.scienceresearch.mapper.BaseMapper;
-import com.uit.ooad.scienceresearch.mapper.lecturer.LecturerMapper;
 import com.uit.ooad.scienceresearch.mapper.team.TeamLecturerMapper;
-import com.uit.ooad.scienceresearch.mapper.team.converter.TeamLecturerConverter;
 import com.uit.ooad.scienceresearch.mapper.topic.converter.SignUpTopicConverter;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
@@ -56,11 +49,11 @@ public abstract class SignUpTopicMapper implements BaseMapper {
         dto.setFieldTopic(entity.getTopic().getFieldTopic().getFieldName());
         dto.setLevelName(entity.getTopic().getLevel().getNameLevel());
         dto.setNameTopic(entity.getTopic().getNameTopic());
-        if (entity.getCompleted().equals(EProcess.APPROVE)) {
+        if (entity.getCompleted().equals(EProcess.finish)) {
             dto.setStatus("Completed");
-        } else if (entity.getUniversityReview().equals(EProcess.PROCESSING)) {
+        } else if (entity.getUniversityReview().equals(EProcess.process)) {
             dto.setStatus("University Review");
-        } else if (entity.getFacultyReview().equals(EProcess.PROCESSING)) {
+        } else if (entity.getFacultyReview().equals(EProcess.process)) {
             dto.setStatus("Faculty Review");
         } else {
             dto.setStatus("Decline");
@@ -72,7 +65,7 @@ public abstract class SignUpTopicMapper implements BaseMapper {
     protected void toFullTopicRegister(SignUpTopic entity, @MappingTarget SignUpTopicFullDto dto) {
         dto.setStart(entity.getStart());
         dto.setFacultyReview(entity.getFacultyReview());
-        if (!entity.getUniversityReview().equals(EProcess.NONE)) {
+        if (!entity.getUniversityReview().equals(EProcess.none)) {
             dto.setUniversityReview(entity.getUniversityReview());
         }
         dto.setCompleted(entity.getCompleted());
@@ -80,6 +73,30 @@ public abstract class SignUpTopicMapper implements BaseMapper {
                 .getTeam()
                 .getGroupLecturers()));
         dto.setTopic(topicMapper.toTopicFullDto(entity.getTopic()));
+        // Hard code
+        if (entity.getFacultyReview().equals(EProcess.error)){
+            dto.setCurrent(1L);
+            dto.setStatus(EProcess.error);
+        }else if (entity.getUniversityReview().equals(EProcess.error)){
+            dto.setCurrent(2L);
+            dto.setStatus(EProcess.error);
+        }else{
+            if(entity.getFacultyReview().equals(EProcess.process)){
+                dto.setCurrent(1L);
+                dto.setStatus(EProcess.process);
+            }else if(entity.getUniversityReview().equals(EProcess.process)){
+                dto.setCurrent(2L);
+                dto.setStatus(EProcess.process);
+            }else{
+                if (entity.getUniversityReview().equals(EProcess.none)){
+                    dto.setCurrent(2L);
+                    dto.setStatus(EProcess.finish);
+                }else{
+                    dto.setCurrent(3L);
+                    dto.setStatus(EProcess.finish);
+                }
+            }
+        }
     }
 
     @BeanMapping(qualifiedByName = "toEntity", ignoreByDefault = true)
@@ -87,14 +104,30 @@ public abstract class SignUpTopicMapper implements BaseMapper {
     @Mapping(source = "facultyReview", target = "facultyReview")
     @Mapping(source = "universityReview", target = "universityReview")
     @Mapping(source = "completed", target = "completed")
+    @Mapping(source = "dateApproved", target = "dateApproved")
+    @Mapping(source = "dateExpired", target = "dateExpired")
+    @Mapping(source = "dateExtend", target = "dateExtend")
+    @Mapping(source = "result", target = "result")
+    @Mapping(source = "finish", target = "finish")
     public abstract SignUpTopic toEntity(SignUpTopicDto dto);
 
     @BeanMapping(qualifiedByName = "toTopicRegister", ignoreByDefault = true)
     public abstract TopicRegisterDto toTopicRegisterDto(SignUpTopic entity);
 
     @BeanMapping(qualifiedByName = "toFullTopicRegister", ignoreByDefault = true)
+    @Mapping(source = "dateApproved", target = "dateApproved")
+    @Mapping(source = "dateExpired", target = "dateExpired")
+    @Mapping(source = "dateExtend", target = "dateExtend")
+    @Mapping(source = "result", target = "result")
+    @Mapping(source = "finish", target = "finish")
     public abstract SignUpTopicFullDto toSignUpTopicFullDto(SignUpTopic entity);
 
     @BeanMapping(ignoreByDefault = true)
     public abstract List<TopicRegisterDto> toListTopicRegisterDto(List<SignUpTopic> entities);
+
+    @BeanMapping(ignoreByDefault = true, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "dateExtend", target = "dateExtend")
+    @Mapping(source = "result", target = "result")
+    @Mapping(source = "finish", target = "finish")
+    public abstract void updateMyTopic(SignUpTopicDto dto, @MappingTarget SignUpTopic entity);
 }

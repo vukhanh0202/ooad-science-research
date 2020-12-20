@@ -4,21 +4,17 @@ import com.uit.ooad.scienceresearch.constant.EProcess;
 import com.uit.ooad.scienceresearch.data.UserPrincipal;
 import com.uit.ooad.scienceresearch.dto.team.TeamLecturerDto;
 import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
 import com.uit.ooad.scienceresearch.entity.Team;
 import com.uit.ooad.scienceresearch.entity.Topic;
-import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
 import com.uit.ooad.scienceresearch.exception.BadRequestException;
 import com.uit.ooad.scienceresearch.exception.InvalidException;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
 import com.uit.ooad.scienceresearch.mapper.team.TeamLecturerMapper;
 import com.uit.ooad.scienceresearch.mapper.topic.SignUpTopicMapper;
-import com.uit.ooad.scienceresearch.mapper.topic.TopicMapper;
 import com.uit.ooad.scienceresearch.repository.*;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
 import com.uit.ooad.scienceresearch.service.team.IRegisterTopicService;
-import com.uit.ooad.scienceresearch.service.topic.IAddTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,9 +22,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_NOT_FOUND;
-import static com.uit.ooad.scienceresearch.constant.MessageCode.Field.FIELD_NOT_FOUND;
-import static com.uit.ooad.scienceresearch.constant.MessageCode.Level.LEVEL_NOT_FOUND;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Register.BAD_REQUEST;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Register.EMPTY_REGISTER;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Topic.TOPIC_NOT_FOUND;
@@ -113,14 +106,17 @@ public class RegisterTopicServiceImpl extends AbstractBaseService<IRegisterTopic
             SignUpTopicDto signUpTopicDto = new SignUpTopicDto();
             signUpTopicDto.setTeamId(team.getTeamId());
             signUpTopicDto.setTopicId(input.getTopicId());
-            signUpTopicDto.setStart(EProcess.APPROVE);
-            signUpTopicDto.setFacultyReview(EProcess.PROCESSING);
+            signUpTopicDto.setStart(EProcess.finish);
+            signUpTopicDto.setFacultyReview(EProcess.process);
             if (topic.getLevel().getLevelId() == 2) {
-                signUpTopicDto.setUniversityReview(EProcess.WAITING);
+                signUpTopicDto.setUniversityReview(EProcess.wait);
             } else {
-                signUpTopicDto.setUniversityReview(EProcess.NONE);
+                signUpTopicDto.setUniversityReview(EProcess.none);
             }
-            signUpTopicDto.setCompleted(EProcess.WAITING);
+            signUpTopicDto.setCompleted(EProcess.wait);
+            signUpTopicDto.setDateApproved("NOT APPROVE");
+            signUpTopicDto.setDateExpired("NOT APPROVE");
+            signUpTopicDto.setDateExtend("0");
             signUpTopicRepository.save(signUpTopicMapper.toEntity(signUpTopicDto));
             return true;
         } catch (Exception e) {

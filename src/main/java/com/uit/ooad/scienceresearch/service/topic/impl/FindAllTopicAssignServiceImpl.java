@@ -3,16 +3,12 @@ package com.uit.ooad.scienceresearch.service.topic.impl;
 import com.uit.ooad.scienceresearch.constant.EProcess;
 import com.uit.ooad.scienceresearch.constant.ERole;
 import com.uit.ooad.scienceresearch.dto.topic.TopicRegisterDto;
-import com.uit.ooad.scienceresearch.entity.Lecturer;
-import com.uit.ooad.scienceresearch.entity.Team;
 import com.uit.ooad.scienceresearch.entity.Topic;
 import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
-import com.uit.ooad.scienceresearch.entity.join.TeamLecturer;
 import com.uit.ooad.scienceresearch.mapper.topic.SignUpTopicMapper;
 import com.uit.ooad.scienceresearch.repository.*;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
 import com.uit.ooad.scienceresearch.service.topic.IFindAllTopicAssignService;
-import com.uit.ooad.scienceresearch.service.topic.IFindAllTopicRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,9 +48,9 @@ public class FindAllTopicAssignServiceImpl extends AbstractBaseService<IFindAllT
             Set<Long> topicIdSets = new HashSet<>(topicIds);
             List<SignUpTopic> signUps = new ArrayList<>();
             if (input.getRoleCode().equals(ERole.ADMIN)){
-                signUps = signUpTopicRepository.findCustomByUniversityReviewAndListTopicId(topicIdSets, EProcess.PROCESSING.ordinal());
+                signUps = signUpTopicRepository.findCustomByUniversityReview(EProcess.process.ordinal());
             }else if (input.getRoleCode().equals(ERole.MANAGER)){
-                signUps = signUpTopicRepository.findCustomByFacultyReviewAndListTopicId(topicIdSets, EProcess.PROCESSING.ordinal());
+                signUps = signUpTopicRepository.findCustomByFacultyReviewAndListTopicId(topicIdSets, EProcess.process.ordinal());
             }
             List<TopicRegisterDto> result =  signUpTopicMapper.toListTopicRegisterDto(signUps);
             result.removeIf(topicRegisterDto -> !topicRegisterDto.getNameTopic().contains(input.getSearch()));

@@ -1,9 +1,6 @@
 package com.uit.ooad.scienceresearch.service.topic;
 
-import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicFullDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicRegisterDto;
+import com.uit.ooad.scienceresearch.dto.topic.*;
 
 import java.util.List;
 
@@ -31,4 +28,10 @@ public interface ITopicService {
     IFindAllTopicAssignService<IFindAllTopicAssignService.Input, List<TopicRegisterDto>> getFindAllTopicAssignService();
 
     IFindDetailTopicRegisterService<IFindDetailTopicRegisterService.Input, SignUpTopicFullDto> getFindDetailTopicRegisterService();
+
+    IApproveTopicService<IApproveTopicService.Input, Boolean> getApproveTopicService();
+
+    IDeclineTopicService<IDeclineTopicService.Input, Boolean> getDeclineTopicService();
+
+    IUpdateMyTopicService<SignUpTopicDto, Boolean> getUpdateMyTopicService();
 }
