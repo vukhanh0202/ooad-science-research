@@ -37,4 +37,6 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
                                                                                   @Param("facultyId") Long facultyId,
                                                                                   @Param("levelId") Long levelId,
                                                                                   @Param("fieldId") Long fieldId);
+
+    List<Topic> findAllByFacultyFacultyId(Long facultyId);
 }

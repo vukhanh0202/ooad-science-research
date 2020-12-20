@@ -1,5 +1,6 @@
 package com.uit.ooad.scienceresearch.service.topic;
 
+import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicFullDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicRegisterDto;
@@ -27,4 +28,7 @@ public interface ITopicService {
 
     IFindAllTopicRegisterService<IFindAllTopicRegisterService.Input, List<TopicRegisterDto>> getFindAllTopicRegisterService();
 
+    IFindAllTopicAssignService<IFindAllTopicAssignService.Input, List<TopicRegisterDto>> getFindAllTopicAssignService();
+
+    IFindDetailTopicRegisterService<IFindDetailTopicRegisterService.Input, SignUpTopicFullDto> getFindDetailTopicRegisterService();
 }

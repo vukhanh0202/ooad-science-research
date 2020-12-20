@@ -10,4 +10,14 @@ import lombok.Data;
  * @since 12/7/2020
  */
 public interface IFindDetailTopicRegisterService<Input, Output> extends IBaseService<Input, Output> {
+    @Data
+    class Input {
+        Long topicId;
+        Long teamId;
+
+        public Input(Long topicId, Long teamId) {
+            this.topicId = topicId;
+            this.teamId = teamId;
+        }
+    }
 }

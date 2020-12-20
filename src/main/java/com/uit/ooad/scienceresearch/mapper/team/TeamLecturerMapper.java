@@ -33,8 +33,22 @@ public abstract class TeamLecturerMapper implements BaseMapper {
         entity.setTeam(teamLecturerConverter.getTeam(dto.getTeamId()));
     }
 
+    @Named("toDto")
+    @BeforeMapping
+    protected void toDto(TeamLecturer entity, @MappingTarget TeamLecturerDto dto) {
+        dto.setFullName(entity.getLecturer().getFullName());
+    }
+
     @BeanMapping(qualifiedByName = "toEntity", ignoreByDefault = true)
     @Mapping(source = "position", target = "position")
     @Mapping(source = "primary", target = "primary")
     public abstract TeamLecturer toEntity(TeamLecturerDto dto);
+
+    @BeanMapping(qualifiedByName = "toDto", ignoreByDefault = true)
+    @Mapping(source = "position", target = "position")
+    @Mapping(source = "primary", target = "primary")
+    public abstract TeamLecturerDto toTeamLecturerDto(TeamLecturer entity);
+
+    @BeanMapping(ignoreByDefault = true)
+    public abstract List<TeamLecturerDto> toListTeamLecturerDto(List<TeamLecturer> entities);
 }

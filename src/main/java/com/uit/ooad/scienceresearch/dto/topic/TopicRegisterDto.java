@@ -18,6 +18,7 @@ import lombok.Data;
 public class TopicRegisterDto {
 
     private Long topicId;
+    private Long teamId;
     private String nameTopic;
     private String description;
     private String facultyName;

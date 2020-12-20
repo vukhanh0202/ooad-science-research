@@ -36,4 +36,10 @@ public class TopicServiceImpl implements ITopicService {
 
     @Autowired
     private IFindAllTopicRegisterService findAllTopicRegisterService;
+
+    @Autowired
+    private IFindAllTopicAssignService findAllTopicAssignService;
+
+    @Autowired
+    private IFindDetailTopicRegisterService findDetailTopicRegisterService;
 }

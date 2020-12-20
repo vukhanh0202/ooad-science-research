@@ -16,8 +16,8 @@ public class TeamLecturerDto {
 
     private Long lecturerId;
     private String username;
+    private String fullName;
     private Long teamId;
     private String position;
     private boolean isPrimary;
-
 }

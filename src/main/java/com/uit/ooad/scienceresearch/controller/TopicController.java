@@ -1,8 +1,10 @@
 package com.uit.ooad.scienceresearch.controller;
 
 import com.uit.ooad.scienceresearch.constant.DefaultConstant;
+import com.uit.ooad.scienceresearch.constant.ERole;
 import com.uit.ooad.scienceresearch.data.UserPrincipal;
 import com.uit.ooad.scienceresearch.dto.team.TeamLecturerDto;
+import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicFullDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicRegisterDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
@@ -10,10 +12,7 @@ import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
 import com.uit.ooad.scienceresearch.service.team.IRegisterTopicService;
 import com.uit.ooad.scienceresearch.service.team.ITeamService;
-import com.uit.ooad.scienceresearch.service.topic.ICountTopicService;
-import com.uit.ooad.scienceresearch.service.topic.IFindAllTopicRegisterService;
-import com.uit.ooad.scienceresearch.service.topic.IFindAllTopicService;
-import com.uit.ooad.scienceresearch.service.topic.ITopicService;
+import com.uit.ooad.scienceresearch.service.topic.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -170,13 +170,34 @@ public class TopicController {
      *
      * @return
      */
-    @GetMapping(value = "/my-topic/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getDetailMyTopic() {
-           /*List<TopicRegisterDto> result = topicService
-                .getFindAllTopicRegisterService()
-                .execute(new IFindAllTopicRegisterService.Input(search, userPrincipal.getLecturerId(), page, size));
+    @GetMapping(value = "/my-topic/{topicId}/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getDetailMyTopic(@PathVariable("topicId") Long topicId, @PathVariable("teamId") Long teamId) {
+        SignUpTopicFullDto result = topicService
+                .getFindDetailTopicRegisterService()
+                .execute(new IFindDetailTopicRegisterService.Input(topicId,teamId));
         return ResponseEntity.status(HttpStatus.OK)
-                .body(result);*/
-           return null;
+                .body(result);
+    }
+
+    /**
+     * Find assign topic
+     *
+     * @return
+     */
+    @GetMapping(value = "/assign-topic", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAssignTopic(@RequestParam(value = "search", defaultValue = "") String search) {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        // hard code
+        if (userPrincipal.getRoleCode().equals(ERole.USER)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ArrayList<>());
+        }
+        List<TopicRegisterDto> result = topicService
+                .getFindAllTopicAssignService()
+                .execute(new IFindAllTopicAssignService.Input(search, userPrincipal.getFacultyId(),
+                        userPrincipal.getRoleCode()));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
     }
 }

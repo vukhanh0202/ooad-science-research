@@ -85,6 +85,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 userPrincipal.setFullName(account.getLecturers().get(0).getFullName());
                 userPrincipal.setLecturerId(lecturer.getLecturerId());
                 userPrincipal.setFacultyId(lecturer.getFaculty().getFacultyId());
+                userPrincipal.setRoleCode(account.getRole().getCode());
                 //userPrincipal.setAuthorities((List<? extends GrantedAuthority>) userDetails.getAuthorities());
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(

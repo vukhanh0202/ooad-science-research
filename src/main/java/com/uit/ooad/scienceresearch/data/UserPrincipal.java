@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.uit.ooad.scienceresearch.constant.ERole;
 import com.uit.ooad.scienceresearch.data.serializer.CustomAuthorityDeserializer;
 import lombok.Data;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class UserPrincipal implements UserDetails {
     private String fullName;
     private Long facultyId;
     private Long lecturerId;
+    private ERole roleCode;
 
 
 

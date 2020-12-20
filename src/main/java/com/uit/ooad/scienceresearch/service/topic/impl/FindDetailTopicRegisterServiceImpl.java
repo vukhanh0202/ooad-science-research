@@ -1,5 +1,6 @@
 package com.uit.ooad.scienceresearch.service.topic.impl;
 
+import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicFullDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicRegisterDto;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
 import com.uit.ooad.scienceresearch.entity.Team;
@@ -22,33 +23,22 @@ import java.util.stream.Collectors;
  * @since 12/7/2020
  */
 @Service
-public class FindDetailTopicRegisterServiceImpl extends AbstractBaseService<Long, TopicRegisterDto>
-        implements IFindDetailTopicRegisterService<Long, TopicRegisterDto> {
-
-
-    @Autowired
-    LecturerRepository lecturerRepository;
+public class FindDetailTopicRegisterServiceImpl extends AbstractBaseService<IFindDetailTopicRegisterService.Input, SignUpTopicFullDto>
+        implements IFindDetailTopicRegisterService<IFindDetailTopicRegisterService.Input, SignUpTopicFullDto> {
 
     @Autowired
-    TopicRepository topicRepository;
+    SignUpTopicRepository signUpTopicRepository;
 
     @Autowired
     SignUpTopicMapper signUpTopicMapper;
 
-    @Autowired
-    FacultyRepository facultyRepository;
-
-    @Autowired
-    LevelRepository levelRepository;
-
-    @Autowired
-    FieldTopicRepository fieldTopicRepository;
-
 
     @Override
-    public TopicRegisterDto doing(Long topicId) {
+    public SignUpTopicFullDto doing(Input input) {
         try {
-            return null;
+            SignUpTopic signUpTopic = signUpTopicRepository
+                    .findByTopicTopicIdAndTeamTeamId(input.getTopicId(),input.getTeamId());
+            return signUpTopicMapper.toSignUpTopicFullDto(signUpTopic);
         } catch (Exception e) {
             return null;
         }
