@@ -45,6 +45,9 @@ public class Lecturer extends BaseEntity {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "degree")
+    private String degree;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contract_id")
     private Contract contract;

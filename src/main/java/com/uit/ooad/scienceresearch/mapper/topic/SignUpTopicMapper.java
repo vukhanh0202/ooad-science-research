@@ -1,11 +1,9 @@
 package com.uit.ooad.scienceresearch.mapper.topic;
 
 import com.uit.ooad.scienceresearch.constant.EProcess;
+import com.uit.ooad.scienceresearch.dto.lecturer.LecturerTopicRegisterDto;
 import com.uit.ooad.scienceresearch.dto.team.TeamLecturerDto;
-import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicDto;
-import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicForFaculty;
-import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicFullDto;
-import com.uit.ooad.scienceresearch.dto.topic.TopicRegisterDto;
+import com.uit.ooad.scienceresearch.dto.topic.*;
 import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
 import com.uit.ooad.scienceresearch.entity.join.TeamLecturer;
 import com.uit.ooad.scienceresearch.mapper.BaseMapper;
@@ -15,6 +13,7 @@ import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -45,6 +44,7 @@ public abstract class SignUpTopicMapper implements BaseMapper {
     @Named("toTopicRegister")
     @BeforeMapping
     protected void toTopicRegister(SignUpTopic entity, @MappingTarget TopicRegisterDto dto) {
+        dto.setYear(entity.getTopic().getYear());
         dto.setTopicId(entity.getTopic().getTopicId());
         dto.setTeamId(entity.getTeam().getTeamId());
         dto.setDescription(entity.getTopic().getDescription());
@@ -162,6 +162,27 @@ public abstract class SignUpTopicMapper implements BaseMapper {
         }
     }
 
+    @Named("toInfoTopicDto")
+    @BeforeMapping
+    protected void toInfoTopicDto(SignUpTopic entity, @MappingTarget InfoTopicDto dto) {
+        dto.setTopic(topicMapper.toTopicFullDto(entity.getTopic()));
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        dto.setDateRegister(formatter.format(entity.getCreatedAt()));
+        if (entity.getFinish()) {
+            dto.setFinish("COMPLETED");
+        } else {
+            dto.setFinish("NOT COMPLETED");
+        }
+        dto.setDateApprove(entity.getDateApproved());
+        if (entity.getResult() == null) {
+            dto.setResult("NOT YET RATE");
+        } else if (entity.getResult()) {
+            dto.setResult("PASS");
+        } else {
+            dto.setResult("FAIL");
+        }
+    }
+
     @BeanMapping(qualifiedByName = "toEntity", ignoreByDefault = true)
     @Mapping(source = "start", target = "start")
     @Mapping(source = "facultyReview", target = "facultyReview")
@@ -189,6 +210,9 @@ public abstract class SignUpTopicMapper implements BaseMapper {
     @Mapping(source = "dateExtend", target = "dateExtend")
     public abstract SignUpTopicForFaculty toSignUpTopicForFaculty(SignUpTopic entity);
 
+    @BeanMapping(qualifiedByName = "toInfoTopicDto", ignoreByDefault = true)
+    public abstract InfoTopicDto toInfoTopicDto(SignUpTopic entity);
+
     @BeanMapping(ignoreByDefault = true)
     public abstract List<SignUpTopicFullDto> toListSignUpTopicFullDto(List<SignUpTopic> entities);
 
@@ -197,6 +221,9 @@ public abstract class SignUpTopicMapper implements BaseMapper {
 
     @BeanMapping(ignoreByDefault = true)
     public abstract List<SignUpTopicForFaculty> toListSignUpTopicForFaculty(List<SignUpTopic> entities);
+
+    @BeanMapping(ignoreByDefault = true)
+    public abstract List<InfoTopicDto> toListInfoTopicDto(List<SignUpTopic> entities);
 
     @BeanMapping(ignoreByDefault = true, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "dateExtend", target = "dateExtend")

@@ -37,5 +37,9 @@ public interface SignUpTopicRepository extends JpaRepository<SignUpTopic, SignUp
             nativeQuery = true)
     List<SignUpTopic> findCustomByListTopicId(@Param("topicIds") Set<Long> topicIds);
 
+    @Query(value = "SELECT * FROM signup_topic s WHERE " +
+            " s.team_id IN :teamIds",
+            nativeQuery = true)
+    List<SignUpTopic> findCustomByTeamId(@Param("teamIds") Set<Long> teamIds);
 }
 

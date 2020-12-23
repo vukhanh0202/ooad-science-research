@@ -25,4 +25,5 @@ public class TopicRegisterDto {
     private String levelName;
     private String fieldTopic;
     private String status;
+    private Long year;
 }

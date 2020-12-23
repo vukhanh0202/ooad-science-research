@@ -30,4 +30,5 @@ public class AccountLecturerDto {
     private Long facultyId;
     private Long accountId;
     private String position;
+    private String degree;
 }

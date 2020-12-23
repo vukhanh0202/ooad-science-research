@@ -35,4 +35,7 @@ public class FacultyServiceImpl implements IFacultyService {
 
     @Autowired
     IFindDetailTopicOfFacultyService findDetailTopicOfFacultyService;
+
+    @Autowired
+    IFindDetailLecturerOfFacultyService findDetailLecturerOfFacultyService;
 }

@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.uit.ooad.scienceresearch.dto.BaseDto;
+import com.uit.ooad.scienceresearch.dto.topic.InfoTopicDto;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
@@ -16,17 +18,8 @@ import java.util.Date;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LecturerFullDto extends BaseDto{
+public class LecturerTopicRegisterDto{
 
-    private Long lecturerId;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date dob;
-    private String fullName;
-    private String major;
-    private String email;
-    private String phone;
-    private String degree;
-    private String contract;
-    private String faculty;
-    private String position;
+    private LecturerFullDto lecturer;
+    private List<InfoTopicDto> listTopicRegister;
 }

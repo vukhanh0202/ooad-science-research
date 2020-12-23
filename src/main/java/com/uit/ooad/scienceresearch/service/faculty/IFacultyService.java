@@ -3,6 +3,7 @@ package com.uit.ooad.scienceresearch.service.faculty;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
 import com.uit.ooad.scienceresearch.dto.faculty.TopicFacultyDto;
+import com.uit.ooad.scienceresearch.dto.lecturer.LecturerTopicRegisterDto;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface IFacultyService {
     IUpdateFacultyService<FacultyFullDto, Boolean> getUpdateFacultyService();
 
     IFindDetailTopicOfFacultyService<IFindDetailTopicOfFacultyService.Input, TopicFacultyDto> getFindDetailTopicOfFacultyService();
+
+    IFindDetailLecturerOfFacultyService<Long, LecturerTopicRegisterDto> getFindDetailLecturerOfFacultyService();
 }

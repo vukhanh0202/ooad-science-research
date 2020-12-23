@@ -5,6 +5,7 @@ import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
 import com.uit.ooad.scienceresearch.dto.faculty.TopicFacultyDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
+import com.uit.ooad.scienceresearch.dto.lecturer.LecturerTopicRegisterDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
@@ -146,6 +147,20 @@ public class FacultyController {
                 .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
                         , size, page, result));
     }
+    /**
+     * Find Detail Topic Of Faculty
+     *
+     * @return
+     */
+    @GetMapping(value = "/topic/detail/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findDetailTopicOfFaculty(@PathVariable("topicId") Long topicId) {
+        TopicFacultyDto result = facultyService
+                .getFindDetailTopicOfFacultyService()
+                .execute(new IFindDetailTopicOfFacultyService.Input(topicId));
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+    }
 
     /**
      * File ALl Lecturer of Faculty
@@ -173,16 +188,15 @@ public class FacultyController {
     }
 
     /**
-     * Find Detail Topic Of Faculty
+     * Find Detail Lecturer Of Faculty
      *
      * @return
      */
-    @GetMapping(value = "/topic/detail/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findDetailTopicOfFaculty(@PathVariable("topicId") Long topicId) {
-        TopicFacultyDto result = facultyService
-                .getFindDetailTopicOfFacultyService()
-                .execute(new IFindDetailTopicOfFacultyService.Input(topicId));
-
+    @GetMapping(value = "/lecturer/detail/{lecturerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findDetailLecturerOfFaculty(@PathVariable("lecturerId") Long lecturerId) {
+        LecturerTopicRegisterDto result = facultyService
+                .getFindDetailLecturerOfFacultyService()
+                .execute(lecturerId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
     }
