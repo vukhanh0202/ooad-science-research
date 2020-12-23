@@ -1,5 +1,6 @@
 package com.uit.ooad.scienceresearch.service.team.impl;
 
+import com.uit.ooad.scienceresearch.service.team.IFindMemberOfTeamService;
 import com.uit.ooad.scienceresearch.service.team.IRegisterTopicService;
 import com.uit.ooad.scienceresearch.service.team.ITeamService;
 import lombok.Getter;
@@ -17,4 +18,7 @@ public class TeamServiceImpl implements ITeamService {
 
     @Autowired
     IRegisterTopicService registerTopicService;
+
+    @Autowired
+    IFindMemberOfTeamService findMemberOfTeamService;
 }

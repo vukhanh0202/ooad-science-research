@@ -2,6 +2,7 @@ package com.uit.ooad.scienceresearch.service.faculty;
 
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
+import com.uit.ooad.scienceresearch.dto.faculty.TopicFacultyDto;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface IFacultyService {
     IAddFacultyService<FacultyFullDto, Boolean> getAddFacultyService();
 
     IUpdateFacultyService<FacultyFullDto, Boolean> getUpdateFacultyService();
+
+    IFindDetailTopicOfFacultyService<IFindDetailTopicOfFacultyService.Input, TopicFacultyDto> getFindDetailTopicOfFacultyService();
 }

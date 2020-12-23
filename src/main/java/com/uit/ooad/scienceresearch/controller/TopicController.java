@@ -46,12 +46,15 @@ public class TopicController {
                                          @RequestParam(value = "search", defaultValue = "") String search,
                                          @RequestParam(value = "facultyId", defaultValue = "") Long facultyId,
                                          @RequestParam(value = "levelId", defaultValue = "") Long levelId,
-                                         @RequestParam(value = "fieldId", defaultValue = "") Long fieldId) {
+                                         @RequestParam(value = "fieldId", defaultValue = "") Long fieldId,
+                                         @RequestParam(value = "year", defaultValue = "") Long year,
+                                         @RequestParam(value = "deleted", defaultValue = "") Boolean deleted) {
         List<TopicFullDto> result = topicService
                 .getFindAllTopicService()
-                .execute(new IFindAllTopicService.Input(search, facultyId, levelId, fieldId, page, size));
+                .execute(new IFindAllTopicService.Input(search, facultyId, levelId, fieldId, year, deleted, page, size));
 
-        Long totalItem = topicService.getCountTopicService().execute(new ICountTopicService.Input(search, facultyId, levelId, fieldId));
+        Long totalItem = topicService.getCountTopicService().execute(new ICountTopicService.Input(search, facultyId,
+                levelId, fieldId, year, deleted));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
                         , size, page, result));
@@ -171,7 +174,7 @@ public class TopicController {
     public ResponseEntity<?> getDetailMyTopic(@PathVariable("topicId") Long topicId, @PathVariable("teamId") Long teamId) {
         SignUpTopicFullDto result = topicService
                 .getFindDetailTopicRegisterService()
-                .execute(new IFindDetailTopicRegisterService.Input(topicId,teamId));
+                .execute(new IFindDetailTopicRegisterService.Input(topicId, teamId));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
     }
@@ -200,7 +203,7 @@ public class TopicController {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         // hard code
-        if (userPrincipal.getRoleCode().equals(ERole.USER)){
+        if (userPrincipal.getRoleCode().equals(ERole.USER)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ArrayList<>());
         }
@@ -221,7 +224,7 @@ public class TopicController {
     public ResponseEntity<?> getDetailAssignTopic(@PathVariable("topicId") Long topicId, @PathVariable("teamId") Long teamId) {
         SignUpTopicFullDto result = topicService
                 .getFindDetailTopicRegisterService()
-                .execute(new IFindDetailTopicRegisterService.Input(topicId,teamId));
+                .execute(new IFindDetailTopicRegisterService.Input(topicId, teamId));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
     }

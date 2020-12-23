@@ -26,5 +26,5 @@ public class TopicFullDto extends BaseDto {
     private FacultyDto faculty;
     private LevelDto level;
     private FieldTopicDto fieldTopic;
-
+    private String status;
 }

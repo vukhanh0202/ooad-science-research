@@ -1,5 +1,6 @@
 package com.uit.ooad.scienceresearch.service.team;
 
+import com.uit.ooad.scienceresearch.dto.team.TeamLecturerDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.service.topic.*;
@@ -14,4 +15,6 @@ import java.util.List;
 public interface ITeamService {
 
     IRegisterTopicService<IRegisterTopicService.Input,Boolean> getRegisterTopicService();
+
+    IFindMemberOfTeamService<Long,List<TeamLecturerDto>> getFindMemberOfTeamService();
 }

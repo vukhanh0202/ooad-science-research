@@ -17,17 +17,21 @@ public interface IFindAllTopicService<Input, Output> extends IBaseService<Input,
         Long facultyId;
         Long levelId;
         Long fieldId;
+        Long year;
+        Boolean deleted;
 
         public Input(Integer page, Integer size) {
             super(page, size);
         }
 
-        public Input(String search, Long facultyId, Long levelId, Long fieldId, Integer page, Integer size) {
+        public Input(String search, Long facultyId, Long levelId, Long fieldId, Long year, Boolean deleted, Integer page, Integer size) {
             super(page, size);
             this.search = search;
             this.facultyId = facultyId;
             this.levelId = levelId;
             this.fieldId = fieldId;
+            this.year = year;
+            this.deleted = deleted;
         }
     }
 }

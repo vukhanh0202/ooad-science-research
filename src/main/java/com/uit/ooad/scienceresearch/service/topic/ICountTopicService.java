@@ -16,11 +16,16 @@ public interface ICountTopicService<Input, Output> extends IBaseService<Input, O
         Long facultyId;
         Long levelId;
         Long fieldId;
-        public Input(String search, Long facultyId, Long levelId, Long fieldId) {
+        Long year;
+        Boolean deleted;
+
+        public Input(String search, Long facultyId, Long levelId, Long fieldId, Long year, Boolean deleted) {
             this.search = search;
             this.facultyId = facultyId;
             this.levelId = levelId;
             this.fieldId = fieldId;
+            this.year = year;
+            this.deleted = deleted;
         }
     }
 }

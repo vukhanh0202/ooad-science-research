@@ -34,7 +34,8 @@ public class DeleteTopicServiceImpl extends AbstractBaseService<TopicDto, Boolea
     public Boolean doing(TopicDto topicDto) {
         try{
             Topic topic = topicRepository.findById(topicDto.getTopicId()).get();
-            topicRepository.delete(topic);
+            topic.setDeleted(true);
+            topicRepository.save(topic);
             return true;
         }catch (Exception e){
             return false;

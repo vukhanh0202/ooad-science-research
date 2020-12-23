@@ -74,10 +74,8 @@ public class FindAllTopicServiceImpl extends AbstractBaseService<IFindAllTopicSe
         try {
             return topicMapper.toListTopicFullDto(topicRepository
                     .findCustomerByNameTopicContainingAndFacultyIdAndLevelIdAndFieldId(input.getSearch(),
-                            input.getFacultyId(),input.getLevelId(),input.getFieldId(),
+                            input.getFacultyId(), input.getLevelId(), input.getFieldId(), input.getYear(),input.getDeleted(),
                             input.createPageable(Sort.Direction.ASC, "createdAt")));
-
-
         } catch (Exception e) {
             return null;
         }

@@ -13,6 +13,8 @@ import com.uit.ooad.scienceresearch.service.topic.IAddTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_NOT_FOUND;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Field.FIELD_NOT_FOUND;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Level.LEVEL_NOT_FOUND;
@@ -57,6 +59,7 @@ public class AddTopicServiceImpl extends AbstractBaseService<TopicDto, Boolean>
     @Override
     public Boolean doing(TopicDto topicDto) {
         try{
+            topicDto.setYear((long) LocalDate.now().getYear());
             topicRepository.save(topicMapper.toTopic(topicDto));
             return true;
         }catch (Exception e){

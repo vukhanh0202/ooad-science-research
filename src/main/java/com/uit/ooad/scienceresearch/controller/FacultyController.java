@@ -3,17 +3,20 @@ package com.uit.ooad.scienceresearch.controller;
 import com.uit.ooad.scienceresearch.constant.DefaultConstant;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
+import com.uit.ooad.scienceresearch.dto.faculty.TopicFacultyDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.dto.topic.TopicFullDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
 import com.uit.ooad.scienceresearch.service.faculty.IFacultyService;
 import com.uit.ooad.scienceresearch.service.faculty.IFindAllFacultyService;
+import com.uit.ooad.scienceresearch.service.faculty.IFindDetailTopicOfFacultyService;
 import com.uit.ooad.scienceresearch.service.lecturer.ICountLecturerService;
 import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerService;
 import com.uit.ooad.scienceresearch.service.lecturer.ILecturerService;
 import com.uit.ooad.scienceresearch.service.topic.ICountTopicService;
 import com.uit.ooad.scienceresearch.service.topic.IFindAllTopicService;
+import com.uit.ooad.scienceresearch.service.topic.IFindDetailTopicRegisterService;
 import com.uit.ooad.scienceresearch.service.topic.ITopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,8 +70,8 @@ public class FacultyController {
     public ResponseEntity<?> getAllFacultyNoPageable() {
         List<FacultyDto> result = facultyService.getFindAllNameFacultyService().execute();
         return ResponseEntity.status(HttpStatus.OK)
-            .body(result);
-}
+                .body(result);
+    }
 
 
     /**
@@ -131,12 +134,14 @@ public class FacultyController {
                                          @RequestParam(value = "search", defaultValue = "") String search,
                                          @RequestParam(value = "levelId", defaultValue = "") Long levelId,
                                          @RequestParam(value = "fieldId", defaultValue = "") Long fieldId,
+                                         @RequestParam(value = "year", defaultValue = "") Long year,
+                                         @RequestParam(value = "deleted", defaultValue = "") Boolean deleted,
                                          @PathVariable("id") Long facultyId) {
         List<TopicFullDto> result = topicService
                 .getFindAllTopicService()
-                .execute(new IFindAllTopicService.Input(search, facultyId, levelId, fieldId, page, size));
+                .execute(new IFindAllTopicService.Input(search, facultyId, levelId, fieldId, year, deleted, page, size));
 
-        Long totalItem = topicService.getCountTopicService().execute(new ICountTopicService.Input(search, facultyId, levelId, fieldId));
+        Long totalItem = topicService.getCountTopicService().execute(new ICountTopicService.Input(search, facultyId, levelId, fieldId, year, deleted));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
                         , size, page, result));
@@ -159,11 +164,26 @@ public class FacultyController {
                                             @RequestParam(value = "contractId", defaultValue = "") Long contractId,
                                             @PathVariable("id") Long facultyId) {
         List<LecturerFullDto> result = lecturerService.getFindAllLecturerService()
-                .execute(new IFindAllLecturerService.Input(search,facultyId,contractId, page, size));
+                .execute(new IFindAllLecturerService.Input(search, facultyId, contractId, page, size));
 
-        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search,facultyId,contractId, page, size));
+        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search, facultyId, contractId, page, size));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
                         , size, page, result));
+    }
+
+    /**
+     * Find Detail Topic Of Faculty
+     *
+     * @return
+     */
+    @GetMapping(value = "/topic/detail/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findDetailTopicOfFaculty(@PathVariable("topicId") Long topicId) {
+        TopicFacultyDto result = facultyService
+                .getFindDetailTopicOfFacultyService()
+                .execute(new IFindDetailTopicOfFacultyService.Input(topicId));
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
     }
 }

@@ -23,6 +23,12 @@ public abstract class TopicMapper implements BaseMapper {
     @Autowired
     private TopicConverter topicConverter;
 
+    @Named("tòFullDto")
+    @BeforeMapping
+    protected void tòFullDto(Topic entity, @MappingTarget TopicFullDto dto) {
+        dto.setStatus(entity.isDeleted() ? "DELETED" : "ACTIVE");
+    }
+
     @Named("toEntity")
     @BeforeMapping
     protected void toEntity(TopicDto dto, @MappingTarget Topic entity) {
@@ -39,7 +45,7 @@ public abstract class TopicMapper implements BaseMapper {
     @Mapping(source = "description", target = "description")
     public abstract Topic toTopic(TopicDto topicDto);
 
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(qualifiedByName = "tòFullDto",ignoreByDefault = true)
     @Mapping(source = "topicId", target = "topicId")
     @Mapping(source = "nameTopic", target = "nameTopic")
     @Mapping(source = "faculty", target = "faculty")

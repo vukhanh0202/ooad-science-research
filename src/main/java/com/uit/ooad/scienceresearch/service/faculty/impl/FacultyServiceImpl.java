@@ -32,4 +32,7 @@ public class FacultyServiceImpl implements IFacultyService {
 
     @Autowired
     IUpdateFacultyService updateFacultyService;
+
+    @Autowired
+    IFindDetailTopicOfFacultyService findDetailTopicOfFacultyService;
 }

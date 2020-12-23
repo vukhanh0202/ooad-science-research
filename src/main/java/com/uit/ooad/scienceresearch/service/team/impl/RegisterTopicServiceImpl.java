@@ -117,6 +117,7 @@ public class RegisterTopicServiceImpl extends AbstractBaseService<IRegisterTopic
             signUpTopicDto.setDateApproved("NOT APPROVE");
             signUpTopicDto.setDateExpired("NOT APPROVE");
             signUpTopicDto.setDateExtend("0");
+            signUpTopicDto.setFinish(false);
             signUpTopicRepository.save(signUpTopicMapper.toEntity(signUpTopicDto));
             return true;
         } catch (Exception e) {

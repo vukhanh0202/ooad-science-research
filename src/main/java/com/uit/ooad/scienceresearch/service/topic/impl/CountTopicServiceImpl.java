@@ -23,6 +23,7 @@ public class CountTopicServiceImpl extends AbstractBaseService<ICountTopicServic
     public Long doing(ICountTopicService.Input input) {
         return topicRepository
                 .countCustomerByNameTopicContainingAndFacultyIdAndLevelIdAndFieldId(
-                        input.getSearch(), input.getFacultyId(), input.getLevelId(), input.getFieldId());
+                        input.getSearch(), input.getFacultyId(), input.getLevelId(), input.getFieldId(), input.getYear()
+                        ,input.getDeleted());
     }
 }

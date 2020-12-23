@@ -20,23 +20,31 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
     @Query(value = "SELECT * FROM TOPIC t WHERE LOWER(t.name_topic) LIKE CONCAT(\"%\", LOWER(:nameTopic), \"%\")" +
             " AND (:facultyId is null or t.faculty_id = :facultyId)" +
             " AND (:levelId is null or t.level_id = :levelId)" +
-            " AND (:fieldId is null or t.field_id = :fieldId)",
+            " AND (:fieldId is null or t.field_id = :fieldId)" +
+            " AND (:year is null or t.year = :year)" +
+            " AND (:deleted is null or t.isDeleted = :deleted)",
             nativeQuery = true)
     List<Topic> findCustomerByNameTopicContainingAndFacultyIdAndLevelIdAndFieldId(@Param("nameTopic") String nameTopic,
-                                                                             @Param("facultyId") Long facultyId,
-                                                                             @Param("levelId") Long levelId,
-                                                                             @Param("fieldId") Long fieldId,
-                                                                             Pageable pageable);
+                                                                                  @Param("facultyId") Long facultyId,
+                                                                                  @Param("levelId") Long levelId,
+                                                                                  @Param("fieldId") Long fieldId,
+                                                                                  @Param("year") Long year,
+                                                                                  @Param("deleted") Boolean deleted,
+                                                                                  Pageable pageable);
 
     @Query(value = "SELECT COUNT(*) FROM TOPIC t WHERE LOWER(t.name_topic) LIKE CONCAT(\"%\", LOWER(:nameTopic), \"%\")" +
             " AND (:facultyId is null or t.faculty_id = :facultyId)" +
             " AND (:levelId is null or t.level_id = :levelId)" +
-            " AND (:fieldId is null or t.field_id = :fieldId)",
+            " AND (:fieldId is null or t.field_id = :fieldId)" +
+            " AND (:year is null or t.year = :year)" +
+            " AND (:deleted is null or t.isDeleted = :deleted)",
             nativeQuery = true)
     Long countCustomerByNameTopicContainingAndFacultyIdAndLevelIdAndFieldId(@Param("nameTopic") String nameTopic,
-                                                                                  @Param("facultyId") Long facultyId,
-                                                                                  @Param("levelId") Long levelId,
-                                                                                  @Param("fieldId") Long fieldId);
+                                                                            @Param("facultyId") Long facultyId,
+                                                                            @Param("levelId") Long levelId,
+                                                                            @Param("fieldId") Long fieldId,
+                                                                            @Param("year") Long year,
+                                                                            @Param("deleted") Boolean deleted);
 
     List<Topic> findAllByFacultyFacultyId(Long facultyId);
 }
