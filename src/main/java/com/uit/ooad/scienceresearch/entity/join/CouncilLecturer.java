@@ -10,16 +10,16 @@ import java.util.Objects;
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
- * @since 12/6/2020
+ * @since 12/19/2020
  */
 @Entity
-@Table(name = "accept_council")
+@Table(name = "council_lecturer")
 @Data
 @NoArgsConstructor
-public class AcceptCouncil extends BaseEntity {
+public class CouncilLecturer extends BaseEntity {
 
     @EmbeddedId
-    private AcceptCouncilId id = new AcceptCouncilId();
+    private CouncilLecturerId id = new CouncilLecturerId();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("councilId")
@@ -27,30 +27,26 @@ public class AcceptCouncil extends BaseEntity {
     private Council council;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("topicId")
-    @JoinColumn(name = "topic_id")
-    private Topic topic;
+    @MapsId("lecturerId")
+    @JoinColumn(name = "lecturer_id")
+    private Lecturer lecturer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("positionId")
+    @JoinColumn(name = "position_id")
+    private Position position;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        AcceptCouncil that = (AcceptCouncil) o;
+        CouncilLecturer that = (CouncilLecturer) o;
         return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);
-    }
-
-    @Override
-    public String toString() {
-        return "AcceptCouncil{" +
-                "id=" + id +
-                ", council=" + council +
-                ", topic=" + topic +
-                '}';
     }
 }

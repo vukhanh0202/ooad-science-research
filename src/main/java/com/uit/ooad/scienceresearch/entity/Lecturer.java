@@ -1,5 +1,6 @@
 package com.uit.ooad.scienceresearch.entity;
 
+import com.uit.ooad.scienceresearch.entity.join.CouncilLecturer;
 import com.uit.ooad.scienceresearch.entity.join.TeamLecturer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -60,6 +61,9 @@ public class Lecturer extends BaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "lecturer")
     private List<TeamLecturer> groupLecturers;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lecturer")
+    private List<CouncilLecturer> councilLecturers;
 
     @Override
     public boolean equals(Object o) {
