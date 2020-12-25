@@ -15,18 +15,14 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TopicReview {
+public class TopicReviewByCouncilDto {
 
-    private Long topicId;
-    private Long id;
     private Long teamId;
     private String leader;
     private String nameTopic;
-    private String facultyName;
     private String levelName;
     private String fieldTopic;
-    private String status;
     private Long year;
-    private List<TeamLecturerDto> members;
-    private Long councilId;
+    private String result;
+    private List<RecordDto> recordList;
 }

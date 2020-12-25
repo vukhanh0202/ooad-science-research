@@ -44,6 +44,10 @@ public class Record extends BaseEntity {
     @Column(name = "score")
     private Long score;
 
+    @Column(name = "comment")
+    private String comment;
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

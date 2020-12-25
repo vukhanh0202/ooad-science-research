@@ -7,19 +7,14 @@ import lombok.Data;
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
  * @project Manage Science Research
- * @since 12/25/2020
+ * @since 12/26/2020
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RecordDto {
-
+public class CouncilInfoDto {
     private Long councilId;
-    private Long topicId;
-    private Long teamId;
-    private Long lecturerId;
-    private String nameLecturer;
-    private String position;
-    private String score;
-    private String comment;
+    private String nameTopic;
+    private String presidentOfCouncil;
+    private Long totalRegister;
 }

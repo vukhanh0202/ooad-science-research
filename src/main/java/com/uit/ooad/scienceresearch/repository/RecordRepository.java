@@ -14,4 +14,6 @@ import java.util.Optional;
  * @since 12/6/2020
  */
 public interface RecordRepository extends JpaRepository<Record, RecordId> {
+
+    List<Record> findAllByCouncil_CouncilIdAndTeamTeamIdAndTopicTopicId(Long councilId, Long teamId, Long topicId);
 }

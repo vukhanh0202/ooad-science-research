@@ -48,5 +48,7 @@ public interface SignUpTopicRepository extends JpaRepository<SignUpTopic, SignUp
             nativeQuery = true)
     List<SignUpTopic> findCustomByTeamId(@Param("teamIds") Set<Long> teamIds);
 
+    List<SignUpTopic> findAllByCouncil_CouncilId(Long councilId);
+
 }
 

@@ -25,7 +25,7 @@ public class PositionController {
     IPositionService positionService;
 
     /**
-     * Find All Faculty No pageable
+     * Find All Position No pageable
      *
      * @return
      */

@@ -1,11 +1,14 @@
 package com.uit.ooad.scienceresearch.controller;
 
 import com.uit.ooad.scienceresearch.data.UserPrincipal;
+import com.uit.ooad.scienceresearch.dto.council.CouncilFullDto;
+import com.uit.ooad.scienceresearch.dto.council.CouncilInfoDto;
 import com.uit.ooad.scienceresearch.dto.council.CouncilLecturerDto;
 import com.uit.ooad.scienceresearch.dto.council.TopicReview;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.service.council.ICouncilService;
 import com.uit.ooad.scienceresearch.service.council.ICreateCouncilService;
+import com.uit.ooad.scienceresearch.service.council.IFindAllListCouncilService;
 import com.uit.ooad.scienceresearch.service.council.IFindAllTopicReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,5 +64,33 @@ public class CouncilController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponse(res, "Fail!"));
         }
+    }
+
+    /**
+     * Find List council
+     *
+     * @return
+     */
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getListCouncil(@RequestParam(value = "facultyId", defaultValue = "") Long facultyId) {
+        List<CouncilInfoDto> result = councilService
+                .getFindAllListCouncilService()
+                .execute(new IFindAllListCouncilService.Input(facultyId));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+    }
+
+    /**
+     * Find Dẻtail council
+     *
+     * @return
+     */
+    @GetMapping(value = "/{councilId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getDetailCouncil(@PathVariable("councilId") Long councilId) {
+        CouncilFullDto result = councilService
+                .getFindDetailCouncilService()
+                .execute(councilId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
     }
 }

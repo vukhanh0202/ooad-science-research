@@ -54,7 +54,9 @@ public class FindAllTopicReviewServiceImpl extends AbstractBaseService<IFindAllT
             List<Long> idTopicList = facultyRepository.findById(input.getFacultyId()).get()
                     .getTopics().stream().map(Topic::getTopicId).collect(Collectors.toList());
             Set<Long> idTopicSet = new HashSet<>(idTopicList);
-            return councilMapper.toListTopicReview(signUpTopicRepository.findCustomByListTopicIdAndFinish(idTopicSet, true));
+            List<TopicReview> result = councilMapper.toListTopicReview(signUpTopicRepository.findCustomByListTopicIdAndFinish(idTopicSet, true));
+            result.removeIf(topicReview -> topicReview.getCouncilId() != null);
+            return result;
         } catch (Exception e) {
             return null;
         }

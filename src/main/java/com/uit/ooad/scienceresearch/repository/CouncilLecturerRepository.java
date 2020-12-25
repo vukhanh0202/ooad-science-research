@@ -17,5 +17,6 @@ import java.util.Set;
  * @since 12/19/2020
  */
 public interface CouncilLecturerRepository extends JpaRepository<CouncilLecturer, CouncilLecturerId> {
+    List<CouncilLecturer> findAllByCouncil_CouncilIdAndLecturer_LecturerId(Long councilId, Long lecturerId);
 }
 
