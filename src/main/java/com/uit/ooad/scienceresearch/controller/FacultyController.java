@@ -1,6 +1,7 @@
 package com.uit.ooad.scienceresearch.controller;
 
 import com.uit.ooad.scienceresearch.constant.DefaultConstant;
+import com.uit.ooad.scienceresearch.data.UserPrincipal;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
 import com.uit.ooad.scienceresearch.dto.faculty.TopicFacultyDto;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -168,20 +170,21 @@ public class FacultyController {
      * @param page
      * @param size
      * @param search
-     * @param facultyId
      * @param contractId
      * @return
      */
-    @GetMapping(value = "/lecturer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/lecturer", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllLecturer(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
                                             @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
                                             @RequestParam(value = "search", defaultValue = "") String search,
-                                            @RequestParam(value = "contractId", defaultValue = "") Long contractId,
-                                            @PathVariable("id") Long facultyId) {
-        List<LecturerFullDto> result = lecturerService.getFindAllLecturerService()
-                .execute(new IFindAllLecturerService.Input(search, facultyId, contractId, page, size));
+                                            @RequestParam(value = "contractId", defaultValue = "") Long contractId) {
 
-        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search, facultyId, contractId, page, size));
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        List<LecturerFullDto> result = lecturerService.getFindAllLecturerService()
+                .execute(new IFindAllLecturerService.Input(search, userPrincipal.getFacultyId(), contractId, page, size));
+
+        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search, userPrincipal.getFacultyId(), contractId, page, size));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
                         , size, page, result));

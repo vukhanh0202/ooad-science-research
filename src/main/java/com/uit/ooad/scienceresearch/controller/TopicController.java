@@ -179,6 +179,12 @@ public class TopicController {
                 .body(result);
     }
 
+    /**
+     * Maintain or completed my topic
+     *
+     * @param body
+     * @return
+     */
     @PutMapping(value = "/my-topic", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateRegisterTopic(@RequestBody SignUpTopicDto body) {
         Boolean res = topicService

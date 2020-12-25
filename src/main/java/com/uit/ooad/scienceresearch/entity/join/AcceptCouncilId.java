@@ -12,7 +12,7 @@ public class AcceptCouncilId implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long lecturerId;
+    private Long councilId;
     private Long topicId;
 
     @Override
@@ -20,13 +20,13 @@ public class AcceptCouncilId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcceptCouncilId that = (AcceptCouncilId) o;
-        return Objects.equals(lecturerId, that.lecturerId) &&
+        return Objects.equals(councilId, that.councilId) &&
                 Objects.equals(topicId, that.topicId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(lecturerId, topicId);
+        return Objects.hash(councilId, topicId);
     }
 
 

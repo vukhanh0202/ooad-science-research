@@ -65,6 +65,7 @@ public class UserController {
         account.setFullName(userPrincipal.getFullName());
         account.setFacultyId(userPrincipal.getFacultyId());
         account.setLecturerId(userPrincipal.getLecturerId());
+        account.setRoleCode(userPrincipal.getRoleCode());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(account));
     }
 

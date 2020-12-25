@@ -2,6 +2,7 @@ package com.uit.ooad.scienceresearch.dto.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.uit.ooad.scienceresearch.constant.ERole;
 import lombok.Data;
 
 /**
@@ -21,6 +22,7 @@ public class AccountDto {
     private String fullName;
     private Long facultyId;
     private Long lecturerId;
+    private ERole roleCode;
 
     //need default constructor for JSON Parsing
     public AccountDto() {

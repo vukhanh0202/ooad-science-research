@@ -39,4 +39,7 @@ public interface MessageCode {
         String EMPTY_REGISTER = "message.register.EmptyLecturer";
         String BAD_REQUEST = "message.register.BadRequest";
     }
+    interface Role {
+        String NOT_PERMISSION = "message.role.NotPermission";
+    }
 }
