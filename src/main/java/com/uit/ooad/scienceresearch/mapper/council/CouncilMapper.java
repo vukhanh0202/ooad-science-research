@@ -1,9 +1,11 @@
 package com.uit.ooad.scienceresearch.mapper.council;
 
 import com.uit.ooad.scienceresearch.dto.council.CouncilLecturerDto;
+import com.uit.ooad.scienceresearch.dto.council.RecordDto;
 import com.uit.ooad.scienceresearch.dto.council.TopicReview;
 import com.uit.ooad.scienceresearch.dto.team.TeamLecturerDto;
 import com.uit.ooad.scienceresearch.entity.join.CouncilLecturer;
+import com.uit.ooad.scienceresearch.entity.join.Record;
 import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
 import com.uit.ooad.scienceresearch.entity.join.TeamLecturer;
 import com.uit.ooad.scienceresearch.mapper.BaseMapper;
@@ -38,6 +40,15 @@ public abstract class CouncilMapper implements BaseMapper {
         entity.setPosition(councilConverter.getPosition(dto.getPositionId()));
     }
 
+    @Named("toRecordEntity")
+    @BeforeMapping
+    protected void toRecordEntity(RecordDto dto, @MappingTarget Record entity) {
+        entity.setCouncil(councilConverter.getCouncil(dto.getCouncilId()));
+        entity.setLecturer(councilConverter.getLecturer(dto.getLecturerId()));
+        entity.setTeam(councilConverter.getTeam(dto.getTeamId()));
+        entity.setTopic(councilConverter.getTopic(dto.getTopicId()));
+    }
+
     @Named("toTopicReview")
     @BeforeMapping
     protected void toTopicReview(SignUpTopic entity, @MappingTarget TopicReview dto) {
@@ -68,4 +79,8 @@ public abstract class CouncilMapper implements BaseMapper {
 
     @BeanMapping(qualifiedByName = "toEntity", ignoreByDefault = true)
     public abstract CouncilLecturer toEntity(CouncilLecturerDto dto);
+
+    @BeanMapping(qualifiedByName = "toRecordEntity", ignoreByDefault = true)
+    @Mapping(source = "score", target = "score")
+    public abstract Record toRecordEntity(RecordDto dto);
 }

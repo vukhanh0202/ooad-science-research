@@ -26,4 +26,5 @@ public class SignUpTopicDto {
     private String dateExtend;
     private Boolean result;
     private Boolean finish;
+    private Long councilId;
 }

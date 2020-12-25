@@ -32,6 +32,10 @@ public class SignUpTopic extends BaseEntity {
     @JoinColumn(name = "topic_id")
     private Topic topic;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "council_id")
+    private Council council;
+
     @Column
     private EProcess start;
 

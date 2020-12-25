@@ -39,6 +39,9 @@ public abstract class SignUpTopicMapper implements BaseMapper {
     protected void toEntity(SignUpTopicDto dto, @MappingTarget SignUpTopic entity) {
         entity.setTopic(signUpTopicConverter.getTopic(dto.getTopicId()));
         entity.setTeam(signUpTopicConverter.getTeam(dto.getTeamId()));
+        if (signUpTopicConverter.getCouncil(dto.getCouncilId())!=null){
+            entity.setCouncil(signUpTopicConverter.getCouncil(dto.getCouncilId()));
+        }
     }
 
     @Named("toTopicRegister")
@@ -227,5 +230,7 @@ public abstract class SignUpTopicMapper implements BaseMapper {
 
     @BeanMapping(ignoreByDefault = true, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "dateExtend", target = "dateExtend")
+    @Mapping(source = "finish", target = "finish")
+    @Mapping(source = "result", target = "result")
     public abstract void updateMyTopic(SignUpTopicDto dto, @MappingTarget SignUpTopic entity);
 }

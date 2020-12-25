@@ -2,14 +2,19 @@ package com.uit.ooad.scienceresearch.service.team.impl;
 
 import com.uit.ooad.scienceresearch.constant.EProcess;
 import com.uit.ooad.scienceresearch.data.UserPrincipal;
+import com.uit.ooad.scienceresearch.dto.council.RecordDto;
 import com.uit.ooad.scienceresearch.dto.team.TeamLecturerDto;
 import com.uit.ooad.scienceresearch.dto.topic.SignUpTopicDto;
+import com.uit.ooad.scienceresearch.entity.Council;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
 import com.uit.ooad.scienceresearch.entity.Team;
 import com.uit.ooad.scienceresearch.entity.Topic;
+import com.uit.ooad.scienceresearch.entity.join.CouncilLecturer;
+import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
 import com.uit.ooad.scienceresearch.exception.BadRequestException;
 import com.uit.ooad.scienceresearch.exception.InvalidException;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
+import com.uit.ooad.scienceresearch.mapper.council.CouncilMapper;
 import com.uit.ooad.scienceresearch.mapper.team.TeamLecturerMapper;
 import com.uit.ooad.scienceresearch.mapper.topic.SignUpTopicMapper;
 import com.uit.ooad.scienceresearch.repository.*;
@@ -55,6 +60,13 @@ public class RegisterTopicServiceImpl extends AbstractBaseService<IRegisterTopic
 
     @Autowired
     SignUpTopicMapper signUpTopicMapper;
+
+    @Autowired
+    RecordRepository recordRepository;
+
+    @Autowired
+    CouncilMapper councilMapper;
+
 
     @Override
     public void preExecute(Input input) {
@@ -117,6 +129,26 @@ public class RegisterTopicServiceImpl extends AbstractBaseService<IRegisterTopic
             signUpTopicDto.setDateExpired("NOT APPROVE");
             signUpTopicDto.setDateExtend("0");
             signUpTopicDto.setFinish(false);
+            List<SignUpTopic> signUpTopics = signUpTopicRepository.findAllByTopicTopicId(input.getTopicId());
+            if (signUpTopics.size() > 0) {
+                Council council = signUpTopics.get(0).getCouncil();
+                if (council != null) {
+                    signUpTopicDto.setCouncilId(council.getCouncilId());
+                    List<Long> idLecturerOfCouncil = council.getCouncilLecturers()
+                            .stream()
+                            .map(councilLecturer -> councilLecturer.getLecturer().getLecturerId())
+                            .collect(Collectors.toList());
+                    for (Long item : idLecturerOfCouncil) {
+                        // Create record follow teams
+                        RecordDto recordDto = new RecordDto();
+                        recordDto.setCouncilId(council.getCouncilId());
+                        recordDto.setLecturerId(item);
+                        recordDto.setTeamId(team.getTeamId());
+                        recordDto.setTopicId(input.getTopicId());
+                        recordRepository.save(councilMapper.toRecordEntity(recordDto));
+                    }
+                }
+            }
             signUpTopicRepository.save(signUpTopicMapper.toEntity(signUpTopicDto));
             return true;
         } catch (Exception e) {

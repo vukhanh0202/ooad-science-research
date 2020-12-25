@@ -66,7 +66,7 @@ public class UserController {
         account.setFacultyId(userPrincipal.getFacultyId());
         account.setLecturerId(userPrincipal.getLecturerId());
         account.setRoleCode(userPrincipal.getRoleCode());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(account));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(account));
     }
 
     @GetMapping(value = "/faculty", produces = MediaType.APPLICATION_JSON_VALUE)

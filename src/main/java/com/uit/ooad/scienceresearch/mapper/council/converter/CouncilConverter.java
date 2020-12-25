@@ -1,13 +1,7 @@
 package com.uit.ooad.scienceresearch.mapper.council.converter;
 
-import com.uit.ooad.scienceresearch.entity.Council;
-import com.uit.ooad.scienceresearch.entity.Lecturer;
-import com.uit.ooad.scienceresearch.entity.Position;
-import com.uit.ooad.scienceresearch.entity.Team;
-import com.uit.ooad.scienceresearch.repository.CouncilRepository;
-import com.uit.ooad.scienceresearch.repository.LecturerRepository;
-import com.uit.ooad.scienceresearch.repository.PositionRepository;
-import com.uit.ooad.scienceresearch.repository.TeamRepository;
+import com.uit.ooad.scienceresearch.entity.*;
+import com.uit.ooad.scienceresearch.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +21,12 @@ public class CouncilConverter {
 
     @Autowired
     PositionRepository positionRepository;
+
+    @Autowired
+    TeamRepository teamRepository;
+
+    @Autowired
+    TopicRepository topicRepository;
 
     public Lecturer getLecturer(Long lecturerId) {
         Lecturer lecturer = lecturerRepository.findById(lecturerId).orElse(new Lecturer());
@@ -48,6 +48,22 @@ public class CouncilConverter {
         Position position = positionRepository.findById(positionId).orElse(new Position());
         if (position.getPositionId() != null) {
             return position;
+        }
+        return null;
+    }
+
+    public Team getTeam(Long teamId) {
+        Team team = teamRepository.findById(teamId).orElse(new Team());
+        if (team.getTeamId() != null) {
+            return team;
+        }
+        return null;
+    }
+
+    public Topic getTopic(Long topicId) {
+        Topic topic = topicRepository.findById(topicId).orElse(new Topic());
+        if (topic.getTopicId() != null) {
+            return topic;
         }
         return null;
     }

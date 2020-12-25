@@ -1,5 +1,6 @@
 package com.uit.ooad.scienceresearch.entity;
 
+import com.uit.ooad.scienceresearch.entity.join.Record;
 import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
 import com.uit.ooad.scienceresearch.entity.join.TeamLecturer;
 import lombok.Data;
@@ -30,6 +31,9 @@ public class Team extends BaseEntity{
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
     private List<SignUpTopic> signUpTopics;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
+    private List<Record> records;
 
     @Override
     public boolean equals(Object o) {

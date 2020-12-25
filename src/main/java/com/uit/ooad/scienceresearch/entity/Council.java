@@ -1,9 +1,8 @@
 package com.uit.ooad.scienceresearch.entity;
 
-import com.uit.ooad.scienceresearch.entity.join.AcceptCouncil;
 import com.uit.ooad.scienceresearch.entity.join.CouncilLecturer;
+import com.uit.ooad.scienceresearch.entity.join.Record;
 import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
-import com.uit.ooad.scienceresearch.entity.join.TeamLecturer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,7 +30,10 @@ public class Council extends BaseEntity{
     private List<CouncilLecturer> councilLecturers;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "council")
-    private List<AcceptCouncil> acceptCouncils;
+    private List<SignUpTopic> signUpTopics;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "council")
+    private List<Record> records;
 
     @Override
     public boolean equals(Object o) {

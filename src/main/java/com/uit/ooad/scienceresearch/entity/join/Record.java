@@ -13,13 +13,13 @@ import java.util.Objects;
  * @since 12/6/2020
  */
 @Entity
-@Table(name = "accept_council")
+@Table(name = "record")
 @Data
 @NoArgsConstructor
-public class AcceptCouncil extends BaseEntity {
+public class Record extends BaseEntity {
 
     @EmbeddedId
-    private AcceptCouncilId id = new AcceptCouncilId();
+    private RecordId id = new RecordId();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("councilId")
@@ -31,26 +31,34 @@ public class AcceptCouncil extends BaseEntity {
     @JoinColumn(name = "topic_id")
     private Topic topic;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("teamId")
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("lecturerId")
+    @JoinColumn(name = "lecturer_id")
+    private Lecturer lecturer;
+
+    @Column(name = "score")
+    private Long score;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        AcceptCouncil that = (AcceptCouncil) o;
-        return Objects.equals(id, that.id);
+        Record record = (Record) o;
+        return Objects.equals(id, record.id) &&
+                Objects.equals(council, record.council) &&
+                Objects.equals(topic, record.topic) &&
+                Objects.equals(team, record.team) &&
+                Objects.equals(lecturer, record.lecturer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id);
-    }
-
-    @Override
-    public String toString() {
-        return "AcceptCouncil{" +
-                "id=" + id +
-                ", council=" + council +
-                ", topic=" + topic +
-                '}';
+        return Objects.hash(super.hashCode(), id, council, topic, team, lecturer);
     }
 }
