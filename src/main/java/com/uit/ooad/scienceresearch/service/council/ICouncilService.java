@@ -1,8 +1,6 @@
 package com.uit.ooad.scienceresearch.service.council;
 
-import com.uit.ooad.scienceresearch.dto.council.CouncilFullDto;
-import com.uit.ooad.scienceresearch.dto.council.CouncilInfoDto;
-import com.uit.ooad.scienceresearch.dto.council.TopicReview;
+import com.uit.ooad.scienceresearch.dto.council.*;
 import com.uit.ooad.scienceresearch.dto.field.FieldTopicDto;
 import com.uit.ooad.scienceresearch.service.field.IFindAllNameFieldService;
 
@@ -22,4 +20,8 @@ public interface ICouncilService {
     IFindAllListCouncilService<IFindAllListCouncilService.Input, List<CouncilInfoDto>> getFindAllListCouncilService();
 
     IFindDetailCouncilService<Long, CouncilFullDto> getFindDetailCouncilService();
+
+    IFindAllReviewCouncilByUserService<Long, List<ReviewCouncilByUserDto>> getFindAllReviewCouncilByUserService();
+
+    IFindDetailReviewCouncilByUserService<IFindDetailReviewCouncilByUserService.Input, DetailReviewCouncilByUserDto> getFindDetailReviewCouncilByUserService();
 }

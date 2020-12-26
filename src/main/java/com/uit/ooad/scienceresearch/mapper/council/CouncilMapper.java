@@ -10,6 +10,7 @@ import com.uit.ooad.scienceresearch.entity.join.TeamLecturer;
 import com.uit.ooad.scienceresearch.mapper.BaseMapper;
 import com.uit.ooad.scienceresearch.mapper.council.converter.CouncilConverter;
 import com.uit.ooad.scienceresearch.mapper.team.TeamLecturerMapper;
+import com.uit.ooad.scienceresearch.mapper.topic.TopicMapper;
 import com.uit.ooad.scienceresearch.repository.CouncilLecturerRepository;
 import com.uit.ooad.scienceresearch.repository.RecordRepository;
 import org.mapstruct.*;
@@ -39,6 +40,9 @@ public abstract class CouncilMapper implements BaseMapper {
 
     @Autowired
     RecordRepository recordRepository;
+
+    @Autowired
+    TopicMapper topicMapper;
 
     @Named("toEntity")
     @BeforeMapping
@@ -121,11 +125,35 @@ public abstract class CouncilMapper implements BaseMapper {
         }
     }
 
+    @Named("toReviewCouncilByUserDto")
+    @BeforeMapping
+    protected void toReviewCouncilByUserDto(Record entity, @MappingTarget ReviewCouncilByUserDto dto) {
+        dto.setId(entity.getTeam().getTeamId() + entity.getCouncil().getCouncilId());
+        dto.setCouncilId(entity.getCouncil().getCouncilId());
+        dto.setTeamId(entity.getTeam().getTeamId());
+        dto.setTopicId(entity.getTopic().getTopicId());
+        dto.setFacultyName(entity.getTopic().getFaculty().getNameFaculty());
+        dto.setFieldTopic(entity.getTopic().getFieldTopic().getFieldName());
+        dto.setLevelName(entity.getTopic().getLevel().getNameLevel());
+        dto.setNameTopic(entity.getTopic().getNameTopic());
+        dto.setScore(entity.getScore() == null ? "NOT RATE" : entity.getScore().toString());
+    }
+
+    @Named("toDetailReviewCouncilByUserDto")
+    @BeforeMapping
+    protected void toDetailReviewCouncilByUserDto(Record entity, @MappingTarget DetailReviewCouncilByUserDto dto) {
+        dto.setComment(entity.getComment());
+        dto.setScore(entity.getScore());
+        dto.setMembers(this.toListRecordDto(recordRepository
+                .findAllByCouncil_CouncilIdAndTeamTeamIdAndTopicTopicId(entity.getCouncil().getCouncilId(),
+                        entity.getTeam().getTeamId(),entity.getTopic().getTopicId())));
+        dto.setTopic(topicMapper.toTopicFullDto(entity.getTopic()));
+    }
+
+
+    // Mapping single
     @BeanMapping(qualifiedByName = "toTopicReview", ignoreByDefault = true)
     public abstract TopicReview toTopicReview(SignUpTopic entity);
-
-    @BeanMapping(ignoreByDefault = true)
-    public abstract List<TopicReview> toListTopicReview(List<SignUpTopic> entities);
 
     @BeanMapping(qualifiedByName = "toEntity", ignoreByDefault = true)
     public abstract CouncilLecturer toEntity(CouncilLecturerDto dto);
@@ -151,6 +179,17 @@ public abstract class CouncilMapper implements BaseMapper {
     @BeanMapping(qualifiedByName = "toTopicReviewByCouncilDto", ignoreByDefault = true)
     public abstract TopicReviewByCouncilDto toTopicReviewByCouncilDto(SignUpTopic entity);
 
+    @BeanMapping(qualifiedByName = "toReviewCouncilByUserDto", ignoreByDefault = true)
+    public abstract ReviewCouncilByUserDto toReviewCouncilByUserDto(Record entity);
+
+    @BeanMapping(qualifiedByName = "toDetailReviewCouncilByUserDto", ignoreByDefault = true)
+    public abstract DetailReviewCouncilByUserDto toDetailReviewCouncilByUserDto(Record entity);
+
+
+    // List
+    @BeanMapping(ignoreByDefault = true)
+    public abstract List<TopicReview> toListTopicReview(List<SignUpTopic> entities);
+
     @BeanMapping(ignoreByDefault = true)
     public abstract List<CouncilInfoDto> toListCouncilInfoDto(Set<Council> entities);
 
@@ -162,4 +201,7 @@ public abstract class CouncilMapper implements BaseMapper {
 
     @BeanMapping(ignoreByDefault = true)
     public abstract List<CouncilLecturerDto> toListDto(List<CouncilLecturer> entities);
+
+    @BeanMapping(ignoreByDefault = true)
+    public abstract List<ReviewCouncilByUserDto> toListReviewCouncilByUserDto(List<Record> entities);
 }

@@ -1,15 +1,9 @@
 package com.uit.ooad.scienceresearch.controller;
 
 import com.uit.ooad.scienceresearch.data.UserPrincipal;
-import com.uit.ooad.scienceresearch.dto.council.CouncilFullDto;
-import com.uit.ooad.scienceresearch.dto.council.CouncilInfoDto;
-import com.uit.ooad.scienceresearch.dto.council.CouncilLecturerDto;
-import com.uit.ooad.scienceresearch.dto.council.TopicReview;
+import com.uit.ooad.scienceresearch.dto.council.*;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
-import com.uit.ooad.scienceresearch.service.council.ICouncilService;
-import com.uit.ooad.scienceresearch.service.council.ICreateCouncilService;
-import com.uit.ooad.scienceresearch.service.council.IFindAllListCouncilService;
-import com.uit.ooad.scienceresearch.service.council.IFindAllTopicReviewService;
+import com.uit.ooad.scienceresearch.service.council.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -92,5 +86,57 @@ public class CouncilController {
                 .execute(councilId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
+    }
+
+    /**
+     * Find council review
+     *
+     * @return
+     */
+    @GetMapping(value = "/review", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getReviewCouncil() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        List<ReviewCouncilByUserDto> result = councilService
+                .getFindAllReviewCouncilByUserService()
+                .execute(userPrincipal.getLecturerId());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+    }
+
+    /**
+     * Find council review detail
+     *
+     * @return
+     */
+    @GetMapping(value = "/review-detail", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getReviewCouncilDetail(@RequestParam(value = "councilId") Long councilId,
+                                                    @RequestParam(value = "topicId") Long topicId,
+                                                    @RequestParam(value = "teamId") Long teamId) {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        DetailReviewCouncilByUserDto result = councilService
+                .getFindDetailReviewCouncilByUserService()
+                .execute(new IFindDetailReviewCouncilByUserService.Input(councilId, userPrincipal.getLecturerId(), teamId, topicId));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+    }
+
+    /**
+     * Create council
+     *
+     * @param body
+     * @return
+     */
+    @PostMapping(value = "/review-detail", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> reviewPost(@RequestBody List<RecordDto> body) {
+        Boolean res = false;
+        if (res) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse(res, "Success!"));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse(res, "Fail!"));
+        }
     }
 }
