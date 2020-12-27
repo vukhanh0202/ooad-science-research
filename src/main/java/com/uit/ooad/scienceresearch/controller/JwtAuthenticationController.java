@@ -8,7 +8,9 @@ package com.uit.ooad.scienceresearch.controller;
 
 import com.uit.ooad.scienceresearch.config.JwtTokenUtil;
 import com.uit.ooad.scienceresearch.dto.account.AccountDto;
+import com.uit.ooad.scienceresearch.exception.ForbiddenException;
 import com.uit.ooad.scienceresearch.service.JwtUserDetailsService;
+import com.uit.ooad.scienceresearch.util.MessageHelper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.User.USER_NOT_FOUND;
+
 
 @RestController
 @CrossOrigin
@@ -37,6 +41,9 @@ public class JwtAuthenticationController {
 
     @Autowired
     private JwtUserDetailsService userDetailsService;
+
+    @Autowired
+    private MessageHelper messageHelper;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AccountDto authenticationRequest) throws Exception {
@@ -57,9 +64,9 @@ public class JwtAuthenticationController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
+            throw new ForbiddenException(messageHelper.getMessage(USER_NOT_FOUND,username));
         } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
+            throw new ForbiddenException(messageHelper.getMessage(USER_NOT_FOUND,username));
         }
     }
 }

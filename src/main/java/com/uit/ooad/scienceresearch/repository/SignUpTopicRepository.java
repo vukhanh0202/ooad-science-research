@@ -41,7 +41,7 @@ public interface SignUpTopicRepository extends JpaRepository<SignUpTopic, SignUp
             " s.topic_id IN :topicIds" +
             " AND s.finish = :finish",
             nativeQuery = true)
-    List<SignUpTopic> findCustomByListTopicIdAndFinish(@Param("topicIds") Set<Long> topicIds,@Param("finish") Boolean finish);
+    List<SignUpTopic> findCustomByListTopicIdAndFinish(@Param("topicIds") Set<Long> topicIds, @Param("finish") Boolean finish);
 
     @Query(value = "SELECT * FROM signup_topic s WHERE " +
             " s.team_id IN :teamIds",
@@ -49,6 +49,19 @@ public interface SignUpTopicRepository extends JpaRepository<SignUpTopic, SignUp
     List<SignUpTopic> findCustomByTeamId(@Param("teamIds") Set<Long> teamIds);
 
     List<SignUpTopic> findAllByCouncil_CouncilId(Long councilId);
+
+    @Query(value = "SELECT * FROM signup_topic s WHERE " +
+            " s.team_id IN :teamIds" +
+            " AND (s.date_approved = :dateApproved" +
+            " OR (s.finish != true AND s.finish != false))",
+            nativeQuery = true)
+    List<SignUpTopic> findCustomByListTeamIdAndDateApprovedAndResult(@Param("teamIds") Set<Long> teamIds,
+                                                                     @Param("dateApproved") String dateApproved);
+
+    @Query(value = "SELECT * FROM signup_topic s WHERE " +
+            " s.team_id IN :teamIds",
+            nativeQuery = true)
+    List<SignUpTopic> findCustomByListTeamId(@Param("teamIds") Set<Long> teamIds);
 
 }
 

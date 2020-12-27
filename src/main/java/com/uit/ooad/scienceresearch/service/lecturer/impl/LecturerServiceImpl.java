@@ -34,4 +34,7 @@ public class LecturerServiceImpl implements ILecturerService {
 
     @Autowired
     private IFindAllLecturerRegisterTopicService findAllLecturerRegisterTopicService;
+
+    @Autowired
+    private IFindAllLecturerCreateCouncilTopicService findAllLecturerCreateCouncilTopicService;
 }

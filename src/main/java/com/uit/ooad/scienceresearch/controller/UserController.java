@@ -15,6 +15,7 @@ import com.uit.ooad.scienceresearch.service.account.IAccountService;
 import com.uit.ooad.scienceresearch.service.faculty.IFacultyService;
 import com.uit.ooad.scienceresearch.service.faculty.IFindAllFacultyService;
 import com.uit.ooad.scienceresearch.service.lecturer.ICountLecturerService;
+import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerRegisterTopicService;
 import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerService;
 import com.uit.ooad.scienceresearch.service.lecturer.ILecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
@@ -51,7 +53,7 @@ public class UserController {
         Account account = accountService.getRegisterAccountService().execute(body);
         body.setAccountId(account.getAccountId());
         Lecturer lecturer = lecturerService.getRegisterLecturerService().execute(body);
-        if (account != null && lecturer != null) {
+        if (account.getUsername() != null && lecturer.getLecturerId() != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(true, "Success!"));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(false, "Fail!"));
@@ -93,6 +95,21 @@ public class UserController {
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> searchUser(@RequestParam(value = "search", defaultValue = "") String search) {
         List<AccountLecturerSearchDto> rs = accountService.getSearchAccountService().execute(search);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(rs);
+    }
+
+    @GetMapping(value = "/check-register", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> checkRegister() {
+        Boolean rs = false;
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Long> list = lecturerService
+                .getFindAllLecturerRegisterTopicService()
+                .execute(new IFindAllLecturerRegisterTopicService.Input("", null))
+                .stream().map(AccountLecturerSearchDto::getLecturerId).collect(Collectors.toList());
+        if (!list.contains(userPrincipal.getLecturerId())) {
+            rs = true;
+        }
         return ResponseEntity.status(HttpStatus.OK)
                 .body(rs);
     }

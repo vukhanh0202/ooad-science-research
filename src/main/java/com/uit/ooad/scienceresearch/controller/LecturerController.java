@@ -6,10 +6,7 @@ import com.uit.ooad.scienceresearch.dto.lecturer.LecturerDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
-import com.uit.ooad.scienceresearch.service.lecturer.ICountLecturerService;
-import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerRegisterTopicService;
-import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerService;
-import com.uit.ooad.scienceresearch.service.lecturer.ILecturerService;
+import com.uit.ooad.scienceresearch.service.lecturer.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -62,6 +59,21 @@ public class LecturerController {
         List<AccountLecturerSearchDto> rs = lecturerService
                 .getFindAllLecturerRegisterTopicService()
                 .execute(new IFindAllLecturerRegisterTopicService.Input(search, topicId));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(rs);
+    }
+
+    /**
+     * Find Lecturer for register topic
+     *
+     * @return
+     */
+    @GetMapping(value = "/find-create-council/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getLecturerCreateCouncil(@RequestParam(value = "search", defaultValue = "") String search,
+                                                         @PathVariable("topicId") Long topicId) {
+        List<AccountLecturerSearchDto> rs = lecturerService
+                .getFindAllLecturerCreateCouncilTopicService()
+                .execute(new IFindAllLecturerCreateCouncilTopicService.Input(search, topicId));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(rs);
     }

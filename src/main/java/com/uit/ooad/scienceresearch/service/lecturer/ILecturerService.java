@@ -29,4 +29,7 @@ public interface ILecturerService {
 
     IFindAllLecturerRegisterTopicService<IFindAllLecturerRegisterTopicService.Input, List<AccountLecturerSearchDto>>
     getFindAllLecturerRegisterTopicService();
+
+    IFindAllLecturerCreateCouncilTopicService<IFindAllLecturerCreateCouncilTopicService.Input, List<AccountLecturerSearchDto>>
+    getFindAllLecturerCreateCouncilTopicService();
 }
