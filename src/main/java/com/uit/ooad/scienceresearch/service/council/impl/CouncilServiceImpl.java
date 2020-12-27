@@ -36,4 +36,10 @@ public class CouncilServiceImpl implements ICouncilService {
 
     @Autowired
     IFindDetailReviewCouncilByUserService findDetailReviewCouncilByUserService;
+
+    @Autowired
+    IAddReviewCouncilService addReviewCouncilService;
+
+    @Autowired
+    IFindMyCouncilService findMyCouncilService;
 }

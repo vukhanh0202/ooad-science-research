@@ -38,6 +38,7 @@ public class UserPrincipal implements UserDetails {
     private Long facultyId;
     private Long lecturerId;
     private ERole roleCode;
+    private String nameFaculty;
 
 
 

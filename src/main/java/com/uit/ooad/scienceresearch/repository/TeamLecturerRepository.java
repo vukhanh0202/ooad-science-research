@@ -18,6 +18,8 @@ public interface TeamLecturerRepository extends JpaRepository<TeamLecturer, Team
 
     List<TeamLecturer> findAllByLecturerLecturerId(Long lecturerId);
 
+    List<TeamLecturer> findAllByTeamTeamIdAndIsPrimary(Long teamId, Boolean primary);
+
     @Query(value = "SELECT * FROM team_lecturer t WHERE " +
             " t.lecturer_id IN :lecturerIds",
             nativeQuery = true)

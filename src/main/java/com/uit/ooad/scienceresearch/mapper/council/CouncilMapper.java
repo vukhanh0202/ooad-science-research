@@ -13,6 +13,7 @@ import com.uit.ooad.scienceresearch.mapper.team.TeamLecturerMapper;
 import com.uit.ooad.scienceresearch.mapper.topic.TopicMapper;
 import com.uit.ooad.scienceresearch.repository.CouncilLecturerRepository;
 import com.uit.ooad.scienceresearch.repository.RecordRepository;
+import com.uit.ooad.scienceresearch.repository.TeamLecturerRepository;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,6 +44,9 @@ public abstract class CouncilMapper implements BaseMapper {
 
     @Autowired
     TopicMapper topicMapper;
+
+    @Autowired
+    TeamLecturerRepository teamLecturerRepository;
 
     @Named("toEntity")
     @BeforeMapping
@@ -115,6 +119,7 @@ public abstract class CouncilMapper implements BaseMapper {
         dto.setLevelName(entity.getTopic().getLevel().getNameLevel());
         dto.setNameTopic(entity.getTopic().getNameTopic());
         dto.setYear(entity.getTopic().getYear());
+        dto.setLeader(teamLecturerRepository.findAllByTeamTeamIdAndIsPrimary(entity.getTeam().getTeamId(), true).get(0).getLecturer().getFullName());
         dto.setRecordList(this.toListRecordDto(recordRepository
                 .findAllByCouncil_CouncilIdAndTeamTeamIdAndTopicTopicId(entity.getCouncil().getCouncilId(),
                         entity.getTeam().getTeamId(), entity.getTopic().getTopicId())));
@@ -136,7 +141,9 @@ public abstract class CouncilMapper implements BaseMapper {
         dto.setFieldTopic(entity.getTopic().getFieldTopic().getFieldName());
         dto.setLevelName(entity.getTopic().getLevel().getNameLevel());
         dto.setNameTopic(entity.getTopic().getNameTopic());
-        dto.setScore(entity.getScore() == null ? "NOT RATE" : entity.getScore().toString());
+        dto.setScoreString(entity.getScore() == null ? "NOT RATE" : entity.getScore().toString());
+        dto.setScore(entity.getScore());
+        dto.setComment(entity.getComment());
     }
 
     @Named("toDetailReviewCouncilByUserDto")
@@ -146,7 +153,7 @@ public abstract class CouncilMapper implements BaseMapper {
         dto.setScore(entity.getScore());
         dto.setMembers(this.toListRecordDto(recordRepository
                 .findAllByCouncil_CouncilIdAndTeamTeamIdAndTopicTopicId(entity.getCouncil().getCouncilId(),
-                        entity.getTeam().getTeamId(),entity.getTopic().getTopicId())));
+                        entity.getTeam().getTeamId(), entity.getTopic().getTopicId())));
         dto.setTopic(topicMapper.toTopicFullDto(entity.getTopic()));
     }
 
@@ -168,6 +175,9 @@ public abstract class CouncilMapper implements BaseMapper {
     @Mapping(source = "score", target = "score")
     @Mapping(source = "comment", target = "comment")
     public abstract Record toRecordEntity(RecordDto dto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public abstract void updateRecord(RecordDto dto, @MappingTarget Record entity);
 
     @BeanMapping(qualifiedByName = "toRecordDto", ignoreByDefault = true)
     @Mapping(source = "lecturer.fullName", target = "nameLecturer")

@@ -22,5 +22,7 @@ public class ReviewCouncilByUserDto {
     private String facultyName;
     private String levelName;
     private String fieldTopic;
-    private String score;
+    private String scoreString;
+    private Long score;
+    private String comment;
 }

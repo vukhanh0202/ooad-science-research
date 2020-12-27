@@ -24,4 +24,8 @@ public interface ICouncilService {
     IFindAllReviewCouncilByUserService<Long, List<ReviewCouncilByUserDto>> getFindAllReviewCouncilByUserService();
 
     IFindDetailReviewCouncilByUserService<IFindDetailReviewCouncilByUserService.Input, DetailReviewCouncilByUserDto> getFindDetailReviewCouncilByUserService();
+
+    IAddReviewCouncilService<RecordDto,Boolean> getAddReviewCouncilService();
+
+    IFindMyCouncilService<Long, List<CouncilInfoDto>>  getFindMyCouncilService();
 }

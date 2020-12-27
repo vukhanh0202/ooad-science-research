@@ -4,6 +4,7 @@ import com.uit.ooad.scienceresearch.constant.DefaultConstant;
 import com.uit.ooad.scienceresearch.data.UserPrincipal;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyDto;
 import com.uit.ooad.scienceresearch.dto.faculty.FacultyFullDto;
+import com.uit.ooad.scienceresearch.dto.faculty.FacultyInfoDto;
 import com.uit.ooad.scienceresearch.dto.faculty.TopicFacultyDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerTopicRegisterDto;
@@ -58,7 +59,7 @@ public class FacultyController {
     public ResponseEntity<?> getAllFaculty(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
                                            @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
                                            @RequestParam(value = "search", defaultValue = "") String search) {
-        List<FacultyFullDto> result = facultyService.getFindAllFacultyService().execute(new IFindAllFacultyService.Input(search, page, size));
+        List<FacultyInfoDto> result = facultyService.getFindAllFacultyService().execute(new IFindAllFacultyService.Input(search, page, size));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PaginationResponse(Integer.parseInt(facultyService.getCountFacultyService().execute().toString())
                         , size, page, result));
@@ -131,20 +132,21 @@ public class FacultyController {
      *
      * @return
      */
-    @GetMapping(value = "/topic/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/topic", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllTopic(@RequestParam(value = "page", defaultValue = DefaultConstant.PAGE_NUMBER_DEFAULT) Integer page,
                                          @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
                                          @RequestParam(value = "search", defaultValue = "") String search,
                                          @RequestParam(value = "levelId", defaultValue = "") Long levelId,
                                          @RequestParam(value = "fieldId", defaultValue = "") Long fieldId,
                                          @RequestParam(value = "year", defaultValue = "") Long year,
-                                         @RequestParam(value = "deleted", defaultValue = "") Boolean deleted,
-                                         @PathVariable("id") Long facultyId) {
+                                         @RequestParam(value = "deleted", defaultValue = "") Boolean deleted) {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
         List<TopicFullDto> result = topicService
                 .getFindAllTopicService()
-                .execute(new IFindAllTopicService.Input(search, facultyId, levelId, fieldId, year, deleted, page, size));
+                .execute(new IFindAllTopicService.Input(search, userPrincipal.getFacultyId(), levelId, fieldId, year, deleted, page, size));
 
-        Long totalItem = topicService.getCountTopicService().execute(new ICountTopicService.Input(search, facultyId, levelId, fieldId, year, deleted));
+        Long totalItem = topicService.getCountTopicService().execute(new ICountTopicService.Input(search, userPrincipal.getFacultyId(), levelId, fieldId, year, deleted));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
                         , size, page, result));

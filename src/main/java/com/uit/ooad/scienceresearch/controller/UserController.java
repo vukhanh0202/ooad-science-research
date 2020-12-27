@@ -59,13 +59,14 @@ public class UserController {
 
     @GetMapping(value = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> info() {
-        UserPrincipal userPrincipal = (UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        AccountDto account =new AccountDto();
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        AccountDto account = new AccountDto();
         account.setUsername(userPrincipal.getUsername());
         account.setFullName(userPrincipal.getFullName());
         account.setFacultyId(userPrincipal.getFacultyId());
         account.setLecturerId(userPrincipal.getLecturerId());
         account.setRoleCode(userPrincipal.getRoleCode());
+        account.setFacultyName(userPrincipal.getNameFaculty());
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(account));
     }
 
@@ -74,12 +75,12 @@ public class UserController {
                                            @RequestParam(value = "size", defaultValue = DefaultConstant.PAGE_SIZE_DEFAULT) Integer size,
                                            @RequestParam(value = "search", defaultValue = "") String search,
                                            @RequestParam(value = "contractId", defaultValue = "") Long contractId) {
-        UserPrincipal userPrincipal = (UserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         FacultyFullDto result1 = facultyService.getFindFacultyByIdService().execute(userPrincipal.getFacultyId());
         List<LecturerFullDto> result = lecturerService.getFindAllLecturerService()
-                .execute(new IFindAllLecturerService.Input(search,userPrincipal.getFacultyId(),contractId, page, size));
+                .execute(new IFindAllLecturerService.Input(search, userPrincipal.getFacultyId(), contractId, page, size));
 
-        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search,userPrincipal.getFacultyId(),contractId, page, size));
+        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search, userPrincipal.getFacultyId(), contractId, page, size));
 
         Map<String, Object> rs = new HashMap<>();
         rs.put("info", result1);

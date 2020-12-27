@@ -57,7 +57,7 @@ public class SignUpTopic extends BaseEntity {
     @Column(name = "date_extend")
     private String dateExtend;
 
-    @Column
+    @Column(columnDefinition = "boolean")
     private Boolean result;
 
     @Column(columnDefinition = "boolean default false")

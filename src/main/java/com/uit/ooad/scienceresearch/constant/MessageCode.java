@@ -42,4 +42,7 @@ public interface MessageCode {
     interface Role {
         String NOT_PERMISSION = "message.role.NotPermission";
     }
+    interface Default {
+        String PRESIDENT_NOT_HAVE_COMMENT = "message.default.PresidentNotHaveComment";
+    }
 }

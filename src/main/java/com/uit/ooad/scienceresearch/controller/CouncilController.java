@@ -65,11 +65,27 @@ public class CouncilController {
      *
      * @return
      */
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getListCouncil(@RequestParam(value = "facultyId", defaultValue = "") Long facultyId) {
+    @GetMapping(value = "/faculty", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getListCouncilFaculty() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
         List<CouncilInfoDto> result = councilService
                 .getFindAllListCouncilService()
-                .execute(new IFindAllListCouncilService.Input(facultyId));
+                .execute(new IFindAllListCouncilService.Input(userPrincipal.getFacultyId()));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+    }
+
+    /**
+     * Find List council
+     *
+     * @return
+     */
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getListCouncilAll() {
+        List<CouncilInfoDto> result = councilService
+                .getFindAllListCouncilService()
+                .execute(new IFindAllListCouncilService.Input(null));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
     }
@@ -129,8 +145,11 @@ public class CouncilController {
      * @return
      */
     @PostMapping(value = "/review-detail", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> reviewPost(@RequestBody List<RecordDto> body) {
-        Boolean res = false;
+    public ResponseEntity<?> addReviewPost(@RequestBody RecordDto body) {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        body.setLecturerId(userPrincipal.getLecturerId());
+        Boolean res = councilService.getAddReviewCouncilService().execute(body);
         if (res) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(res, "Success!"));
@@ -138,5 +157,21 @@ public class CouncilController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ApiResponse(res, "Fail!"));
         }
+    }
+
+    /**
+     * Find List council
+     *
+     * @return
+     */
+    @GetMapping(value = "/my-council", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getListMyCouncil() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        List<CouncilInfoDto> result = councilService
+                .getFindMyCouncilService()
+                .execute(userPrincipal.getLecturerId());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
     }
 }

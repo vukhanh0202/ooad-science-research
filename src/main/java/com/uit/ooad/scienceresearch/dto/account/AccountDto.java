@@ -23,6 +23,7 @@ public class AccountDto {
     private Long facultyId;
     private Long lecturerId;
     private ERole roleCode;
+    private String facultyName;
 
     //need default constructor for JSON Parsing
     public AccountDto() {

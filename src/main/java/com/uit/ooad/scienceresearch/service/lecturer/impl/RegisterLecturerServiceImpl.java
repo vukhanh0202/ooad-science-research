@@ -1,7 +1,10 @@
 package com.uit.ooad.scienceresearch.service.lecturer.impl;
 
+import com.uit.ooad.scienceresearch.constant.ERole;
+import com.uit.ooad.scienceresearch.data.UserPrincipal;
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
+import com.uit.ooad.scienceresearch.exception.ForbiddenException;
 import com.uit.ooad.scienceresearch.exception.InvalidException;
 import com.uit.ooad.scienceresearch.mapper.lecturer.LecturerMapper;
 import com.uit.ooad.scienceresearch.repository.ContractRepository;
@@ -10,10 +13,12 @@ import com.uit.ooad.scienceresearch.repository.LecturerRepository;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
 import com.uit.ooad.scienceresearch.service.lecturer.IRegisterLecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Contract.CONTRACT_NOT_FOUND;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Faculty.FACULTY_NOT_FOUND;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Role.NOT_PERMISSION;
 
 /**
  * @author VuKhanh [18520903@gm.uit.edu.vn]
@@ -38,7 +43,11 @@ public class RegisterLecturerServiceImpl extends AbstractBaseService<AccountLect
 
     @Override
     public void preExecute(AccountLecturerDto accountLecturerDto) {
-
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        if (!userPrincipal.getRoleCode().equals(ERole.ADMIN)){
+            throw new ForbiddenException(messageHelper.getMessage(NOT_PERMISSION));
+        }
         if (accountLecturerDto.getContractId() == null || contractRepository.findById(accountLecturerDto.getContractId()).isEmpty()) {
             throw new InvalidException(messageHelper.getMessage(CONTRACT_NOT_FOUND, accountLecturerDto.getContractId()));
         }

@@ -1,16 +1,21 @@
 package com.uit.ooad.scienceresearch.service.account.impl;
 
+import com.uit.ooad.scienceresearch.constant.ERole;
+import com.uit.ooad.scienceresearch.data.UserPrincipal;
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
 import com.uit.ooad.scienceresearch.entity.Account;
+import com.uit.ooad.scienceresearch.exception.ForbiddenException;
 import com.uit.ooad.scienceresearch.exception.InvalidException;
 import com.uit.ooad.scienceresearch.mapper.account.AccountMapper;
 import com.uit.ooad.scienceresearch.repository.AccountRepository;
 import com.uit.ooad.scienceresearch.service.AbstractBaseService;
 import com.uit.ooad.scienceresearch.service.account.IRegisterAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Role.NOT_PERMISSION;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.User.USER_EXIST;
 
 /**
@@ -31,7 +36,11 @@ public class RegisterAccountServiceImpl extends AbstractBaseService<AccountLectu
 
     @Override
     public void preExecute(AccountLecturerDto accountLecturerDto) {
-
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        if (!userPrincipal.getRoleCode().equals(ERole.ADMIN)){
+            throw new ForbiddenException(messageHelper.getMessage(NOT_PERMISSION));
+        }
         if (accountRepository.findByUsername(accountLecturerDto.getUsername()).isPresent()) {
             throw new InvalidException(messageHelper.getMessage(USER_EXIST, accountLecturerDto.getUsername()));
         }
