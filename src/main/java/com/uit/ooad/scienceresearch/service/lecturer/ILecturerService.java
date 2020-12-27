@@ -1,6 +1,7 @@
 package com.uit.ooad.scienceresearch.service.lecturer;
 
 import com.uit.ooad.scienceresearch.dto.account.AccountLecturerDto;
+import com.uit.ooad.scienceresearch.dto.account.AccountLecturerSearchDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.entity.Lecturer;
@@ -25,4 +26,7 @@ public interface ILecturerService {
     IUpdateLecturerService<LecturerDto, Boolean> getUpdateLecturerService();
 
     IDeleteLecturerService<LecturerDto, Boolean> getDeleteLecturerService();
+
+    IFindAllLecturerRegisterTopicService<IFindAllLecturerRegisterTopicService.Input, List<AccountLecturerSearchDto>>
+    getFindAllLecturerRegisterTopicService();
 }

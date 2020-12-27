@@ -1,11 +1,13 @@
 package com.uit.ooad.scienceresearch.controller;
 
 import com.uit.ooad.scienceresearch.constant.DefaultConstant;
+import com.uit.ooad.scienceresearch.dto.account.AccountLecturerSearchDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerDto;
 import com.uit.ooad.scienceresearch.dto.lecturer.LecturerFullDto;
 import com.uit.ooad.scienceresearch.payload.ApiResponse;
 import com.uit.ooad.scienceresearch.payload.PaginationResponse;
 import com.uit.ooad.scienceresearch.service.lecturer.ICountLecturerService;
+import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerRegisterTopicService;
 import com.uit.ooad.scienceresearch.service.lecturer.IFindAllLecturerService;
 import com.uit.ooad.scienceresearch.service.lecturer.ILecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +43,27 @@ public class LecturerController {
                                             @RequestParam(value = "facultyId", defaultValue = "") Long facultyId,
                                             @RequestParam(value = "contractId", defaultValue = "") Long contractId) {
         List<LecturerFullDto> result = lecturerService.getFindAllLecturerService()
-                .execute(new IFindAllLecturerService.Input(search,facultyId,contractId, page, size));
+                .execute(new IFindAllLecturerService.Input(search, facultyId, contractId, page, size));
 
-        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search,facultyId,contractId, page, size));
+        Long totalItem = lecturerService.getCountLecturerService().execute(new ICountLecturerService.Input(search, facultyId, contractId, page, size));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new PaginationResponse(Integer.parseInt(totalItem.toString())
                         , size, page, result));
+    }
+
+    /**
+     * Find Lecturer for register topic
+     *
+     * @return
+     */
+    @GetMapping(value = "/find-register/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getLecturerForRegisterTopic(@RequestParam(value = "search", defaultValue = "") String search,
+                                                         @PathVariable("topicId") Long topicId) {
+        List<AccountLecturerSearchDto> rs = lecturerService
+                .getFindAllLecturerRegisterTopicService()
+                .execute(new IFindAllLecturerRegisterTopicService.Input(search, topicId));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(rs);
     }
 
     /**

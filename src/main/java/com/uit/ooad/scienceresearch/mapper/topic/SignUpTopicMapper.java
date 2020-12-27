@@ -55,6 +55,19 @@ public abstract class SignUpTopicMapper implements BaseMapper {
         dto.setFieldTopic(entity.getTopic().getFieldTopic().getFieldName());
         dto.setLevelName(entity.getTopic().getLevel().getNameLevel());
         dto.setNameTopic(entity.getTopic().getNameTopic());
+        if (entity.getFinish()) {
+            dto.setFinish("COMPLETED");
+        } else {
+            dto.setFinish("NOT COMPLETED");
+        }
+
+        if (entity.getResult() == null) {
+            dto.setResult("NOT YET RATE");
+        } else if (entity.getResult()) {
+            dto.setResult("PASS");
+        } else {
+            dto.setResult("FAIL");
+        }
         if (entity.getCompleted().equals(EProcess.finish)) {
             dto.setStatus("Completed");
         } else if (entity.getUniversityReview().equals(EProcess.process)) {

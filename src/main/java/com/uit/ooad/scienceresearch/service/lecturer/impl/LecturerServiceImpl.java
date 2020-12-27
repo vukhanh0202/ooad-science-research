@@ -31,4 +31,7 @@ public class LecturerServiceImpl implements ILecturerService {
 
     @Autowired
     private IDeleteLecturerService deleteLecturerService;
+
+    @Autowired
+    private IFindAllLecturerRegisterTopicService findAllLecturerRegisterTopicService;
 }
