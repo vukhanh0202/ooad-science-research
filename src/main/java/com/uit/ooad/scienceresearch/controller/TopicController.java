@@ -82,6 +82,8 @@ public class TopicController {
      */
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addTopic(@RequestBody TopicDto body) {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        body.setFacultyId(userPrincipal.getFacultyId());
         Boolean res = topicService.getAddTopicService().execute(body);
         if (res) {
             return ResponseEntity.status(HttpStatus.OK)

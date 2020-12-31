@@ -13,6 +13,7 @@ import com.uit.ooad.scienceresearch.entity.Team;
 import com.uit.ooad.scienceresearch.entity.Topic;
 import com.uit.ooad.scienceresearch.entity.join.CouncilLecturer;
 import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
+import com.uit.ooad.scienceresearch.exception.BadRequestException;
 import com.uit.ooad.scienceresearch.exception.ForbiddenException;
 import com.uit.ooad.scienceresearch.exception.InvalidException;
 import com.uit.ooad.scienceresearch.exception.NotFoundException;
@@ -25,8 +26,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Default.DUPLICATE_USER;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Register.BAD_REQUEST;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Register.EMPTY_REGISTER;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Role.NOT_PERMISSION;
@@ -80,6 +85,15 @@ public class CreateCouncilServiceImpl extends AbstractBaseService<ICreateCouncil
                 .getContext().getAuthentication().getPrincipal();
         if (!userPrincipal.getRoleCode().equals(ERole.MANAGER)) {
             throw new ForbiddenException(messageHelper.getMessage(NOT_PERMISSION));
+        }
+
+        List<CouncilLecturerDto> listInput = input.getListMember();
+        listInput.removeIf(dto -> dto.getUsername() == null);
+        List<String> usernameList = listInput.stream().map(CouncilLecturerDto::getUsername).collect(Collectors.toList());
+        Set<String> sets = new HashSet<>(usernameList);
+
+        if (sets.size() != listInput.size()){
+            throw new BadRequestException(messageHelper.getMessage(DUPLICATE_USER));
         }
     }
 

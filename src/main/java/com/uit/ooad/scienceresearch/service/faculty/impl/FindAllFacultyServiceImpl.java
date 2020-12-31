@@ -46,8 +46,7 @@ public class FindAllFacultyServiceImpl extends AbstractBaseService<IFindAllFacul
     public List<FacultyInfoDto> doing(Input input) {
         try {
             return facultyMapper.toFacultyInfoListDto(facultyRepository.
-                    findAllByNameFacultyContaining(input.getSearch(), input.createPageable(Sort.Direction.ASC,
-                            "nameFaculty")));
+                    findAllByNameFacultyContaining(input.getSearch()));
         } catch (Exception e) {
             return null;
         }

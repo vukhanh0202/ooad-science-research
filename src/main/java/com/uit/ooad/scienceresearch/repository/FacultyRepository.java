@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
 
-    List<Faculty> findAllByNameFacultyContaining(String nameFaculty, Pageable pageable);
+    List<Faculty> findAllByNameFacultyContaining(String nameFaculty);
 
     Optional<Faculty> findByNameFaculty(String nameFaculty);
 

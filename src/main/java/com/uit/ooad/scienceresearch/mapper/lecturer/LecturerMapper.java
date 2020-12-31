@@ -57,9 +57,8 @@ public abstract class LecturerMapper implements BaseMapper {
     @Mapping(source = "deleted", target = "isDeleted")
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "degree", target = "degree")
-    //@Mapping(source = "updatedAt", target = "updatedAt")
-    //@Mapping(source = "createdBy", target = "createdBy", qualifiedByName = "getAudit")
-    //@Mapping(source = "updatedBy", target = "updatedBy", qualifiedByName = "getAudit")
+    @Mapping(source = "account.role.code", target = "role")
+    @Mapping(source = "account.username", target = "username")
     public abstract LecturerFullDto toLecturerFullDto(Lecturer entity);
 
     @BeanMapping(ignoreByDefault = true)

@@ -70,7 +70,8 @@ public class FindAllLecturerRegisterTopicServiceImpl extends AbstractBaseService
                 List<CouncilLecturer> councils = lecturer.getCouncilLecturers();
                 // Remove lecturer register > 3 topic
                 List<SignUpTopic> signUpTopics = signUpTopicRepository
-                        .findCustomByListTeamIdAndDateApprovedAndResult(teamsSet, "NOT APPROVE");
+                        .findCustomByListTeamId(teamsSet);
+                signUpTopics.removeIf(signUpTopic -> (!signUpTopic.getDateApproved().equals("NOT APPROVE")) && signUpTopic.getResult() != null);
                 if (signUpTopics.size() >= 3) {
                     listIdLecturerInvalid.add(lecturer.getLecturerId());
                 }

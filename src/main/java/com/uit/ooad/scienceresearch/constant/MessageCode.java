@@ -44,6 +44,8 @@ public interface MessageCode {
     }
     interface Default {
         String PRESIDENT_NOT_HAVE_COMMENT = "message.default.PresidentNotHaveComment";
-        String LEADER = "message.default.PresidentNotHaveComment";
+        String LEADER = "message.default.Leader";
+        String DUPLICATE_USER = "message.default.DuplicateUser";
+        String USER_BELONG_TO = "message.default.BelongTo";
     }
 }

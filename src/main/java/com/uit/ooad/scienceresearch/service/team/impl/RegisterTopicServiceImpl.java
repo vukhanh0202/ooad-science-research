@@ -24,9 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Default.DUPLICATE_USER;
+import static com.uit.ooad.scienceresearch.constant.MessageCode.Default.USER_BELONG_TO;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Register.BAD_REQUEST;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Register.EMPTY_REGISTER;
 import static com.uit.ooad.scienceresearch.constant.MessageCode.Topic.TOPIC_NOT_FOUND;
@@ -73,9 +77,7 @@ public class RegisterTopicServiceImpl extends AbstractBaseService<IRegisterTopic
         if (topicRepository.findById(input.getTopicId()).isEmpty()) {
             throw new NotFoundException(messageHelper.getMessage(TOPIC_NOT_FOUND, input.getTopicId()));
         }
-        if (input.getListMember().size() == 0) {
-            throw new InvalidException(messageHelper.getMessage(EMPTY_REGISTER));
-        }
+
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         List<String> lecturerUsername = input.getListMember()
@@ -83,7 +85,7 @@ public class RegisterTopicServiceImpl extends AbstractBaseService<IRegisterTopic
                 .map(TeamLecturerDto::getUsername)
                 .collect(Collectors.toList());
         if (!lecturerUsername.contains(userPrincipal.getUsername())) {
-            throw new BadRequestException(messageHelper.getMessage(BAD_REQUEST));
+            throw new BadRequestException(messageHelper.getMessage(USER_BELONG_TO));
         }
         List<Boolean> primaries = input.getListMember()
                 .stream()
@@ -92,7 +94,18 @@ public class RegisterTopicServiceImpl extends AbstractBaseService<IRegisterTopic
         if (!primaries.contains(true)) {
             throw new BadRequestException(messageHelper.getMessage(BAD_REQUEST));
         }
+        List<TeamLecturerDto> listInput = input.getListMember();
+        listInput.removeIf(dto -> dto.getUsername() == null);
 
+        List<String> usernameList = listInput.stream().map(TeamLecturerDto::getUsername).collect(Collectors.toList());
+        Set<String> sets = new HashSet<>(usernameList);
+
+        if (sets.size() != listInput.size()){
+            throw new BadRequestException(messageHelper.getMessage(DUPLICATE_USER));
+        }
+        if (listInput.size() == 0) {
+            throw new InvalidException(messageHelper.getMessage(EMPTY_REGISTER));
+        }
     }
 
     @Override

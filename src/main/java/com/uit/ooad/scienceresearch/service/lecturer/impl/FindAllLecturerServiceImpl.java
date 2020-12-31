@@ -60,7 +60,7 @@ public class FindAllLecturerServiceImpl extends AbstractBaseService<IFindAllLect
         try {
             return lecturerMapper.toListLecturerFullDto(lecturerRepository.
                     findCustomerByFullNameContainingAndContractIdAndFacultyId(input.getSearch(),input.getContractId(),
-                            input.getFacultyId(),input.createPageable(Sort.Direction.ASC, "createdAt")));
+                            input.getFacultyId()));
         } catch (Exception e) {
             return null;
         }
