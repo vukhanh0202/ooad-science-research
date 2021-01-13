@@ -19,6 +19,8 @@ public interface SignUpTopicRepository extends JpaRepository<SignUpTopic, SignUp
 
     List<SignUpTopic> findAllByTopicTopicId(Long topicId);
 
+    List<SignUpTopic> findAllByFinishFalse();
+
     @Query(value = "SELECT * FROM signup_topic s WHERE " +
             " s.faculty_review = :facultyReview" +
             " AND s.topic_id IN :topicIds",

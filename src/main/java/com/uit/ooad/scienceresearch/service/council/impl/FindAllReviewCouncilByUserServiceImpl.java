@@ -5,6 +5,7 @@ import com.uit.ooad.scienceresearch.dto.council.ReviewCouncilByUserDto;
 import com.uit.ooad.scienceresearch.dto.council.TopicReview;
 import com.uit.ooad.scienceresearch.entity.Topic;
 import com.uit.ooad.scienceresearch.entity.join.Record;
+import com.uit.ooad.scienceresearch.entity.join.SignUpTopic;
 import com.uit.ooad.scienceresearch.exception.ForbiddenException;
 import com.uit.ooad.scienceresearch.mapper.council.CouncilMapper;
 import com.uit.ooad.scienceresearch.repository.FacultyRepository;
@@ -38,10 +39,16 @@ public class FindAllReviewCouncilByUserServiceImpl extends AbstractBaseService<L
     @Autowired
     CouncilMapper councilMapper;
 
+    @Autowired
+    SignUpTopicRepository signUpTopicRepository;
+
     @Override
     public List<ReviewCouncilByUserDto> doing(Long lecturerId) {
         try {
             List<Record> result = recordRepository.findAllByLecturerLecturerId(lecturerId);
+            List<Long> removeIds = signUpTopicRepository.findAllByFinishFalse().stream().map(signUpTopic -> signUpTopic.getTopic().getTopicId()).collect(Collectors.toList());
+            List<Long> teamIds = signUpTopicRepository.findAllByFinishFalse().stream().map(signUpTopic -> signUpTopic.getTeam().getTeamId()).collect(Collectors.toList());
+            result.removeIf(record -> (removeIds.contains(record.getTopic().getTopicId()) && teamIds.contains(record.getTeam().getTeamId())) );
             return councilMapper.toListReviewCouncilByUserDto(result);
         } catch (Exception e) {
             return null;
